@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="724px" preserveAspectRatio="none" style="width:1684px;height:724px;background:#FFFFFF;" version="1.1" viewBox="0 0 1684 724" width="1684px" zoomAndPan="magnify"><defs/><g><!--MD5=[99f03e4a8c5fcdf605e2c438036da25f]
+class GatewayRequestInterface--><g id="elem_GatewayRequestInterface"><rect codeLine="5" fill="#F1F1F1" height="113.9531" id="GatewayRequestInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="311" x="338" y="7"/><ellipse cx="403.25" cy="23" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M399.1777,18.7651 L399.1777,16.6069 L406.5571,16.6069 L406.5571,18.7651 L404.0918,18.7651 L404.0918,26.8418 L406.5571,26.8418 L406.5571,29 L399.1777,29 L399.1777,26.8418 L401.6431,26.8418 L401.6431,18.7651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="172" x="423.75" y="28.291">GatewayRequestInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="339" x2="648" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="339" x2="648" y1="47" y2="47"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="269" x="344" y="64.5352">public toPsrRequest(): RequestInterface</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="299" x="344" y="81.0234">public getCensoredBody(): ?StreamInterface</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="243" x="344" y="97.5117">public getCensoredHeaders(): array</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="252" x="344" y="114">public getCensoredUri(): UriInterface</text></g><!--MD5=[08202e2c6fb9da817419220ae062181f]
+class AbstractGatewayRequest--><g id="elem_AbstractGatewayRequest"><rect codeLine="12" fill="#F1F1F1" height="130.4414" id="AbstractGatewayRequest" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="346" x="320.5" y="181"/><ellipse cx="404.75" cy="197" fill="#CDCDCD" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M404.8633,192.3481 L403.7095,197.4199 L406.0254,197.4199 Z M403.3691,190.1069 L406.3657,190.1069 L409.7109,202.5 L407.2622,202.5 L406.4985,199.437 L403.2197,199.437 L402.4727,202.5 L400.0239,202.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="169" x="425.25" y="202.291">AbstractGatewayRequest</text><line style="stroke:#181818;stroke-width:0.5;" x1="321.5" x2="665.5" y1="213" y2="213"/><line style="stroke:#181818;stroke-width:0.5;" x1="321.5" x2="665.5" y1="221" y2="221"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="243" x="326.5" y="238.5352">protected getMethod(): HttpMethod</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="210" x="326.5" y="255.0234">protected getUri(): UriInterface</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="201" x="326.5" y="271.5117">protected getHeaders(): array</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="257" x="326.5" y="288">protected getBody(): ?StreamInterface</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="334" x="326.5" y="304.4883">final protected createRequest(): RequestInterface</text></g><!--MD5=[bec2a78d8e55fcaad4caba6022bd9591]
+class RequestGatewayInterface--><g id="elem_RequestGatewayInterface"><rect codeLine="20" fill="#F1F1F1" height="64.4883" id="RequestGatewayInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="404" x="684.5" y="32"/><ellipse cx="796.25" cy="48" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M792.1777,43.7651 L792.1777,41.6069 L799.5571,41.6069 L799.5571,43.7651 L797.0918,43.7651 L797.0918,51.8418 L799.5571,51.8418 L799.5571,54 L792.1777,54 L792.1777,51.8418 L794.6431,51.8418 L794.6431,43.7651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="172" x="816.75" y="53.291">RequestGatewayInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="685.5" x2="1087.5" y1="64" y2="64"/><line style="stroke:#181818;stroke-width:0.5;" x1="685.5" x2="1087.5" y1="72" y2="72"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="392" x="690.5" y="89.5352">public sendRequest(): GatewayDomainResponseInterface;</text></g><!--MD5=[d44d617dece917110d4b38eccd156440]
+class RequestGateway--><g id="elem_RequestGateway"><rect codeLine="24" fill="#F1F1F1" height="48" id="RequestGateway" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144" x="814.5" y="222"/><ellipse cx="829.5" cy="238" fill="#C2C2C2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M832.4731,243.6431 Q831.8921,243.9419 831.2529,244.0913 Q830.6138,244.2407 829.9082,244.2407 Q827.4014,244.2407 826.0815,242.5889 Q824.7617,240.937 824.7617,237.8159 Q824.7617,234.6865 826.0815,233.0347 Q827.4014,231.3828 829.9082,231.3828 Q830.6138,231.3828 831.2612,231.5322 Q831.9087,231.6816 832.4731,231.9805 L832.4731,234.7031 Q831.8423,234.1221 831.2488,233.8523 Q830.6553,233.5825 830.0244,233.5825 Q828.6797,233.5825 827.9949,234.6492 Q827.3101,235.7158 827.3101,237.8159 Q827.3101,239.9077 827.9949,240.9744 Q828.6797,242.041 830.0244,242.041 Q830.6553,242.041 831.2488,241.7712 Q831.8423,241.5015 832.4731,240.9204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="843.5" y="243.291">RequestGateway</text><line style="stroke:#181818;stroke-width:0.5;" x1="815.5" x2="957.5" y1="254" y2="254"/><line style="stroke:#181818;stroke-width:0.5;" x1="815.5" x2="957.5" y1="262" y2="262"/></g><!--MD5=[a67ad5c865ff278ff6210a3b16bf42fb]
+class GatewayResponseInterface--><g id="elem_GatewayResponseInterface"><rect codeLine="27" fill="#F1F1F1" height="64.4883" id="GatewayResponseInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="215" x="1130" y="379.5"/><ellipse cx="1145" cy="395.5" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1140.9277,391.2651 L1140.9277,389.1069 L1148.3071,389.1069 L1148.3071,391.2651 L1145.8418,391.2651 L1145.8418,399.3418 L1148.3071,399.3418 L1148.3071,401.5 L1140.9277,401.5 L1140.9277,399.3418 L1143.3931,399.3418 L1143.3931,391.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="183" x="1159" y="400.791">GatewayResponseInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="1131" x2="1344" y1="411.5" y2="411.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="1131" x2="1344" y1="419.5" y2="419.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="177" x="1136" y="437.0352">public isSuccessful(): bool</text></g><!--MD5=[82a610994bd6770e9716eecc68217009]
+class EndpointResponseInterface--><g id="elem_EndpointResponseInterface"><rect codeLine="31" fill="#F1F1F1" height="97.4648" id="EndpointResponseInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="254" x="1110.5" y="512"/><ellipse cx="1140.8" cy="528" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1136.7277,523.7651 L1136.7277,521.6069 L1144.1071,521.6069 L1144.1071,523.7651 L1141.6418,523.7651 L1141.6418,531.8418 L1144.1071,531.8418 L1144.1071,534 L1136.7277,534 L1136.7277,531.8418 L1139.1931,531.8418 L1139.1931,523.7651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="188" x="1158.2" y="533.291">EndpointResponseInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="1111.5" x2="1363.5" y1="544" y2="544"/><line style="stroke:#181818;stroke-width:0.5;" x1="1111.5" x2="1363.5" y1="552" y2="552"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="242" x="1116.5" y="569.5352">public getStatusCode(): StatusCode</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="227" x="1116.5" y="586.0234">public getBody(): StreamInterface</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="177" x="1116.5" y="602.5117">public getHeaders(): array</text></g><!--MD5=[cf621a66acb071ddec7ae4071ddcfffc]
+class EndpointResponse--><g id="elem_EndpointResponse"><rect codeLine="37" fill="#F1F1F1" height="48" id="EndpointResponse" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="160" x="1157.5" y="669"/><ellipse cx="1172.5" cy="685" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1168.4277,680.7651 L1168.4277,678.6069 L1175.8071,678.6069 L1175.8071,680.7651 L1173.3418,680.7651 L1173.3418,688.8418 L1175.8071,688.8418 L1175.8071,691 L1168.4277,691 L1168.4277,688.8418 L1170.8931,688.8418 L1170.8931,680.7651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="128" x="1186.5" y="690.291">EndpointResponse</text><line style="stroke:#181818;stroke-width:0.5;" x1="1158.5" x2="1316.5" y1="701" y2="701"/><line style="stroke:#181818;stroke-width:0.5;" x1="1158.5" x2="1316.5" y1="709" y2="709"/></g><!--MD5=[3f95ddb69471904e84456cd20fa1c795]
+class GatewayDomainResponseInterface--><g id="elem_GatewayDomainResponseInterface"><rect codeLine="40" fill="#F1F1F1" height="64.4883" id="GatewayDomainResponseInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="268" x="779.5" y="528.5"/><ellipse cx="794.5" cy="544.5" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M790.4277,540.2651 L790.4277,538.1069 L797.8071,538.1069 L797.8071,540.2651 L795.3418,540.2651 L795.3418,548.3418 L797.8071,548.3418 L797.8071,550.5 L790.4277,550.5 L790.4277,548.3418 L792.8931,548.3418 L792.8931,540.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="236" x="808.5" y="549.791">GatewayDomainResponseInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="780.5" x2="1046.5" y1="560.5" y2="560.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="780.5" x2="1046.5" y1="568.5" y2="568.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="242" x="785.5" y="586.0352">public function getResponseBody();</text></g><path d="M6,190 L6,291.8633 A0,0 0 0 0 6,291.8633 L285,291.8633 A0,0 0 0 0 285,291.8633 L285,244.9316 L324.5,299.1973 L285,236.9316 L285,200 L275,190 L6,190 A0,0 0 0 0 6,190 " fill="#FAFAFA" style="stroke:#181818;stroke-width:0.5;"/><path d="M275,190 L275,200 L285,200 L275,190 " fill="#FAFAFA" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="159" x="12" y="207.5684">Template method pattern</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="34" x="12" y="222.8789">Uses:</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="238" x="28" y="238.1895">AbstractGatewayRequest::getMethod()</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="209" x="28" y="253.5">AbstractGatewayRequest::getUri()</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="242" x="28" y="268.8105">AbstractGatewayRequest::getHeaders()</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="221" x="28" y="284.1211">AbstractGatewayRequest::getBody()</text><!--MD5=[c08e726e0557a16575f24b28f8c02999]
+class AdapterInterface--><g id="elem_AdapterInterface"><rect codeLine="53" fill="#F1F1F1" height="64.4883" id="AdapterInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="297" x="1380" y="379.5"/><ellipse cx="1466.75" cy="395.5" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1462.6777,391.2651 L1462.6777,389.1069 L1470.0571,389.1069 L1470.0571,391.2651 L1467.5918,391.2651 L1467.5918,399.3418 L1470.0571,399.3418 L1470.0571,401.5 L1462.6777,401.5 L1462.6777,399.3418 L1465.1431,399.3418 L1465.1431,391.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="115" x="1487.25" y="400.791">AdapterInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="1381" x2="1676" y1="411.5" y2="411.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="1381" x2="1676" y1="419.5" y2="419.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="285" x="1386" y="437.0352">public send(): EndpointResponseInterface</text></g><!--MD5=[9fdd1893284c42e7cb329a69eba8187f]
+class GuzzleAdapter--><g id="elem_GuzzleAdapter"><rect codeLine="57" fill="#F1F1F1" height="48" id="GuzzleAdapter" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134" x="1461.5" y="536.5"/><ellipse cx="1476.5" cy="552.5" fill="#C2C2C2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1479.4731,558.1431 Q1478.8921,558.4419 1478.2529,558.5913 Q1477.6138,558.7407 1476.9082,558.7407 Q1474.4014,558.7407 1473.0815,557.0889 Q1471.7617,555.437 1471.7617,552.3159 Q1471.7617,549.1865 1473.0815,547.5347 Q1474.4014,545.8828 1476.9082,545.8828 Q1477.6138,545.8828 1478.2612,546.0322 Q1478.9087,546.1816 1479.4731,546.4805 L1479.4731,549.2031 Q1478.8423,548.6221 1478.2488,548.3523 Q1477.6553,548.0825 1477.0244,548.0825 Q1475.6797,548.0825 1474.9949,549.1492 Q1474.3101,550.2158 1474.3101,552.3159 Q1474.3101,554.4077 1474.9949,555.4744 Q1475.6797,556.541 1477.0244,556.541 Q1477.6553,556.541 1478.2488,556.2712 Q1478.8423,556.0015 1479.4731,555.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="1490.5" y="557.791">GuzzleAdapter</text><line style="stroke:#181818;stroke-width:0.5;" x1="1462.5" x2="1594.5" y1="568.5" y2="568.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="1462.5" x2="1594.5" y1="576.5" y2="576.5"/></g><!--MD5=[ea216eefc62d2c562faf81e925c5ea2e]
+class ResponseDomainMapperInterface--><g id="elem_ResponseDomainMapperInterface"><rect codeLine="61" fill="#F1F1F1" height="64.4883" id="ResponseDomainMapperInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="417" x="678" y="379.5"/><ellipse cx="766.75" cy="395.5" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M762.6777,391.2651 L762.6777,389.1069 L770.0571,389.1069 L770.0571,391.2651 L767.5918,391.2651 L767.5918,399.3418 L770.0571,399.3418 L770.0571,401.5 L762.6777,401.5 L762.6777,399.3418 L765.1431,399.3418 L765.1431,391.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="231" x="787.25" y="400.791">ResponseDomainMapperInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="679" x2="1094" y1="411.5" y2="411.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="679" x2="1094" y1="419.5" y2="419.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="405" x="684" y="437.0352">public mapToDomain(): GatewayDomainResponseInterface;</text></g><!--MD5=[0be258654d2f0ac42df5d04b19b21a26]
+class RequestGatewayLoggerInterface--><g id="elem_RequestGatewayLoggerInterface"><rect codeLine="65" fill="#F1F1F1" height="80.9766" id="RequestGatewayLoggerInterface" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="274" x="368.5" y="371"/><ellipse cx="393.4" cy="387" fill="#B1B1B1" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M389.3277,382.7651 L389.3277,380.6069 L396.7071,380.6069 L396.7071,382.7651 L394.2418,382.7651 L394.2418,390.8418 L396.7071,390.8418 L396.7071,393 L389.3277,393 L389.3277,390.8418 L391.7931,390.8418 L391.7931,382.7651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="220" x="409.6" y="392.291">RequestGatewayLoggerInterface</text><line style="stroke:#181818;stroke-width:0.5;" x1="369.5" x2="641.5" y1="403" y2="403"/><line style="stroke:#181818;stroke-width:0.5;" x1="369.5" x2="641.5" y1="411" y2="411"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="262" x="374.5" y="428.5352">public logRequestResponsePair(): void</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="238" x="374.5" y="445.0234">public logRequestException(): void</text></g><!--MD5=[5f0ee6899a20dd882142c0f551fb9268]
+class DefaultRequestGatewayLogger--><g id="elem_DefaultRequestGatewayLogger"><rect codeLine="70" fill="#F1F1F1" height="48" id="DefaultRequestGatewayLogger" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="241" x="385" y="536.5"/><ellipse cx="400" cy="552.5" fill="#C2C2C2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M402.9731,558.1431 Q402.3921,558.4419 401.7529,558.5913 Q401.1138,558.7407 400.4082,558.7407 Q397.9014,558.7407 396.5815,557.0889 Q395.2617,555.437 395.2617,552.3159 Q395.2617,549.1865 396.5815,547.5347 Q397.9014,545.8828 400.4082,545.8828 Q401.1138,545.8828 401.7612,546.0322 Q402.4087,546.1816 402.9731,546.4805 L402.9731,549.2031 Q402.3423,548.6221 401.7488,548.3523 Q401.1553,548.0825 400.5244,548.0825 Q399.1797,548.0825 398.4949,549.1492 Q397.8101,550.2158 397.8101,552.3159 Q397.8101,554.4077 398.4949,555.4744 Q399.1797,556.541 400.5244,556.541 Q401.1553,556.541 401.7488,556.2712 Q402.3423,556.0015 402.9731,555.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="209" x="414" y="557.791">DefaultRequestGatewayLogger</text><line style="stroke:#181818;stroke-width:0.5;" x1="386" x2="625" y1="568.5" y2="568.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="386" x2="625" y1="576.5" y2="576.5"/></g><!--MD5=[d70279aee16cb60954d73d22597b95b5]
+class ErrorResponse--><g id="elem_ErrorResponse"><rect fill="#F1F1F1" height="48" id="ErrorResponse" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133" x="905" y="669"/><ellipse cx="920" cy="685" fill="#C2C2C2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M922.9731,690.6431 Q922.3921,690.9419 921.7529,691.0913 Q921.1138,691.2407 920.4082,691.2407 Q917.9014,691.2407 916.5815,689.5889 Q915.2617,687.937 915.2617,684.8159 Q915.2617,681.6865 916.5815,680.0347 Q917.9014,678.3828 920.4082,678.3828 Q921.1138,678.3828 921.7612,678.5322 Q922.4087,678.6816 922.9731,678.9805 L922.9731,681.7031 Q922.3423,681.1221 921.7488,680.8523 Q921.1553,680.5825 920.5244,680.5825 Q919.1797,680.5825 918.4949,681.6492 Q917.8101,682.7158 917.8101,684.8159 Q917.8101,686.9077 918.4949,687.9744 Q919.1797,689.041 920.5244,689.041 Q921.1553,689.041 921.7488,688.7712 Q922.3423,688.5015 922.9731,687.9204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="101" x="934" y="690.291">ErrorResponse</text><line style="stroke:#181818;stroke-width:0.5;" x1="906" x2="1037" y1="701" y2="701"/><line style="stroke:#181818;stroke-width:0.5;" x1="906" x2="1037" y1="709" y2="709"/></g><!--MD5=[627936b8ffaac01d97e04cb83f820d4f]
+class SimpleResponse--><g id="elem_SimpleResponse"><rect fill="#F1F1F1" height="48" id="SimpleResponse" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144" x="725.5" y="669"/><ellipse cx="740.5" cy="685" fill="#C2C2C2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M743.4731,690.6431 Q742.8921,690.9419 742.2529,691.0913 Q741.6138,691.2407 740.9082,691.2407 Q738.4014,691.2407 737.0815,689.5889 Q735.7617,687.937 735.7617,684.8159 Q735.7617,681.6865 737.0815,680.0347 Q738.4014,678.3828 740.9082,678.3828 Q741.6138,678.3828 742.2612,678.5322 Q742.9087,678.6816 743.4731,678.9805 L743.4731,681.7031 Q742.8423,681.1221 742.2488,680.8523 Q741.6553,680.5825 741.0244,680.5825 Q739.6797,680.5825 738.9949,681.6492 Q738.3101,682.7158 738.3101,684.8159 Q738.3101,686.9077 738.9949,687.9744 Q739.6797,689.041 741.0244,689.041 Q741.6553,689.041 742.2488,688.7712 Q742.8423,688.5015 743.4731,687.9204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="754.5" y="690.291">SimpleResponse</text><line style="stroke:#181818;stroke-width:0.5;" x1="726.5" x2="868.5" y1="701" y2="701"/><line style="stroke:#181818;stroke-width:0.5;" x1="726.5" x2="868.5" y1="709" y2="709"/></g><!--MD5=[fdfc76952bcfa18a55e86adc9de36fa6]
+reverse link GatewayRequestInterface to AbstractGatewayRequest--><g id="link_GatewayRequestInterface_AbstractGatewayRequest"><path codeLine="73" d="M493.5,141.57 C493.5,154.67 493.5,168.16 493.5,180.9 " fill="none" id="GatewayRequestInterface-backto-AbstractGatewayRequest" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="486.5,141.46,493.5,121.46,500.5,141.46,486.5,141.46" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[e515628a6a25a8d9a3ddd68024f712ab]
+reverse link RequestGatewayInterface to RequestGateway--><g id="link_RequestGatewayInterface_RequestGateway"><path codeLine="74" d="M886.5,116.55 C886.5,151.33 886.5,195.56 886.5,222 " fill="none" id="RequestGatewayInterface-backto-RequestGateway" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="879.5,116.35,886.5,96.35,893.5,116.35,879.5,116.35" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[70eb6a20d0db2f932970f288eb997fa3]
+reverse link GatewayResponseInterface to EndpointResponseInterface--><g id="link_GatewayResponseInterface_EndpointResponseInterface"><path codeLine="75" d="M1237.5,463.76 C1237.5,479.39 1237.5,496.49 1237.5,511.87 " fill="none" id="GatewayResponseInterface-backto-EndpointResponseInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="1230.5,463.67,1237.5,443.67,1244.5,463.67,1230.5,463.67" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[2eebc066cd56f4549536d44eb160450e]
+reverse link GatewayResponseInterface to GatewayDomainResponseInterface--><g id="link_GatewayResponseInterface_GatewayDomainResponseInterface"><path codeLine="76" d="M1150.34,452.05 C1097.44,476.04 1030.91,506.23 981.83,528.5 " fill="none" id="GatewayResponseInterface-backto-GatewayDomainResponseInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="1147.68,445.56,1168.79,443.67,1153.47,458.31,1147.68,445.56" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[200911d84e4778f0009952e7a462af71]
+reverse link AdapterInterface to GuzzleAdapter--><g id="link_AdapterInterface_GuzzleAdapter"><path codeLine="77" d="M1528.5,464.02 C1528.5,488.58 1528.5,516.74 1528.5,536.09 " fill="none" id="AdapterInterface-backto-GuzzleAdapter" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="1521.5,463.67,1528.5,443.67,1535.5,463.67,1521.5,463.67" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[d91a0e21e2af88222c108510819ce270]
+reverse link RequestGateway to AdapterInterface--><g id="link_RequestGateway_AdapterInterface"><path codeLine="78" d="M971.42,268.63 C1082.93,297.02 1279.41,347.06 1406.74,379.49 " fill="none" id="RequestGateway-backto-AdapterInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="958.59,265.36,963.4151,270.719,970.2176,268.3262,965.3926,262.9672,958.59,265.36" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[5a748d8552a5c2f7660fec94a9267c1c]
+reverse link RequestGateway to ResponseDomainMapperInterface--><g id="link_RequestGateway_ResponseDomainMapperInterface"><path codeLine="79" d="M886.5,283.25 C886.5,312.1 886.5,352.04 886.5,379.44 " fill="none" id="RequestGateway-backto-ResponseDomainMapperInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="886.5,270.08,882.5,276.08,886.5,282.08,890.5,276.08,886.5,270.08" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ecdd33aa4d13ffa2959101ad418872a2]
+reverse link RequestGateway to RequestGatewayLoggerInterface--><g id="link_RequestGateway_RequestGatewayLoggerInterface"><path codeLine="80" d="M820.47,275.34 C758.97,301.73 666.71,341.32 597.91,370.84 " fill="none" id="RequestGateway-backto-RequestGatewayLoggerInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="832.72,270.08,825.6291,268.769,821.6916,274.8102,828.7825,276.1212,832.72,270.08" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[5aad3ab1597cbe55d31a1b7e5a459154]
+reverse link ResponseDomainMapperInterface to GatewayDomainResponseInterface--><g id="link_ResponseDomainMapperInterface_GatewayDomainResponseInterface"><path codeLine="81" d="M894.61,456.66 C898.86,479.78 903.95,507.53 907.78,528.37 " fill="none" id="ResponseDomainMapperInterface-backto-GatewayDomainResponseInterface" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="892.23,443.67,889.3769,450.2927,894.3929,455.4735,897.2459,448.8508,892.23,443.67" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[3253a0437a2c99e4bb85339d88b9da16]
+reverse link GatewayDomainResponseInterface to ErrorResponse--><g id="link_GatewayDomainResponseInterface_ErrorResponse"><path codeLine="82" d="M935.59,611.21 C944.38,630.99 954.08,652.8 961.17,668.76 " fill="none" id="GatewayDomainResponseInterface-backto-ErrorResponse" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="929.12,613.88,927.39,592.76,941.91,608.19,929.12,613.88" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ec0236e6b34e1ee16ab1e7db5aff0dcf]
+reverse link GatewayDomainResponseInterface to SimpleResponse--><g id="link_GatewayDomainResponseInterface_SimpleResponse"><path codeLine="83" d="M872.3,607.85 C853.96,628.49 833.16,651.89 818.16,668.76 " fill="none" id="GatewayDomainResponseInterface-backto-SimpleResponse" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="867.2,603.06,885.72,592.76,877.66,612.36,867.2,603.06" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[b77974b85b69c8ad9fcbc74fadc903a8]
+reverse link EndpointResponseInterface to EndpointResponse--><g id="link_EndpointResponseInterface_EndpointResponse"><path codeLine="84" d="M1237.5,629.73 C1237.5,643.76 1237.5,657.6 1237.5,668.66 " fill="none" id="EndpointResponseInterface-backto-EndpointResponse" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="1230.5,629.35,1237.5,609.35,1244.5,629.35,1230.5,629.35" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[32e239566c4e995dfcad1da4e4470126]
+reverse link RequestGatewayLoggerInterface to DefaultRequestGatewayLogger--><g id="link_RequestGatewayLoggerInterface_DefaultRequestGatewayLogger"><path codeLine="85" d="M505.5,472.53 C505.5,494.93 505.5,519.06 505.5,536.2 " fill="none" id="RequestGatewayLoggerInterface-backto-DefaultRequestGatewayLogger" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="498.5,472.28,505.5,452.28,512.5,472.28,498.5,472.28" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ce63788e8dea222c7781cdc3e25a8f70]
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam monochrome true
+
+interface GatewayRequestInterface {
+    public toPsrRequest(): RequestInterface
+    public getCensoredBody(): ?StreamInterface
+    public getCensoredHeaders(): array
+    public getCensoredUri(): UriInterface
+}
+
+abstract class AbstractGatewayRequest {
+    protected getMethod(): HttpMethod
+    protected getUri(): UriInterface
+    protected getHeaders(): array
+    protected getBody(): ?StreamInterface
+    final protected createRequest(): RequestInterface
+}
+
+interface RequestGatewayInterface {
+    public sendRequest(): GatewayDomainResponseInterface;
+}
+
+class RequestGateway {
+}
+
+interface GatewayResponseInterface {
+    public isSuccessful(): bool
+}
+
+interface EndpointResponseInterface {
+    public getStatusCode(): StatusCode
+    public getBody(): StreamInterface
+    public getHeaders(): array
+}
+
+interface EndpointResponse {
+}
+
+interface GatewayDomainResponseInterface {
+    public function getResponseBody();
+}
+
+note left of AbstractGatewayRequest::createRequest
+    Template method pattern
+    Uses:
+        AbstractGatewayRequest::getMethod()
+        AbstractGatewayRequest::getUri()
+        AbstractGatewayRequest::getHeaders()
+        AbstractGatewayRequest::getBody()
+end note
+
+interface AdapterInterface {
+    public send(): EndpointResponseInterface
+}
+
+class GuzzleAdapter {
+
+}
+
+interface ResponseDomainMapperInterface {
+    public mapToDomain(): GatewayDomainResponseInterface;
+}
+
+interface RequestGatewayLoggerInterface {
+    public logRequestResponsePair(): void
+    public logRequestException(): void
+}
+
+class DefaultRequestGatewayLogger {
+}
+
+GatewayRequestInterface <|.. AbstractGatewayRequest
+RequestGatewayInterface <|.. RequestGateway
+GatewayResponseInterface <|- - EndpointResponseInterface
+GatewayResponseInterface <|- - GatewayDomainResponseInterface
+AdapterInterface <|.. GuzzleAdapter
+RequestGateway *- - AdapterInterface
+RequestGateway *- - ResponseDomainMapperInterface
+RequestGateway *- - RequestGatewayLoggerInterface
+ResponseDomainMapperInterface o- - GatewayDomainResponseInterface
+GatewayDomainResponseInterface <|.. ErrorResponse
+GatewayDomainResponseInterface <|.. SimpleResponse
+EndpointResponseInterface <|.. EndpointResponse
+RequestGatewayLoggerInterface <|.. DefaultRequestGatewayLogger
+
+@enduml
+
+@startuml
+
+skinparam monochrome true
+
+interface GatewayRequestInterface {
+    public toPsrRequest(): RequestInterface
+    public getCensoredBody(): ?StreamInterface
+    public getCensoredHeaders(): array
+    public getCensoredUri(): UriInterface
+}
+
+abstract class AbstractGatewayRequest {
+    protected getMethod(): HttpMethod
+    protected getUri(): UriInterface
+    protected getHeaders(): array
+    protected getBody(): ?StreamInterface
+    final protected createRequest(): RequestInterface
+}
+
+interface RequestGatewayInterface {
+    public sendRequest(): GatewayDomainResponseInterface;
+}
+
+class RequestGateway {
+}
+
+interface GatewayResponseInterface {
+    public isSuccessful(): bool
+}
+
+interface EndpointResponseInterface {
+    public getStatusCode(): StatusCode
+    public getBody(): StreamInterface
+    public getHeaders(): array
+}
+
+interface EndpointResponse {
+}
+
+interface GatewayDomainResponseInterface {
+    public function getResponseBody();
+}
+
+note left of AbstractGatewayRequest::createRequest
+    Template method pattern
+    Uses:
+        AbstractGatewayRequest::getMethod()
+        AbstractGatewayRequest::getUri()
+        AbstractGatewayRequest::getHeaders()
+        AbstractGatewayRequest::getBody()
+end note
+
+interface AdapterInterface {
+    public send(): EndpointResponseInterface
+}
+
+class GuzzleAdapter {
+
+}
+
+interface ResponseDomainMapperInterface {
+    public mapToDomain(): GatewayDomainResponseInterface;
+}
+
+interface RequestGatewayLoggerInterface {
+    public logRequestResponsePair(): void
+    public logRequestException(): void
+}
+
+class DefaultRequestGatewayLogger {
+}
+
+GatewayRequestInterface <|.. AbstractGatewayRequest
+RequestGatewayInterface <|.. RequestGateway
+GatewayResponseInterface <|- - EndpointResponseInterface
+GatewayResponseInterface <|- - GatewayDomainResponseInterface
+AdapterInterface <|.. GuzzleAdapter
+RequestGateway *- - AdapterInterface
+RequestGateway *- - ResponseDomainMapperInterface
+RequestGateway *- - RequestGatewayLoggerInterface
+ResponseDomainMapperInterface o- - GatewayDomainResponseInterface
+GatewayDomainResponseInterface <|.. ErrorResponse
+GatewayDomainResponseInterface <|.. SimpleResponse
+EndpointResponseInterface <|.. EndpointResponse
+RequestGatewayLoggerInterface <|.. DefaultRequestGatewayLogger
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 15:29:17 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: SK
+--></g></svg>

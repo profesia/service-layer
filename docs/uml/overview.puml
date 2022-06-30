@@ -1,0 +1,88 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam monochrome true
+
+interface GatewayRequestInterface {
+    public toPsrRequest(): RequestInterface
+    public getCensoredBody(): ?StreamInterface
+    public getCensoredHeaders(): array
+    public getCensoredUri(): UriInterface
+}
+
+abstract class AbstractGatewayRequest {
+    protected getMethod(): HttpMethod
+    protected getUri(): UriInterface
+    protected getHeaders(): array
+    protected getBody(): ?StreamInterface
+    final protected createRequest(): RequestInterface
+}
+
+interface RequestGatewayInterface {
+    public sendRequest(): GatewayDomainResponseInterface;
+}
+
+class RequestGateway {
+}
+
+interface GatewayResponseInterface {
+    public isSuccessful(): bool
+}
+
+interface EndpointResponseInterface {
+    public getStatusCode(): StatusCode
+    public getBody(): StreamInterface
+    public getHeaders(): array
+}
+
+interface EndpointResponse {
+}
+
+interface GatewayDomainResponseInterface {
+    public function getResponseBody();
+}
+
+note left of AbstractGatewayRequest::createRequest
+    Template method pattern
+    Uses:
+        AbstractGatewayRequest::getMethod()
+        AbstractGatewayRequest::getUri()
+        AbstractGatewayRequest::getHeaders()
+        AbstractGatewayRequest::getBody()
+end note
+
+interface AdapterInterface {
+    public send(): EndpointResponseInterface
+}
+
+class GuzzleAdapter {
+
+}
+
+interface ResponseDomainMapperInterface {
+    public mapToDomain(): GatewayDomainResponseInterface;
+}
+
+interface RequestGatewayLoggerInterface {
+    public logRequestResponsePair(): void
+    public logRequestException(): void
+}
+
+class DefaultRequestGatewayLogger {
+}
+
+GatewayRequestInterface <|.. AbstractGatewayRequest
+RequestGatewayInterface <|.. RequestGateway
+GatewayResponseInterface <|-- EndpointResponseInterface
+GatewayResponseInterface <|-- GatewayDomainResponseInterface
+AdapterInterface <|.. GuzzleAdapter
+RequestGateway *-- AdapterInterface
+RequestGateway *-- ResponseDomainMapperInterface
+RequestGateway *-- RequestGatewayLoggerInterface
+ResponseDomainMapperInterface *-- GatewayDomainResponseInterface
+GatewayDomainResponseInterface <|.. ErrorResponse
+GatewayDomainResponseInterface <|.. SimpleResponse
+EndpointResponseInterface <|.. EndpointResponse
+RequestGatewayLoggerInterface <|.. DefaultRequestGatewayLogger
+
+@enduml

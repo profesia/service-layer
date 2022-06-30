@@ -1,8 +1,6 @@
-# Service Layer
- 
-Library designed for SOA communication via REST with external services
+`/`[Home](/service-layer)`/`[1.0](/service-layer/docs/1.0)`/`[Installation](01-installation.html)
 
-![License](https://img.shields.io/packagist/l/profesia/service-layer)
+# Installing library
 
 ## Installation
 Install the latest version by running the command
