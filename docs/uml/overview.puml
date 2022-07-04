@@ -18,11 +18,11 @@ abstract class AbstractGatewayRequest {
     final protected createRequest(): RequestInterface
 }
 
-interface RequestGatewayInterface {
+interface GatewayInterface {
     public sendRequest(): GatewayDomainResponseInterface;
 }
 
-class RequestGateway {
+class Gateway {
 }
 
 interface GatewayResponseInterface {

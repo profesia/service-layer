@@ -1,4 +1,4 @@
-`/`[Home](/service-layer)`/`[1.0](/service-layer/docs/1.0)`/`[Installation](01-installation.html)
+`/`[Home](/service-layer)`/`[1.0](/service-layer/docs/1.0)`/`[Basic concepts](03-basic-concepts.html)
 
 # Basic concepts
 Having in mind definition of a SOA and also good practices of a software 
@@ -30,11 +30,12 @@ and has access to the response body.
   * [DomainResponseInterface](../../src/Response/Domain/GatewayDomainResponseInterface.php) represents domain response wrapper
 that is able to retrieve specific domain object.
 * [Adapter](../../src/Adapter/AdapterInterface.php) contract represents wrapper for any adapter capable of sending of a HTTP requests. 
-* [Mapper](../../src/Mapper/ResponseDomainMapperInterface.php) contract represents a component capable of mapping [EndpointResponse](../../src/Response/Connection/EndpointResponseInterface.php) into [DomainResponseInterface](../../src/Response/Domain/GatewayDomainResponseInterface.php)
+* [Mapper](../../src/Mapper/ResponseDomainMapperInterface.php) contract represents a component 
+capable of mapping [EndpointResponse](../../src/Response/Connection/EndpointResponseInterface.php) into [DomainResponseInterface](../../src/Response/Domain/GatewayDomainResponseInterface.php)
 * [GatewayUseCase](../../src/Registry/GatewayUseCase.php) contract represents one specific use 
 case - request with all the necessary configuration and means to override its one time configuration. 
 * [GatewayUseCaseRegistry](../../src/Registry/GatewayUseCaseRegistry.php) contract represents registry of gateway use cases
-and predefines required structure for the neccessary configuration with the capability to override each part of a communication.
+and predefines required structure for the necessary configuration with the capability to override each part of a communication.
 
 ## Model
 In the following extended model the core list of classes is shown along with their relations:
