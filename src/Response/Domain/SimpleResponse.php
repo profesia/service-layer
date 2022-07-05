@@ -8,7 +8,7 @@ use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Http\Message\StreamInterface;
 
-final class SimpleResponse implements GatewayDomainResponseInterface
+final class SimpleResponse implements DomainResponseInterface
 {
     private StatusCode      $statusCode;
     private StreamInterface $responseBody;

@@ -9,7 +9,7 @@ use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
 use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
-use Profesia\ServiceLayer\Response\Domain\GatewayDomainResponseInterface;
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\ErrorResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
@@ -49,7 +49,7 @@ final class Gateway implements GatewayInterface
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
         ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
-    ): GatewayDomainResponseInterface {
+    ): DomainResponseInterface {
         $startTime = new DateTimeImmutable();
         $logger    = $this->getLogger();
         $adapter   = $this->getAdapter();

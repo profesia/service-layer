@@ -162,3 +162,6 @@ final class TestRequest extends AbstractGatewayRequest
     }
 }
 ```
+### Runtime params
+There may occur situations when some parameters are not going to be available till runtime. In such situtions
+usage of a request factory is advised as the best practise.

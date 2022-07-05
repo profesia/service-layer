@@ -10,7 +10,7 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
-use Profesia\ServiceLayer\Response\Domain\GatewayDomainResponseInterface;
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
 use Profesia\ServiceLayer\Transport\Proxy\GatewayCachingProxy;
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
@@ -250,7 +250,7 @@ class RequestGatewayCachingProxyTest extends MockeryTestCase
     }
 }
 
-class ArrayDomainResponse implements GatewayDomainResponseInterface
+class ArrayDomainResponse implements DomainResponseInterface
 {
     private array $array;
 

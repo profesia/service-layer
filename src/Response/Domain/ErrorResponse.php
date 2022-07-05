@@ -6,7 +6,7 @@ namespace Profesia\ServiceLayer\Response\Domain;
 
 use Throwable;
 
-final class ErrorResponse implements GatewayDomainResponseInterface
+final class ErrorResponse implements DomainResponseInterface
 {
     private Throwable $throwable;
 

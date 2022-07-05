@@ -4,7 +4,7 @@ namespace Profesia\ServiceLayer\Response\Domain;
 
 use Profesia\ServiceLayer\Response\GatewayResponseInterface;
 
-interface GatewayDomainResponseInterface extends GatewayResponseInterface
+interface DomainResponseInterface extends GatewayResponseInterface
 {
     /**
      * @return mixed

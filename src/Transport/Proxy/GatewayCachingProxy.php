@@ -8,7 +8,7 @@ use GuzzleHttp\Utils;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
-use Profesia\ServiceLayer\Response\Domain\GatewayDomainResponseInterface;
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
@@ -45,7 +45,7 @@ final class GatewayCachingProxy implements GatewayInterface
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
         ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
-    ): GatewayDomainResponseInterface {
+    ): DomainResponseInterface {
         $psrRequest = $gatewayRequest->toPsrRequest();
         $key        = self::getRequestCacheKey($psrRequest);
         if ($this->cache->has($key)) {

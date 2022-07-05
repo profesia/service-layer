@@ -5,7 +5,7 @@ namespace Profesia\ServiceLayer\Transport;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
-use Profesia\ServiceLayer\Response\Domain\GatewayDomainResponseInterface;
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
 
@@ -18,5 +18,5 @@ interface GatewayInterface
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
         ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
-    ): GatewayDomainResponseInterface;
+    ): DomainResponseInterface;
 }
