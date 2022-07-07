@@ -31,3 +31,50 @@ those are already being used in the code base on the gateway level. **SimpleResp
 endpoint call, when no mapper is set to gateway. **ErrorResponse** is returned on catching of 
 a [ServiceLayerException](../../src/Exception/ServiceLayerException.php) instance, that was thrown during
 any part of a remote communication.
+## Usage
+```php
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
+
+final class SampleResponse implements DomainResponseInterface
+{
+    /**
+     * Successfulness determined from higher context
+     */
+    private bool $isSuccessful = false;
+    private int $a;
+    private int $b;
+    
+    public function __construct(bool $isSuccessful, int $a, int $b)
+    {
+        $this->isSuccessful = $isSuccessful;
+    }
+    
+    public function getResponseBody() {
+        return new DomainObject(
+            $this->a,
+            $this->b
+        );    
+    }
+    
+    public function isSuccessful(): bool{
+        return $this->isSuccessful;
+    }
+}
+
+final class DomainObject
+{
+    private int $a;
+    private int $b;
+    
+    public function __construct(int $a, int $b)
+    {
+        $this->a = $a;
+        $this->b = $b;
+    }
+    
+    public function isGreater(): bool
+    {
+        return ($a > $b);
+    }
+}
+```
