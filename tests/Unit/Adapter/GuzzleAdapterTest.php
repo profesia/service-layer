@@ -12,7 +12,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Nyholm\Psr7\Stream;
-use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
 use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
@@ -83,7 +83,7 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
         $adapter->send($gatewayRequest);
@@ -154,7 +154,7 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
         $actualResponse = $adapter->send($gatewayRequest);
@@ -225,7 +225,7 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
         $actualResponse = $adapter->send($gatewayRequest);
@@ -274,7 +274,7 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
         $this->expectException(AdapterException::class);
@@ -325,7 +325,7 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
         $this->expectException(AdapterException::class);
@@ -403,10 +403,10 @@ class GuzzleAdapterTest extends MockeryTestCase
 
         $adapter = new GuzzleAdapter(
             $client,
-            GuzzleAdapterConfigBuilder::createDefault()
+            GuzzleAdapterConfig::createDefault()
         );
 
-        $overrideConfig = GuzzleAdapterConfigBuilder::createFromArray(
+        $overrideConfig = GuzzleAdapterConfig::createFromArray(
             $rawConfig
         );
 

@@ -6,7 +6,7 @@ namespace Profesia\ServiceLayer\Transport;
 
 use DateTimeImmutable;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
@@ -48,7 +48,7 @@ final class Gateway implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
     ): DomainResponseInterface {
         $startTime = new DateTimeImmutable();
         $logger    = $this->getLogger();

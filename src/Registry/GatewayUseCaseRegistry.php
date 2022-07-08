@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Registry;
 
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfig;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\Exception\BadConfigException;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
@@ -78,7 +78,7 @@ final class GatewayUseCaseRegistry
             /** @var GatewayRequestInterface $request */
             $request = $requestConfig['request'] ?? null;
 
-            /** @var AbstractAdapterConfigBuilder|null $configOverride */
+            /** @var AbstractAdapterConfig|null $configOverride */
             $configOverride = $requestConfig['configOverride'] ?? null;
 
             /** @var AdapterInterface|null $adapterOverride */

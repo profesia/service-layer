@@ -12,7 +12,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7\Stream;
 use Nyholm\Psr7\Uri;
-use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
@@ -142,7 +142,7 @@ class RequestGatewayTest extends MockeryTestCase
                 $psrResponse
             );
 
-        $configBuilder = GuzzleAdapterConfigBuilder::createDefault();
+        $configBuilder = GuzzleAdapterConfig::createDefault();
 
         $adapter = new GuzzleAdapter(
             $client,

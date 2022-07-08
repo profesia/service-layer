@@ -8,7 +8,7 @@ namespace Profesia\ServiceLayer\Test\Unit\Registry;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfig;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\GatewayUseCase;
 use Mockery\MockInterface;
@@ -249,8 +249,8 @@ class GatewayUseCaseTest extends MockeryTestCase
         /** @var ResponseDomainMapperInterface|MockInterface $mapper */
         $mapper = Mockery::mock(ResponseDomainMapperInterface::class);
 
-        /** @var AbstractAdapterConfigBuilder|MockInterface $configOverride */
-        $configOverride = Mockery::mock(AbstractAdapterConfigBuilder::class);
+        /** @var AbstractAdapterConfig|MockInterface $configOverride */
+        $configOverride = Mockery::mock(AbstractAdapterConfig::class);
 
         /** @var GatewayInterface|MockInterface $defaultGateway */
         $defaultGateway = Mockery::mock(GatewayInterface::class);

@@ -10,9 +10,9 @@ use Profesia\ServiceLayer\ValueObject\Login;
 use Profesia\ServiceLayer\ValueObject\Password;
 use Profesia\ServiceLayer\ValueObject\Timeout;
 
-final class GuzzleAdapterConfigBuilder extends AbstractAdapterConfigBuilder
+final class GuzzleAdapterConfig extends AbstractAdapterConfig
 {
-    public static function createFromArray(array $config): GuzzleAdapterConfigBuilder
+    public static function createFromArray(array $config): GuzzleAdapterConfig
     {
         if (array_key_exists(RequestOptions::TIMEOUT, $config)) {
             $config[RequestOptions::TIMEOUT] = (Timeout::createFromFloat($config[RequestOptions::TIMEOUT]))->toFloat();

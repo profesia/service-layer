@@ -5,7 +5,7 @@ namespace Profesia\ServiceLayer\Adapter\Config;
 
 use InvalidArgumentException;
 
-abstract class AbstractAdapterConfigBuilder implements AdapterConfigBuilderInterface
+abstract class AbstractAdapterConfig implements AdapterConfigInterface
 {
     private array $config;
 

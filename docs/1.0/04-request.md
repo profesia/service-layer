@@ -15,6 +15,10 @@ PSR request instance, any PSR-18 compliant HTTP client should be able to process
 Basic request definition is illustrated on the following code sample:
 
 ```php
+<?php 
+
+declare(strict_types=1);
+
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
@@ -45,6 +49,10 @@ class [AbstractGatewayRequest](../../src/Transport/Request/AbstractGatewayReques
 that splits request creation into separate parts - body definition, headers, definition, method definition etc:
 
 ```php
+<?php 
+
+declare(strict_types=1);
+
 use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
@@ -97,6 +105,10 @@ comes with default behavior - each method returns its non-censored counterpart.
 The specific request knows best what data to hide.
 Basic usage is illustrated on the following code fragment:
 ```php
+<?php 
+
+declare(strict_types=1);
+
 use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;

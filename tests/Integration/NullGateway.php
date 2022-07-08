@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Test\Integration;
 
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
@@ -30,7 +30,7 @@ final class NullGateway implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
     ): DomainResponseInterface {
         $psrRequest = $gatewayRequest->toPsrRequest();
         return SimpleResponse::createFromStatusCodeAndStream(

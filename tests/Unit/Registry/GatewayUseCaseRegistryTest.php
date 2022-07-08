@@ -9,7 +9,7 @@ use Mockery\MockInterface;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfig;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\GatewayUseCase;
 use Profesia\ServiceLayer\Registry\GatewayUseCaseRegistry;
@@ -84,17 +84,17 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
                         'request1' => [
                             'request'        => $request1,
                             'mapper'         => Mockery::mock(ResponseDomainMapperInterface::class),
-                            'configOverride' => Mockery::mock(AbstractAdapterConfigBuilder::class),
+                            'configOverride' => Mockery::mock(AbstractAdapterConfig::class),
                         ],
                         'request2' => [
                             'request'        => $request2,
                             'mapper'         => Mockery::mock(ResponseDomainMapperInterface::class),
-                            'configOverride' => Mockery::mock(AbstractAdapterConfigBuilder::class),
+                            'configOverride' => Mockery::mock(AbstractAdapterConfig::class),
                         ],
                         'request3' => [
                             'request'        => $request3,
                             'mapper'         => Mockery::mock(ResponseDomainMapperInterface::class),
-                            'configOverride' => Mockery::mock(AbstractAdapterConfigBuilder::class),
+                            'configOverride' => Mockery::mock(AbstractAdapterConfig::class),
                         ],
                     ],
                 ],

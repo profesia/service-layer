@@ -2,7 +2,7 @@
 
 namespace Profesia\ServiceLayer\Adapter\Config;
 
-interface AdapterConfigBuilderInterface
+interface AdapterConfigInterface
 {
     public function getConfig(): array;
 }

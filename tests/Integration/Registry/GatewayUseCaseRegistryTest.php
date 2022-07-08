@@ -7,7 +7,7 @@ namespace Profesia\ServiceLayer\Test\Integration\Registry;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfigBuilder;
+use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Registry\Exception\BadConfigException;
 use Profesia\ServiceLayer\Registry\Exception\RequestNotRegisteredException;
 use Profesia\ServiceLayer\Registry\GatewayUseCase;
@@ -76,7 +76,7 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
                                 'request'        => new TestRequest1(
                                     $requestFactory
                                 ),
-                                'configOverride' => GuzzleAdapterConfigBuilder::createFromArray(
+                                'configOverride' => GuzzleAdapterConfig::createFromArray(
                                     [
 
                                     ]

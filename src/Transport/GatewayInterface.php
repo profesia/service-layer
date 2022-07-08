@@ -3,7 +3,7 @@
 namespace Profesia\ServiceLayer\Transport;
 
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
@@ -17,6 +17,6 @@ interface GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
     ): DomainResponseInterface;
 }

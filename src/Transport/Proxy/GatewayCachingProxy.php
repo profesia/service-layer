@@ -6,7 +6,7 @@ namespace Profesia\ServiceLayer\Transport\Proxy;
 
 use GuzzleHttp\Utils;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
@@ -44,7 +44,7 @@ final class GatewayCachingProxy implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
     ): DomainResponseInterface {
         $psrRequest = $gatewayRequest->toPsrRequest();
         $key        = self::getRequestCacheKey($psrRequest);

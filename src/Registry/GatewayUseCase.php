@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Registry;
 
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
@@ -20,7 +20,7 @@ final class GatewayUseCase
     private GatewayInterface $defaultGateway;
     private ?GatewayInterface $gatewayOverride = null;
     private ?ResponseDomainMapperInterface $mapper;
-    private ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder;
+    private ?AdapterConfigInterface $adapterOverrideConfigBuilder;
     private ?RequestGatewayLoggerInterface $loggerOverride = null;
     private ?AdapterInterface $adapterOverride = null;
 
@@ -28,7 +28,7 @@ final class GatewayUseCase
         GatewayInterface $defaultGateway,
         ?GatewayRequestInterface $request = null,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigBuilderInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
     ) {
         $this->request                      = $request;
         $this->defaultGateway               = $defaultGateway;

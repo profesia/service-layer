@@ -7,7 +7,7 @@ namespace Profesia\ServiceLayer\Adapter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
-use Profesia\ServiceLayer\Adapter\Config\AdapterConfigBuilderInterface;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
@@ -20,7 +20,7 @@ final class GuzzleAdapter implements AdapterInterface
 
     public function __construct(
         Client $client,
-        AdapterConfigBuilderInterface $configBuilder
+        AdapterConfigInterface $configBuilder
     ) {
         $this->client = $client;
         $this->config = $configBuilder->getConfig();
@@ -29,7 +29,7 @@ final class GuzzleAdapter implements AdapterInterface
     /**
      * @inheritdoc
      */
-    public function send(GatewayRequestInterface $request, ?AdapterConfigBuilderInterface $configOverrideBuilder = null): EndpointResponse
+    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverrideBuilder = null): EndpointResponse
     {
         try {
             $psrRequest  = $request->toPsrRequest();

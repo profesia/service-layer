@@ -33,6 +33,10 @@ a [ServiceLayerException](../../src/Exception/ServiceLayerException.php) instanc
 any part of a remote communication.
 ## Usage
 ```php
+<?php 
+
+declare(strict_types=1);
+
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 
 final class SampleResponse implements DomainResponseInterface
