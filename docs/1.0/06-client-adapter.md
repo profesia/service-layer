@@ -43,6 +43,8 @@ Currently there is one concrete implementation coupled with **GuzzleAdapter**
 ```php
 <?php
 
+declare(strict_types=1);
+
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use GuzzleHttp\RequestOptions;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
@@ -75,6 +77,8 @@ a concept of config override was introduced - it is possible to have the standar
 can be overridden just in specific cases.
 ```php
 <?php
+
+declare(strict_types=1);
 
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use GuzzleHttp\RequestOptions;

@@ -31,7 +31,7 @@ and has access to the response body.
 that is able to retrieve specific domain object.
 * [Adapter](../../src/Adapter/AdapterInterface.php) contract represents wrapper for any adapter capable of sending of a HTTP requests. 
 * [Mapper](../../src/Mapper/ResponseDomainMapperInterface.php) contract represents a component 
-capable of mapping [EndpointResponse](../../src/Response/Connection/EndpointResponseInterface.php) into [DomainResponseInterface](../../src/Response/Domain/GatewayDomainResponseInterface.php)
+capable of mapping [EndpointResponse](../../src/Response/Connection/EndpointResponseInterface.php) onto [DomainResponseInterface](../../src/Response/Domain/GatewayDomainResponseInterface.php)
 * [GatewayUseCase](../../src/Registry/GatewayUseCase.php) contract represents one specific use 
 case - request with all the necessary configuration and means to override its one time configuration. 
 * [GatewayUseCaseRegistry](../../src/Registry/GatewayUseCaseRegistry.php) contract represents registry of gateway use cases
