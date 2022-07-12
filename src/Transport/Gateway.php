@@ -12,7 +12,7 @@ use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\ErrorResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Log\LogLevel;
 
@@ -20,12 +20,12 @@ final class Gateway implements GatewayInterface
 {
     private AdapterInterface $adapter;
     private ?AdapterInterface $oneTimeAdapter = null;
-    private RequestGatewayLoggerInterface $gatewayLogger;
-    private ?RequestGatewayLoggerInterface $oneTimeGatewayLogger = null;
+    private GatewayLoggerInterface $gatewayLogger;
+    private ?GatewayLoggerInterface $oneTimeGatewayLogger = null;
 
     public function __construct(
         AdapterInterface $adapter,
-        RequestGatewayLoggerInterface $gatewayLogger
+        GatewayLoggerInterface $gatewayLogger
     ) {
         $this->adapter       = $adapter;
         $this->gatewayLogger = $gatewayLogger;
@@ -38,7 +38,7 @@ final class Gateway implements GatewayInterface
         return $this;
     }
 
-    public function useLogger(RequestGatewayLoggerInterface $logger): self
+    public function useLogger(GatewayLoggerInterface $logger): self
     {
         $this->oneTimeGatewayLogger = $logger;
 
@@ -72,7 +72,7 @@ final class Gateway implements GatewayInterface
 
             return SimpleResponse::createFromEndpointResponse($endpointResponse);
         } catch (ServiceLayerException $e) {
-            $logger->logRequestException(
+            $logger->logRequestExceptionPair(
                 $gatewayRequest,
                 $e,
                 $startTime,
@@ -84,7 +84,7 @@ final class Gateway implements GatewayInterface
         }
     }
 
-    private function getLogger(): RequestGatewayLoggerInterface
+    private function getLogger(): GatewayLoggerInterface
     {
         if ($this->oneTimeGatewayLogger !== null) {
             return $this->oneTimeGatewayLogger;

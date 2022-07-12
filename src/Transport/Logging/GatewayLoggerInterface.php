@@ -7,7 +7,7 @@ use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
-interface RequestGatewayLoggerInterface
+interface GatewayLoggerInterface
 {
     public function logRequestResponsePair(
         GatewayRequestInterface $request,
@@ -17,7 +17,7 @@ interface RequestGatewayLoggerInterface
         string $logLevel
     ): void;
 
-    public function logRequestException(
+    public function logRequestExceptionPair(
         GatewayRequestInterface $request,
         ServiceLayerException $exception,
         DateTimeImmutable $start,

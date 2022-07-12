@@ -15,7 +15,7 @@ use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\ErrorResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\Gateway;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
@@ -46,8 +46,8 @@ class RequestGatewayTest extends MockeryTestCase
         $adapter
             ->shouldNotReceive('send');
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
         $logger
             ->shouldReceive('logRequestResponsePair')
             ->once()
@@ -124,13 +124,13 @@ class RequestGatewayTest extends MockeryTestCase
                 $expectedResponse
             );
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
         $logger
             ->shouldNotReceive('logRequestResponsePair');
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $loggerOverride */
-        $loggerOverride = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $loggerOverride */
+        $loggerOverride = Mockery::mock(GatewayLoggerInterface::class);
         $loggerOverride
             ->shouldReceive('logRequestResponsePair')
             ->once()
@@ -198,8 +198,8 @@ class RequestGatewayTest extends MockeryTestCase
             )
             ->andReturn($expectedResponse);
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
         $logger
             ->shouldReceive('logRequestResponsePair')
             ->once()
@@ -278,8 +278,8 @@ class RequestGatewayTest extends MockeryTestCase
             )
             ->andThrow($exception);
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
         $logger
             ->shouldReceive('logRequestException')
             ->times(1)

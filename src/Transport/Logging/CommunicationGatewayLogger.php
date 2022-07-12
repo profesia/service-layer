@@ -11,7 +11,7 @@ use Profesia\ServiceLayer\Transport\Logging\Helper\TimeDiffHelper;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Log\LoggerInterface;
 
-final class DefaultRequestGatewayLogger implements RequestGatewayLoggerInterface
+final class CommunicationGatewayLogger implements GatewayLoggerInterface
 {
     private LoggerInterface $logger;
 
@@ -65,7 +65,7 @@ final class DefaultRequestGatewayLogger implements RequestGatewayLoggerInterface
         $this->logger->log($logLevel, $message, $stackTrace);
     }
 
-    public function logRequestException(
+    public function logRequestExceptionPair(
         GatewayRequestInterface $request,
         ServiceLayerException $exception,
         DateTimeImmutable $start,

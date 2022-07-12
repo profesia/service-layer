@@ -13,7 +13,7 @@ use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\GatewayUseCase;
 use Mockery\MockInterface;
 use Mockery;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
@@ -205,8 +205,8 @@ class GatewayUseCaseTest extends MockeryTestCase
         /** @var GatewayRequestInterface|MockInterface $request */
         $request = Mockery::mock(GatewayRequestInterface::class);
 
-        /** @var MockInterface|RequestGatewayLoggerInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var MockInterface|GatewayLoggerInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
 
         /** @var GatewayInterface|MockInterface $defaultGateway */
         $defaultGateway = Mockery::mock(GatewayInterface::class);

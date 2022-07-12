@@ -14,8 +14,8 @@ use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\Decorator\ResponseBodyTrimmingLoggerDecorator;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\Decorator\ResponseBodyTrimmingDecorator;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
@@ -92,8 +92,8 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
         $stop             = new DateTimeImmutable();
         $logLevel         = LogLevel::INFO;
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $decoratedObject */
-        $decoratedObject = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $decoratedObject */
+        $decoratedObject = Mockery::mock(GatewayLoggerInterface::class);
         $decoratedObject
             ->shouldReceive('logRequestResponsePair')
             ->once()
@@ -128,7 +128,7 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
                     $endpointResponse->getBody()->rewind();
                     $suppliedResponse->getBody()->rewind();
                     if ($endpointResponse->getBody()->getContents() !== 'Original body'
-                        || $suppliedResponse->getBody()->getContents() !== ResponseBodyTrimmingLoggerDecorator::BODY_TO_REPLACE) {
+                        || $suppliedResponse->getBody()->getContents() !== ResponseBodyTrimmingDecorator::BODY_TO_REPLACE) {
                         return false;
                     }
 
@@ -136,7 +136,7 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
                 }
             );
 
-        $decorator = new ResponseBodyTrimmingLoggerDecorator(
+        $decorator = new ResponseBodyTrimmingDecorator(
             $decoratedObject
         );
 
@@ -182,8 +182,8 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
         $stop      = new DateTimeImmutable();
         $logLevel  = LogLevel::ERROR;
 
-        /** @var RequestGatewayLoggerInterface|MockInterface $decoratedObject */
-        $decoratedObject = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $decoratedObject */
+        $decoratedObject = Mockery::mock(GatewayLoggerInterface::class);
         $decoratedObject
             ->shouldReceive('logRequestException')
             ->once()
@@ -197,11 +197,11 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
                 ]
             );
 
-        $decorator = new ResponseBodyTrimmingLoggerDecorator(
+        $decorator = new ResponseBodyTrimmingDecorator(
             $decoratedObject
         );
 
-        $decorator->logRequestException(
+        $decorator->logRequestExceptionPair(
             $gatewayRequest,
             $exception,
             $start,

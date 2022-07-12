@@ -9,16 +9,16 @@ use Nyholm\Psr7\Stream;
 use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
-final class ResponseBodyTrimmingLoggerDecorator implements RequestGatewayLoggerInterface
+final class ResponseBodyTrimmingDecorator implements GatewayLoggerInterface
 {
     public const BODY_TO_REPLACE = 'Body was trimmed by ServiceLayer library';
 
-    private RequestGatewayLoggerInterface $decoratedObject;
+    private GatewayLoggerInterface $decoratedObject;
 
-    public function __construct(RequestGatewayLoggerInterface $decoratedObject)
+    public function __construct(GatewayLoggerInterface $decoratedObject)
     {
         $this->decoratedObject = $decoratedObject;
     }
@@ -41,13 +41,13 @@ final class ResponseBodyTrimmingLoggerDecorator implements RequestGatewayLoggerI
         $this->decoratedObject->logRequestResponsePair($request, $newResponse, $start, $stop, $logLevel);
     }
 
-    public function logRequestException(
+    public function logRequestExceptionPair(
         GatewayRequestInterface $request,
         ServiceLayerException $exception,
         DateTimeImmutable $start,
         DateTimeImmutable $stop,
         string $logLevel
     ): void {
-        $this->decoratedObject->logRequestException($request, $exception, $start, $stop, $logLevel);
+        $this->decoratedObject->logRequestExceptionPair($request, $exception, $start, $stop, $logLevel);
     }
 }

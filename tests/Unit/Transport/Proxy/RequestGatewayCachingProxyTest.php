@@ -11,7 +11,7 @@ use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Transport\Proxy\GatewayCachingProxy;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
@@ -58,8 +58,8 @@ class RequestGatewayCachingProxyTest extends MockeryTestCase
      */
     public function testCanOverrideLogger(): void
     {
-        /** @var RequestGatewayLoggerInterface|MockInterface $logger */
-        $logger = Mockery::mock(RequestGatewayLoggerInterface::class);
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
 
         /** @var GatewayInterface|MockInterface $gateway */
         $gateway = Mockery::mock(GatewayInterface::class);

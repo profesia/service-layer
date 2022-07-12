@@ -9,7 +9,7 @@ use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Psr\Http\Message\RequestInterface;
@@ -33,7 +33,7 @@ final class GatewayCachingProxy implements GatewayInterface
         return $this;
     }
 
-    public function useLogger(RequestGatewayLoggerInterface $logger): GatewayInterface
+    public function useLogger(GatewayLoggerInterface $logger): GatewayInterface
     {
         $this->requestGateway->useLogger($logger);
 

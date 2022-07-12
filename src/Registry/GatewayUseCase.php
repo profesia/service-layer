@@ -10,7 +10,7 @@ use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 
@@ -21,7 +21,7 @@ final class GatewayUseCase
     private ?GatewayInterface $gatewayOverride = null;
     private ?ResponseDomainMapperInterface $mapper;
     private ?AdapterConfigInterface $adapterOverrideConfigBuilder;
-    private ?RequestGatewayLoggerInterface $loggerOverride = null;
+    private ?GatewayLoggerInterface $loggerOverride = null;
     private ?AdapterInterface $adapterOverride = null;
 
     public function __construct(
@@ -50,7 +50,7 @@ final class GatewayUseCase
         return $this;
     }
 
-    public function useLogger(?RequestGatewayLoggerInterface $logger = null): self
+    public function useLogger(?GatewayLoggerInterface $logger = null): self
     {
         $this->loggerOverride = $logger;
 
