@@ -3,7 +3,7 @@
 # Client Adapter
 
 Client adapter represents contract capable of
-transforming [GatewayRequest](../../src/Transport/Request/GatewayRequestInterface.php)
+transforming [GatewayRequest](../../src/Request/GatewayRequestInterface.php)
 into [GatewayResponse](../../src/Response/GatewayResponseInterface.php) via HTTP client.
 Adapter should be able to handle all the possible situations able to occur during transport of a request:
 

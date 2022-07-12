@@ -11,7 +11,7 @@ use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 

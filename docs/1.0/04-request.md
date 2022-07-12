@@ -19,7 +19,7 @@ Basic request definition is illustrated on the following code sample:
 
 declare(strict_types=1);
 
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Nyholm\Psr7\Stream;
@@ -45,7 +45,7 @@ final class TestRequest implements GatewayRequestInterface
 PSR request creation is pretty straightforward, yet ### long to write part of a code.
 There are more implementations available on the market and we do not want to force end user to use specific one.
 To ensure easy-to-use request creation the library offers abstract
-class [AbstractGatewayRequest](../../src/Transport/Request/AbstractGatewayRequest.php)
+class [AbstractGatewayRequest](../../src/Request/AbstractGatewayRequest.php)
 that splits request creation into separate parts - body definition, headers, definition, method definition etc:
 
 ```php
@@ -53,7 +53,7 @@ that splits request creation into separate parts - body definition, headers, def
 
 declare(strict_types=1);
 
-use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
+use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Nyholm\Psr7\Stream;
@@ -92,7 +92,7 @@ final class TestRequest extends AbstractGatewayRequest
 ```
 Under the hood, by using 
 [RequestFactoryInterface](https://www.php-fig.org/psr/psr-17/#21-requestfactoryinterface) implementation,
-PSR request is created. Because the abstract class implements [GatewayRequestInterface](../../src/Transport/Request/GatewayRequestInterface.php),
+PSR request is created. Because the abstract class implements [GatewayRequestInterface](../../src/Request/GatewayRequestInterface.php),
 interchangeability is ensured.
 ### Censoring critical data
 The request implementation should contain all the necessary data for remote endpoint execution - including
@@ -100,7 +100,7 @@ credentials or other security sensitive data. The library comes with the logging
 contents out of-the-box. In other words, any part of the request is being written into the log. To overcome
 security breaches, we have introduced a separated method family - "censored getters" those are being used under the
 hood to retrieve information for recording.
-Similarly as in request definition [AbstractGatewayRequest](../../src/Transport/Request/AbstractGatewayRequest.php)
+Similarly as in request definition [AbstractGatewayRequest](../../src/Request/AbstractGatewayRequest.php)
 comes with default behavior - each method returns its non-censored counterpart.
 The specific request knows best what data to hide.
 Basic usage is illustrated on the following code fragment:
@@ -109,7 +109,7 @@ Basic usage is illustrated on the following code fragment:
 
 declare(strict_types=1);
 
-use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
+use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use Nyholm\Psr7\Stream;

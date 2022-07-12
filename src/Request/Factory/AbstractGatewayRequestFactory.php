@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Profesia\ServiceLayer\Transport\Request\Factory;
+namespace Profesia\ServiceLayer\Request\Factory;
 
 use Psr\Http\Message\RequestFactoryInterface;
 

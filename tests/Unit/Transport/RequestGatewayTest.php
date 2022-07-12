@@ -16,7 +16,7 @@ use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\ErrorResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\Gateway;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Log\LogLevel;

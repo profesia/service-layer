@@ -8,7 +8,7 @@ namespace Profesia\ServiceLayer\Test\Integration;
 
 use Nyholm\Psr7\Stream;
 use Nyholm\Psr7\Uri;
-use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
+use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;

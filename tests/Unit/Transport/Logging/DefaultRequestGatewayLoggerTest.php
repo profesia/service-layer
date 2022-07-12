@@ -13,7 +13,7 @@ use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\DefaultRequestGatewayLogger;
 use Profesia\ServiceLayer\Transport\Logging\Helper\TimeDiffHelper;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;

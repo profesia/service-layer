@@ -10,7 +10,7 @@ use GuzzleHttp\RequestOptions;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 
 final class GuzzleAdapter implements AdapterInterface

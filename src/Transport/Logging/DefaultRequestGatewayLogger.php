@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\Helper\TimeDiffHelper;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Log\LoggerInterface;
 
 final class DefaultRequestGatewayLogger implements RequestGatewayLoggerInterface

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Profesia\ServiceLayer\Test\Unit\Transport\Request;
+namespace Profesia\ServiceLayer\Test\Unit\Request;
 
 use GuzzleHttp\Psr7\Uri;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
-use Profesia\ServiceLayer\Transport\Request\AbstractGatewayRequest;
+use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;

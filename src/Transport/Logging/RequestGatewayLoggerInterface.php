@@ -5,7 +5,7 @@ namespace Profesia\ServiceLayer\Transport\Logging;
 use DateTimeImmutable;
 use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
 interface RequestGatewayLoggerInterface
 {

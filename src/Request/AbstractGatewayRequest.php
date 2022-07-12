@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Profesia\ServiceLayer\Transport\Request;
+namespace Profesia\ServiceLayer\Request;
 
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestFactoryInterface;

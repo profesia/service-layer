@@ -9,7 +9,7 @@ use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 
 class TestingAdapter implements AdapterInterface

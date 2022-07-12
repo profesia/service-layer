@@ -14,7 +14,7 @@ use Profesia\ServiceLayer\Registry\GatewayUseCase;
 use Mockery\MockInterface;
 use Mockery;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
 

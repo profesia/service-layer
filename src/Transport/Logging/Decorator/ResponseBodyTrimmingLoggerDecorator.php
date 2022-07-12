@@ -10,7 +10,7 @@ use Profesia\ServiceLayer\Exception\ServiceLayerException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\RequestGatewayLoggerInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
 final class ResponseBodyTrimmingLoggerDecorator implements RequestGatewayLoggerInterface
 {

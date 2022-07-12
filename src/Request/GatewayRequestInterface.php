@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Profesia\ServiceLayer\Transport\Request;
+namespace Profesia\ServiceLayer\Request;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;

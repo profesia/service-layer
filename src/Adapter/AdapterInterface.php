@@ -6,7 +6,7 @@ namespace Profesia\ServiceLayer\Adapter;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
 interface AdapterInterface
 {

@@ -10,14 +10,14 @@ development we have designed Service layer around a few standard principles:
 * Separation of concerns
 
 ## Logical components
-* [GatewayRequestInterface](../../src/Transport/Request/GatewayRequestInterface.php)
+* [GatewayRequestInterface](../../src/Request/GatewayRequestInterface.php)
 * [AdapterInterface](../../src/Adapter/AdapterInterface.php)
 * [GatewayInterface](../../src/Transport/GatewayInterface.php)
 * [ResponseDomainMapperInterface](../../src/Mapper/ResponseDomainMapperInterface.php)
 * [LoggerInterface](../../src/Transport/Logging/RequestGatewayLoggerInterface.php)
 
 ## Core ideas
-* [Request](../../src/Transport/Request/GatewayRequestInterface.php) contract represents basic contract
+* [Request](../../src/Request/GatewayRequestInterface.php) contract represents basic contract
 for wrapping mandatory parameters for service execution - endpoint URL, headers, request body and HTTP method.
 Reusability is ensured by name of a request - because it contains all necessary information and
 is properly named, it can be initialized and reused in any place.
