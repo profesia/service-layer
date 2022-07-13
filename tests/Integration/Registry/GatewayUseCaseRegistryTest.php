@@ -18,7 +18,7 @@ use Profesia\ServiceLayer\Test\Integration\TestMapper;
 use Profesia\ServiceLayer\Test\Integration\TestRequest1;
 use Profesia\ServiceLayer\Test\Integration\TestRequest2;
 use Profesia\ServiceLayer\Test\Integration\TestRequest3;
-use Profesia\ServiceLayer\Transport\Logging\CommunicationGatewayLogger;
+use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\Transport\Gateway;
 use Psr\Log\NullLogger;
 
@@ -27,7 +27,7 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
     public function provideInputConfigForCreatingRegistry(): array
     {
         $adapter       = new TestingAdapter();
-        $gatewayLogger = new CommunicationGatewayLogger(
+        $gatewayLogger = new CommunicationLogger(
             new NullLogger()
         );
 
@@ -39,7 +39,7 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
         $requestFactory = new Psr17Factory();
         $testMapper     = new TestMapper();
 
-        $loggerOverride = new CommunicationGatewayLogger(
+        $loggerOverride = new CommunicationLogger(
             new NullLogger
         );
 
@@ -147,7 +147,7 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
     public function testCanHandleNonRegisteredRequest(): void
     {
         $adapter       = new TestingAdapter();
-        $gatewayLogger = new CommunicationGatewayLogger(
+        $gatewayLogger = new CommunicationLogger(
             new NullLogger()
         );
 
@@ -263,7 +263,7 @@ class GatewayUseCaseRegistryTest extends MockeryTestCase
     public function testWillThrowAnExceptionOnGettingOfNonRegisteredUseCase()
     {
         $adapter       = new TestingAdapter();
-        $gatewayLogger = new CommunicationGatewayLogger(
+        $gatewayLogger = new CommunicationLogger(
             new NullLogger()
         );
 

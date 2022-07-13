@@ -16,7 +16,7 @@ use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
-use Profesia\ServiceLayer\Transport\Logging\CommunicationGatewayLogger;
+use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
 use Profesia\ServiceLayer\Transport\Gateway;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
@@ -225,7 +225,7 @@ class RequestGatewayTest extends MockeryTestCase
                 }
             );
 
-        $gatewayLogger = new CommunicationGatewayLogger(
+        $gatewayLogger = new CommunicationLogger(
             $psrLogger
         );
 

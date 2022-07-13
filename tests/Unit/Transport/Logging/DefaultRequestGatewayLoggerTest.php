@@ -11,7 +11,7 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\CommunicationGatewayLogger;
+use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\Transport\Logging\Helper\TimeDiffHelper;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
@@ -166,7 +166,7 @@ class DefaultRequestGatewayLoggerTest extends MockeryTestCase
                 ]
             );
 
-        $logger = new CommunicationGatewayLogger(
+        $logger = new CommunicationLogger(
             $communicationLogger
         );
 
@@ -279,7 +279,7 @@ class DefaultRequestGatewayLoggerTest extends MockeryTestCase
                 ]
             );
 
-        $logger = new CommunicationGatewayLogger(
+        $logger = new CommunicationLogger(
             $communicationLogger
         );
 

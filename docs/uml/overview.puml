@@ -38,7 +38,7 @@ interface EndpointResponseInterface {
 interface EndpointResponse {
 }
 
-interface GatewayDomainResponseInterface {
+interface DomainResponseInterface {
     public function getResponseBody();
 }
 
@@ -60,29 +60,29 @@ class GuzzleAdapter {
 }
 
 interface ResponseDomainMapperInterface {
-    public mapToDomain(): GatewayDomainResponseInterface;
+    public mapToDomain(): DomainResponseInterface;
 }
 
-interface RequestGatewayLoggerInterface {
+interface GatewayLoggerInterface {
     public logRequestResponsePair(): void
     public logRequestException(): void
 }
 
-class DefaultRequestGatewayLogger {
+class CommunicationLogger {
 }
 
 GatewayRequestInterface <|.. AbstractGatewayRequest
-RequestGatewayInterface <|.. RequestGateway
+GatewayInterface <|.. Gateway
 GatewayResponseInterface <|-- EndpointResponseInterface
-GatewayResponseInterface <|-- GatewayDomainResponseInterface
+GatewayResponseInterface <|-- DomainResponseInterface
 AdapterInterface <|.. GuzzleAdapter
-RequestGateway *-- AdapterInterface
-RequestGateway *-- ResponseDomainMapperInterface
-RequestGateway *-- RequestGatewayLoggerInterface
-ResponseDomainMapperInterface *-- GatewayDomainResponseInterface
-GatewayDomainResponseInterface <|.. ErrorResponse
-GatewayDomainResponseInterface <|.. SimpleResponse
+Gateway *-- AdapterInterface
+Gateway *-- ResponseDomainMapperInterface
+Gateway *-- GatewayLoggerInterface
+ResponseDomainMapperInterface *-- DomainResponseInterface
+DomainResponseInterface <|.. ErrorResponse
+DomainResponseInterface <|.. SimpleResponse
 EndpointResponseInterface <|.. EndpointResponse
-RequestGatewayLoggerInterface <|.. DefaultRequestGatewayLogger
+GatewayLoggerInterface <|.. CommunicationLogger
 
 @enduml
