@@ -3,14 +3,14 @@
 # Gateway Request
 
 As stated in the [basic concepts](03-basic-concepts.html), request class
-represents contract wrapping al the mandatory parameters for the API endpoint call
+represents contract wrapping all the mandatory parameters for the API endpoint call
 execution.
 
 ## Usage
 
 ### Request definition
 
-Request definition is ### by method **toPsrRequest**. This method creates
+Request definition is realized by method **toPsrRequest**. This method creates
 PSR request instance, any PSR-18 compliant HTTP client should be able to process.
 Basic request definition is illustrated on the following code sample:
 
@@ -42,7 +42,8 @@ final class TestRequest implements GatewayRequestInterface
 }
 ```
 
-PSR request creation is pretty straightforward, yet ### long to write part of a code.
+PSR request creation is pretty straightforward, yet contains a few similar parts, those do not differ
+and thus could be extracted into common ancestor in the context of the OOP paradigm.
 There are more implementations available on the market and we do not want to force end user to use specific one.
 To ensure easy-to-use request creation the library offers abstract
 class [AbstractGatewayRequest](../../src/Request/AbstractGatewayRequest.php)
