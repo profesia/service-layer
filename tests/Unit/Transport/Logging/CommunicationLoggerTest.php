@@ -20,7 +20,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-class DefaultRequestGatewayLoggerTest extends MockeryTestCase
+class CommunicationLoggerTest extends MockeryTestCase
 {
     public function testCanLogRequestResponsePar()
     {

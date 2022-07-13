@@ -9,27 +9,18 @@ use InvalidArgumentException;
 
 class HttpMethodTest extends MockeryTestCase
 {
-    /**
-     * @group value-object
-     */
     public function testCanThrowAnErrorOnBadType()
     {
         $this->expectException(TypeError::class);
         HttpMethod::createFromString(1);
     }
 
-    /**
-     * @group value-object
-     */
     public function testCanThrowAnExceptionOnUnsupportedMethod()
     {
         $this->expectException(InvalidArgumentException::class);
         HttpMethod::createFromString('');
     }
 
-    /**
-     * @group value-object
-     */
     public function testCanCreateAndWorkWith()
     {
         $httpMethod = HttpMethod::createFromString(HttpMethod::HTTP_METHOD_GET);
@@ -39,5 +30,24 @@ class HttpMethodTest extends MockeryTestCase
 
         $this->assertIsString((string)$httpMethod);
         $this->assertEquals(HttpMethod::HTTP_METHOD_GET, (string)$httpMethod);
+    }
+
+    public function testFactoryMethods(): void
+    {
+        $methods = [
+            'get',
+            'post',
+            'put',
+            'delete'
+        ];
+
+        foreach ($methods as $method) {
+            $uMethod = ucfirst($method);
+            /** @var HttpMethod $httpMethod */
+            $class = HttpMethod::class;
+            $httpMethod = call_user_func("{$class}::create{$uMethod}");
+            $upperMethod = strtoupper($method);
+            $this->assertEquals($upperMethod, $httpMethod->toString());
+        }
     }
 }

@@ -187,7 +187,7 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
         /** @var GatewayLoggerInterface|MockInterface $decoratedObject */
         $decoratedObject = Mockery::mock(GatewayLoggerInterface::class);
         $decoratedObject
-            ->shouldReceive('logRequestException')
+            ->shouldReceive('logRequestExceptionPair')
             ->once()
             ->withArgs(
                 [

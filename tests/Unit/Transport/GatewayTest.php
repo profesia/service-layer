@@ -21,7 +21,7 @@ use Profesia\ServiceLayer\Transport\Gateway;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Log\LogLevel;
 
-class RequestGatewayTest extends MockeryTestCase
+class GatewayTest extends MockeryTestCase
 {
 
     /**
@@ -281,7 +281,7 @@ class RequestGatewayTest extends MockeryTestCase
         /** @var GatewayLoggerInterface|MockInterface $logger */
         $logger = Mockery::mock(GatewayLoggerInterface::class);
         $logger
-            ->shouldReceive('logRequestException')
+            ->shouldReceive('logRequestExceptionPair')
             ->times(1)
             ->withArgs(
                 [

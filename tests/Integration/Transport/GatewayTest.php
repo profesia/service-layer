@@ -28,7 +28,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-class RequestGatewayTest extends MockeryTestCase
+class GatewayTest extends MockeryTestCase
 {
     public function testCanHandleSuccessfulRequest(): void
     {

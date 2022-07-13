@@ -19,7 +19,7 @@ use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestInterface;
 use Psr\SimpleCache\CacheInterface;
 
-class RequestGatewayCachingProxyTest extends MockeryTestCase
+class GatewayCachingProxyTest extends MockeryTestCase
 {
     /**
      * @group request-gateway

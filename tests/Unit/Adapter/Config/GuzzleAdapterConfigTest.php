@@ -7,11 +7,8 @@ use InvalidArgumentException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 
-class GuzzleAdapterConfigBuilderTest extends MockeryTestCase
+class GuzzleAdapterConfigTest extends MockeryTestCase
 {
-    /**
-     * @group adapter-config
-     */
     public function testCanTransformToConfig()
     {
         $config = [
@@ -53,6 +50,20 @@ class GuzzleAdapterConfigBuilderTest extends MockeryTestCase
             RequestOptions::AUTH            => [
                 'test',
                 'secret',
+            ],
+        ];
+        $builder = GuzzleAdapterConfig::createFromArray($config);
+        $this->assertEquals($config, $builder->getConfig());
+
+        $config  = [
+            RequestOptions::ALLOW_REDIRECTS => true,
+            RequestOptions::VERIFY          => false,
+            RequestOptions::TIMEOUT         => 0.0,
+            RequestOptions::CONNECT_TIMEOUT => 5.7,
+            RequestOptions::AUTH            => [
+                'test',
+                'secret',
+                'third'
             ],
         ];
         $builder = GuzzleAdapterConfig::createFromArray($config);
