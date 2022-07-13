@@ -14,7 +14,7 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Stream;
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
-use Profesia\ServiceLayer\Exception\AdapterException;
+use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Http\Message\RequestInterface;

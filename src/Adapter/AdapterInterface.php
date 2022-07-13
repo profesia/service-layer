@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Adapter;
 
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
-use Profesia\ServiceLayer\Exception\AdapterException;
+use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 

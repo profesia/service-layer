@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
-use Profesia\ServiceLayer\Exception\AdapterException;
+use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Http\Client\ClientExceptionInterface;

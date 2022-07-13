@@ -11,7 +11,7 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Stream;
 use Nyholm\Psr7\Uri;
-use Profesia\ServiceLayer\Exception\AdapterException;
+use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\Decorator\ResponseBodyTrimmingDecorator;
@@ -33,15 +33,15 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
         $requestMethod  = HttpMethod::createPost();
         $uri            = new Uri('https://www.test.sk');
         $requestHeaders = [
-            'Test' => 'test'
+            'Test' => 'test',
         ];
         $requestBody    = Stream::create('Request body');
 
         $gatewayRequest = (new class($psrFactory, $requestMethod, $uri, $requestBody, $requestHeaders) extends AbstractGatewayRequest {
 
-            private array           $headers;
-            private HttpMethod      $requestMethod;
-            private UriInterface    $uri;
+            private array $headers;
+            private HttpMethod $requestMethod;
+            private UriInterface $uri;
             private StreamInterface $body;
 
             public function __construct(
@@ -85,7 +85,9 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
             StatusCode::createFromInteger(200),
             Stream::create('Original body'),
             [
-                'Test' => 'abce'
+                [
+                    'Test' => 'abce',
+                ],
             ]
         );
         $start            = new DateTimeImmutable();
@@ -166,7 +168,7 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
             protected function getHeaders(): array
             {
                 return [
-                    'Test' => 'test'
+                    'Test' => 'test',
                 ];
             }
 
@@ -193,7 +195,7 @@ class ResponseBodyTrimmingLoggerDecoratorTest extends MockeryTestCase
                     $exception,
                     $start,
                     $stop,
-                    $logLevel
+                    $logLevel,
                 ]
             );
 

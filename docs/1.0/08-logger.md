@@ -34,12 +34,15 @@ that serves as a "standard" remote communication logger - logs all the communica
 As stated in the [Request section](04-request.html#censoring-critical-data), tho logger respects data sensitivy
 and is using **censored** method family for communication logging.
 
-## Decorator
+## Additional Functionality
 
 In general, logging of all communications parts is and important part of the monitoring process.
 But there are scenarios, when it is redundant, or even harmful - for example logging of binary content.
 This kind of content has no informative value to the end user and it may cause logs data overflow, when it comes
 to the document API.
+By offering of the base contract [GatewayLoggerInterface](../../src/Transport/Logging/GatewayLoggerInterface.php)
+we have enabled the end user to use multiple structural design patterns and alter/expand the base functionality of
+the default logger.
 As a simple solution a decorator pattern was used. Currently implemented list of decorators:
 
 * [ResponseBodyTrimmingDecorator](../../src/Transport/Logging/Decorator/ResponseBodyTrimmingDecorator.php)

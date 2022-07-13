@@ -14,4 +14,5 @@ Library designed for SOA communication via REST with external services
 - [Gateway](06-gateway.html)
 - [Mapper](07-mapper.html)
 - [Logger](08-logger.html)
-- [Other concepts](09-other-concepts.html)
+- [Gateway](09-gateway.html)
+- [Gateway Registry](10-gateway-registry.html)
