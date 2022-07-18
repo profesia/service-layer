@@ -41,11 +41,11 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
                     throw new InvalidArgumentException('Auth value requires at least two item in the array config');
                 }
 
-                $authConfig = [];
-                array_push($authConfig, Login::createFromString($originalAuthConfig[0])->toString());
-                array_push($authConfig, Password::createFromString($originalAuthConfig[1])->toString());
+                $authConfig   = [];
+                $authConfig[] = Login::createFromString($originalAuthConfig[0])->toString();
+                $authConfig[] = Password::createFromString($originalAuthConfig[1])->toString();
                 if (sizeof($originalAuthConfig) === 3) {
-                    array_push($authConfig, $originalAuthConfig[2]);
+                    $authConfig[] = $originalAuthConfig[2];
                 }
 
                 $config[RequestOptions::AUTH] = $authConfig;
