@@ -1,7 +1,7 @@
 {
   "name": "profesia/service-layer",
   "type": "library",
-  "license": "propietary",
+  "license": "MIT",
   "description": "Profesia service layer",
   "authors": [
     {
