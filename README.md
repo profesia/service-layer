@@ -15,7 +15,7 @@ composer require profesia/service-layer
 - PHP 7.4+
 
 ## Documentation
-Documentation for the bundle can be found at https://profesia.github.io/service-layer
+The Documentation for the bundle can be found at https://profesia.github.io/service-layer
 
 ## Author
 Matej Bádal - matej.badal@profesia.sk
