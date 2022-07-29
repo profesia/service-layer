@@ -3,8 +3,8 @@
 # Mapper
 
 The role of a mapper contract amongst library contracts is straightforward - it maps/transforms
-[EndpointResponse](../../src/Response/Connection/EndpointResponseInterface.php) onto the concrete
-implementation of a [DomainResponse](../../src/Response/Domain/DomainResponseInterface.php).
+[EndpointResponse](https://github.com/profesia/service-layer/blob/v0.9.0/src/Response/Connection/EndpointResponseInterface.php) onto the concrete
+implementation of a [DomainResponse](https://github.com/profesia/service-layer/blob/v0.9.0/src/Response/Domain/DomainResponseInterface.php).
 By doing so, we prevent the end user to manipulate with the low-level communication details in
 a higher context. The end user shouldn`t build any business logic around connection responses.
 The only acceptable place of such task is the mapper contract.

@@ -3,8 +3,8 @@
 # Client Adapter
 
 Client adapter represents contract capable of
-transforming [GatewayRequest](../../src/Request/GatewayRequestInterface.php)
-into [GatewayResponse](../../src/Response/GatewayResponseInterface.php) via HTTP client.
+transforming [GatewayRequest](https://github.com/profesia/service-layer/blob/v0.9.0/src/Request/GatewayRequestInterface.php)
+into [GatewayResponse](https://github.com/profesia/service-layer/blob/v0.9.0/src/Response/GatewayResponseInterface.php) via HTTP client.
 Adapter should be able to handle all the possible situations able to occur during transport of a request:
 
 * Communication with remote URL.
@@ -18,7 +18,7 @@ We did not want to have library dependant on the specific HTTP client. Although 
 library is based on Guzzle, we wanted for the end user to have freed of choice when it comes to the HTTP client.
 With this concern in mind, we have built this set of classes using Adapter pattern.
 Currently the only implementation of client adapter in the library
-is [GuzzleAdapter](../../src/Adapter/GuzzleAdapter.php).
+is [GuzzleAdapter](https://github.com/profesia/service-layer/blob/v0.9.0/src/Adapter/GuzzleAdapter.php).
 
 ## Basic Usage
 
@@ -35,11 +35,11 @@ The basic usage of client adapter consist of a few steps:
 ## Adapter Config
 
 Due to high diversity when it comes to client configuration, we have introduced a concept of client adapter config -
-a class extended from the abstract contract [AbstractAdapterConfig](../../src/Adapter/Config/AbstractAdapterConfig.php)
-implementing base contract [AdapterConfigInterface](../../src/Adapter/Config/AdapterConfigInterface.php).
+a class extended from the abstract contract [AbstractAdapterConfig](https://github.com/profesia/service-layer/blob/v0.9.0/src/Adapter/Config/AbstractAdapterConfig.php)
+implementing base contract [AdapterConfigInterface](https://github.com/profesia/service-layer/blob/v0.9.0/src/Adapter/Config/AdapterConfigInterface.php).
 Currently there is one concrete implementation coupled with **GuzzleAdapter**
 
-- [GuzzleAdapterConfig](../../src/Adapter/Config/GuzzleAdapterConfig.php).
+- [GuzzleAdapterConfig](https://github.com/profesia/service-layer/blob/v0.9.0/src/Adapter/Config/GuzzleAdapterConfig.php).
 
 ```php
 <?php

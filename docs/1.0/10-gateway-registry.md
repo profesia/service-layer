@@ -11,7 +11,7 @@ in the configuration parts of an application, not in the code itself.
 
 ## Gateway Use Case
 
-The part of the Gateway Registry solution is the [contract](../../src/Registry/GatewayUseCase.php)
+The part of the Gateway Registry solution is the [contract](https://github.com/profesia/service-layer/blob/v0.9.0/src/Registry/GatewayUseCase.php)
 representing on remote URL call with all the required classes and parameters.
 The main responsibility of the class is the wrap all the library components to be able to execute
 one endpoint remote call via one class.

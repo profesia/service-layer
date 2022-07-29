@@ -46,7 +46,7 @@ PSR request creation is pretty straightforward, yet contains a few similar parts
 and thus could be extracted into common ancestor in the context of the OOP paradigm.
 There are more implementations available on the market and we do not want to force end user to use specific one.
 To ensure easy-to-use request creation the library offers abstract
-class [AbstractGatewayRequest](../../src/Request/AbstractGatewayRequest.php)
+class [AbstractGatewayRequest](https://github.com/profesia/service-layer/blob/v0.9.0/src/Request/AbstractGatewayRequest.php)
 that splits request creation into separate parts - body definition, headers, definition, method definition etc:
 
 ```php
@@ -95,7 +95,7 @@ final class TestRequest extends AbstractGatewayRequest
 Under the hood, by using
 [RequestFactoryInterface](https://www.php-fig.org/psr/psr-17/#21-requestfactoryinterface) implementation,
 PSR request is created. Because the abstract class
-implements [GatewayRequestInterface](../../src/Request/GatewayRequestInterface.php),
+implements [GatewayRequestInterface](https://github.com/profesia/service-layer/blob/v0.9.0/src/Request/GatewayRequestInterface.php),
 interchangeability is ensured.
 
 ### Censoring critical data
@@ -105,7 +105,7 @@ credentials or other security sensitive data. The library comes with the logging
 contents out of-the-box. In other words, any part of the request is being written into the log. To overcome
 security breaches, we have introduced a separated method family - "censored getters" those are being used under the
 hood to retrieve information for recording.
-Similarly as in request definition [AbstractGatewayRequest](../../src/Request/AbstractGatewayRequest.php)
+Similarly as in request definition [AbstractGatewayRequest](https://github.com/profesia/service-layer/blob/v0.9.0/src/Request/AbstractGatewayRequest.php)
 comes with default behavior - each method returns its non-censored counterpart.
 The specific request knows best what data to hide.
 Basic usage is illustrated on the following code fragment:
