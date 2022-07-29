@@ -48,5 +48,5 @@ development we have designed Service layer around a few standard principles:
 
 ## Model
 
-In the following extended model the core list of classes is shown along with their relations:
+In the following diagram the extended model the core list of classes is shown along with their relations:
 ![Overview UML class diagram](../assets/img/service-layer-overview.svg)
