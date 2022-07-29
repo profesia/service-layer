@@ -9,6 +9,7 @@ composer require profesia/service-layer
 ```
 ## Requirements
 - PHP 7.4+
+
 ## Author
 Matej Bádal - matej.badal@profesia.sk
 

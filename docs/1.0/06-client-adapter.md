@@ -38,6 +38,7 @@ Due to high diversity when it comes to client configuration, we have introduced 
 a class extended from the abstract contract [AbstractAdapterConfig](../../src/Adapter/Config/AbstractAdapterConfig.php)
 implementing base contract [AdapterConfigInterface](../../src/Adapter/Config/AdapterConfigInterface.php).
 Currently there is one concrete implementation coupled with **GuzzleAdapter**
+
 - [GuzzleAdapterConfig](../../src/Adapter/Config/GuzzleAdapterConfig.php).
 
 ```php
@@ -70,11 +71,14 @@ if ($response->isSuccessful()) {
     //handle error
 }
 ```
+
 ## Config Override
+
 Adapter config illustrated in the previous section is the common way how to configure HTTP client adapter.
 However it would be wastage of resources to instantiate an adapter per remote URL call. Due to this reason
 a concept of config override was introduced - it is possible to have the standard adapter cofiguration that
 can be overridden just in specific cases.
+
 ```php
 <?php
 

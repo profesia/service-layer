@@ -91,11 +91,15 @@ final class TestRequest extends AbstractGatewayRequest
     }
 }
 ```
-Under the hood, by using 
+
+Under the hood, by using
 [RequestFactoryInterface](https://www.php-fig.org/psr/psr-17/#21-requestfactoryinterface) implementation,
-PSR request is created. Because the abstract class implements [GatewayRequestInterface](../../src/Request/GatewayRequestInterface.php),
+PSR request is created. Because the abstract class
+implements [GatewayRequestInterface](../../src/Request/GatewayRequestInterface.php),
 interchangeability is ensured.
+
 ### Censoring critical data
+
 The request implementation should contain all the necessary data for remote endpoint execution - including
 credentials or other security sensitive data. The library comes with the logging of the request
 contents out of-the-box. In other words, any part of the request is being written into the log. To overcome
@@ -105,6 +109,7 @@ Similarly as in request definition [AbstractGatewayRequest](../../src/Request/Ab
 comes with default behavior - each method returns its non-censored counterpart.
 The specific request knows best what data to hide.
 Basic usage is illustrated on the following code fragment:
+
 ```php
 <?php 
 
@@ -175,6 +180,8 @@ final class TestRequest extends AbstractGatewayRequest
     }
 }
 ```
+
 ### Runtime params
+
 There may occur situations when some parameters are not going to be available till runtime. In such situtions
 usage of a request factory is advised as the best practise.
