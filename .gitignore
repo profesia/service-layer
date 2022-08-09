@@ -1,6 +1,7 @@
 .*
 !.gitignore
 !.github
+!docker/.env.default
 vendor
 build
 composer.lock
