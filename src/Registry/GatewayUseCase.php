@@ -20,6 +20,7 @@ final class GatewayUseCase
     private GatewayInterface $defaultGateway;
     private ?GatewayInterface $gatewayOverride = null;
     private ?ResponseDomainMapperInterface $mapper;
+    private ?ResponseDomainMapperInterface $mapperOverride = null;
     private ?AdapterConfigInterface $adapterOverrideConfigBuilder;
     private ?GatewayLoggerInterface $loggerOverride = null;
     private ?AdapterInterface $adapterOverride = null;
@@ -64,6 +65,13 @@ final class GatewayUseCase
         return $this;
     }
 
+    public function withMapper(ResponseDomainMapperInterface $mapperOverride): self
+    {
+        $this->mapperOverride = $mapperOverride;
+
+        return $this;
+    }
+
     /**
      * @return DomainResponseInterface
      * @throws BadStateException
@@ -77,7 +85,7 @@ final class GatewayUseCase
         return $this->constructFinalGatewayToUse()
             ->sendRequest(
                 $this->request,
-                $this->mapper,
+                $this->getMapperToUse(),
                 $this->adapterOverrideConfigBuilder
             );
     }
@@ -94,5 +102,14 @@ final class GatewayUseCase
         }
 
         return $gatewayToUse;
+    }
+
+    private function getMapperToUse(): ?ResponseDomainMapperInterface
+    {
+        if ($this->mapperOverride !== null) {
+            return $this->mapperOverride;
+        }
+
+        return $this->mapper;
     }
 }

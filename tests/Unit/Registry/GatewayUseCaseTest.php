@@ -92,7 +92,7 @@ class GatewayUseCaseTest extends MockeryTestCase
         $gatewayUseCase->performRequest();
     }
 
-    public function testWillOverrideREquestSetDuringCreation(): void
+    public function testWillOverrideRequestSetDuringCreation(): void
     {
         /** @var GatewayRequestInterface|MockInterface $request1 */
         $request1 = Mockery::mock(GatewayRequestInterface::class);
@@ -237,6 +237,45 @@ class GatewayUseCaseTest extends MockeryTestCase
             $request
         );
         $gatewayUseCase->useLogger($logger);
+
+        $gatewayUseCase->performRequest();
+    }
+
+    public function testWillUseMapperOverride(): void
+    {
+        /** @var GatewayRequestInterface|MockInterface $request */
+        $request = Mockery::mock(GatewayRequestInterface::class);
+
+        /** @var ResponseDomainMapperInterface|MockInterface $defaultMapper */
+        $defaultMapper = Mockery::mock(ResponseDomainMapperInterface::class);
+
+        /** @var ResponseDomainMapperInterface|MockInterface $mapperOverride */
+        $mapperOverride = Mockery::mock(ResponseDomainMapperInterface::class);
+
+        /** @var AbstractAdapterConfig|MockInterface $configOverride */
+        $configOverride = Mockery::mock(AbstractAdapterConfig::class);
+
+        /** @var GatewayInterface|MockInterface $defaultGateway */
+        $defaultGateway = Mockery::mock(GatewayInterface::class);
+        $defaultGateway
+            ->shouldReceive('sendRequest')
+            ->once()
+            ->withArgs(
+                [
+                    $request,
+                    $mapperOverride,
+                    $configOverride,
+                ]
+            );
+
+        $gatewayUseCase = new GatewayUseCase(
+            $defaultGateway,
+            $request,
+            $defaultMapper,
+            $configOverride
+        );
+
+        $gatewayUseCase->withMapper($mapperOverride);
 
         $gatewayUseCase->performRequest();
     }
