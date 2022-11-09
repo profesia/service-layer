@@ -9,10 +9,12 @@ Install the latest version by running the command
 ```bash
 composer require profesia/service-layer
 ```
+
 ## Requirements
 - PHP 7.4+
 
-## Latest version
+## Documentation
+### Latest version
 * [Version 1.0](docs/1.0/index.html)
 
 ## Author
