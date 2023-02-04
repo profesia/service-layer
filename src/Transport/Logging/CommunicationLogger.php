@@ -42,22 +42,14 @@ final class CommunicationLogger implements GatewayLoggerInterface
         ];
 
         if ($requestBody !== null) {
-            if ($requestBody->isSeekable()) {
-                $requestBody->rewind();
-            }
-
-            $stackTrace['Request']['Body'] = $requestBody->getContents();
+            $stackTrace['Request']['Body'] = (string)$requestBody;
             if ($requestBody->isSeekable()) {
                 $requestBody->rewind();
             }
         }
 
-        $responseBody = $response->getBody();
-        if ($responseBody->isSeekable()) {
-            $responseBody->rewind();
-        }
-
-        $stackTrace['Response']['Body'] = $responseBody->getContents();
+        $responseBody                   = $response->getBody();
+        $stackTrace['Response']['Body'] = (string)$responseBody;
         if ($responseBody->isSeekable()) {
             $responseBody->rewind();
         }
@@ -86,11 +78,7 @@ final class CommunicationLogger implements GatewayLoggerInterface
         ];
 
         if ($requestBody !== null) {
-            if ($requestBody->isSeekable()) {
-                $requestBody->rewind();
-            }
-
-            $stackTrace['Request']['Body'] = $requestBody->getContents();
+            $stackTrace['Request']['Body'] = (string)$requestBody;
             if ($requestBody->isSeekable()) {
                 $requestBody->rewind();
             }

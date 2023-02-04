@@ -22,7 +22,7 @@ use Psr\Log\LogLevel;
 
 class CommunicationLoggerTest extends MockeryTestCase
 {
-    public function testCanLogRequestResponsePar()
+    public function testCanLogRequestResponsePair()
     {
         $requestHttpMethod = 'POST';
         $requestUri        = new Uri('https://test-1.com');
@@ -35,15 +35,16 @@ class CommunicationLoggerTest extends MockeryTestCase
         $requestBody = Mockery::mock(StreamInterface::class);
         $requestBody
             ->shouldReceive('isSeekable')
-            ->times(2)
+            ->times(1)
             ->andReturn(
                 true
             );
         $requestBody
             ->shouldReceive('rewind')
-            ->times(2);
+            ->times(1);
+
         $requestBody
-            ->shouldReceive('getContents')
+            ->shouldReceive('__toString')
             ->once()
             ->andReturn(
                 $requestBodyContents
@@ -99,21 +100,14 @@ class CommunicationLoggerTest extends MockeryTestCase
         $responseBody = Mockery::mock(StreamInterface::class);
         $responseBody
             ->shouldReceive('isSeekable')
-            ->times(2)
+            ->times(1)
             ->andReturn(
                 true
             );
 
         $responseBody
             ->shouldReceive('rewind')
-            ->times(2);
-
-        $responseBody
-            ->shouldReceive('getContents')
-            ->once()
-            ->andReturn(
-                $responseBodyContents
-            );
+            ->times(1);
 
         /** @var EndpointResponseInterface|MockInterface $endpointResponse */
         $endpointResponse = Mockery::mock(EndpointResponseInterface::class);
@@ -138,9 +132,17 @@ class CommunicationLoggerTest extends MockeryTestCase
                 $responseBody
             );
 
+        $responseBody
+            ->shouldReceive('__toString')
+            ->once()
+            ->andReturn(
+                $responseBodyContents
+            );
+
         $logLevel = LogLevel::INFO;
         $start    = new DateTimeImmutable();
         $stop     = new DateTimeImmutable();
+        $message = "{$requestHttpMethod}: {$requestUri}";
 
         /** @var LoggerInterface|MockInterface $communicationLogger */
         $communicationLogger = Mockery::mock(LoggerInterface::class);
@@ -193,16 +195,16 @@ class CommunicationLoggerTest extends MockeryTestCase
         $requestBody = Mockery::mock(StreamInterface::class);
         $requestBody
             ->shouldReceive('isSeekable')
-            ->times(2)
+            ->times(1)
             ->andReturn(
                 true
             );
 
         $requestBody
             ->shouldReceive('rewind')
-            ->times(2);
+            ->times(1);
         $requestBody
-            ->shouldReceive('getContents')
+            ->shouldReceive('__toString')
             ->once()
             ->andReturn(
                 $requestBodyString
