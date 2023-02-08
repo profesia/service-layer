@@ -15,7 +15,7 @@ composer require profesia/service-layer
 
 ## Documentation
 ### Latest version
-* [Version 1.0](docs/1.0/index.html)
+* Documentation for [Version 1.0](docs/1.0/index.html)
 
 ## Author
 Matej Bádal - matej.badal@profesia.sk
