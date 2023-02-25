@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Transport\Logging;
 
 use DateTimeImmutable;
-use Profesia\ServiceLayer\Exception\ServiceLayerException;
+use Exception;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\Helper\TimeDiffHelper;
-use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Log\LoggerInterface;
 
 final class CommunicationLogger implements GatewayLoggerInterface
@@ -59,7 +59,7 @@ final class CommunicationLogger implements GatewayLoggerInterface
 
     public function logRequestExceptionPair(
         GatewayRequestInterface $request,
-        ServiceLayerException $exception,
+        Exception $exception,
         DateTimeImmutable $start,
         DateTimeImmutable $stop,
         string $logLevel

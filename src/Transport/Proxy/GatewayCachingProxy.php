@@ -40,7 +40,9 @@ final class GatewayCachingProxy implements GatewayInterface
         return $this;
     }
 
-
+    /**
+     * @inheritDoc
+     */
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,

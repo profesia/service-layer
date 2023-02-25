@@ -3,9 +3,9 @@
 namespace Profesia\ServiceLayer\Transport\Logging;
 
 use DateTimeImmutable;
-use Profesia\ServiceLayer\Exception\ServiceLayerException;
-use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
+use Exception;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 
 interface GatewayLoggerInterface
 {
@@ -19,7 +19,7 @@ interface GatewayLoggerInterface
 
     public function logRequestExceptionPair(
         GatewayRequestInterface $request,
-        ServiceLayerException $exception,
+        Exception $exception,
         DateTimeImmutable $start,
         DateTimeImmutable $stop,
         string $logLevel

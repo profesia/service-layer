@@ -20,6 +20,7 @@ use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\Gateway;
 use Profesia\ServiceLayer\ValueObject\StatusCode;
 use Psr\Log\LogLevel;
+use Exception;
 
 class GatewayTest extends MockeryTestCase
 {
@@ -305,5 +306,52 @@ class GatewayTest extends MockeryTestCase
         $this->assertEquals($expectedResponse, $actualResponse);
         $this->assertEquals($message, $actualResponse->getResponseBody());
         $this->assertFalse($actualResponse->isSuccessful());
+    }
+
+    public function testCanHandleAnyException(): void
+    {
+        /** @var GatewayRequestInterface|MockInterface $gatewayRequest */
+        $gatewayRequest = Mockery::mock(GatewayRequestInterface::class);
+
+        $message          = 'Error during communication';
+        $exception        = new Exception($message);
+
+        /** @var AdapterInterface|MockInterface $adapter */
+        $adapter = Mockery::mock(AdapterInterface::class);
+        $adapter
+            ->shouldReceive('send')
+            ->times(1)
+            ->withArgs(
+                [
+                    $gatewayRequest,
+                    null,
+                ]
+            )
+            ->andThrow($exception);
+
+        /** @var GatewayLoggerInterface|MockInterface $logger */
+        $logger = Mockery::mock(GatewayLoggerInterface::class);
+        $logger
+            ->shouldReceive('logRequestExceptionPair')
+            ->times(1)
+            ->withArgs(
+                [
+                    $gatewayRequest,
+                    $exception,
+                    Mockery::any(),
+                    Mockery::any(),
+                    LogLevel::CRITICAL,
+                ]
+            );
+
+        $gateway = new Gateway(
+            $adapter,
+            $logger
+        );
+
+        $this->expectExceptionObject($exception);
+        $gateway->sendRequest(
+            $gatewayRequest
+        );
     }
 }

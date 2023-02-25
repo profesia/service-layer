@@ -15,6 +15,7 @@ use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
 use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Psr\Log\LogLevel;
+use Exception;
 
 final class Gateway implements GatewayInterface
 {
@@ -45,6 +46,9 @@ final class Gateway implements GatewayInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
@@ -81,6 +85,16 @@ final class Gateway implements GatewayInterface
             );
 
             return new ErrorResponse($e);
+        } catch (Exception $e1) {
+            $logger->logRequestExceptionPair(
+                $gatewayRequest,
+                $e1,
+                $startTime,
+                new DateTimeImmutable(),
+                LogLevel::CRITICAL
+            );
+
+            throw $e1;
         }
     }
 

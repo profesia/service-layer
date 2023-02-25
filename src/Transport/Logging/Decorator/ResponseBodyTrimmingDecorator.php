@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Profesia\ServiceLayer\Transport\Logging\Decorator;
 
 use DateTimeImmutable;
+use Exception;
 use Nyholm\Psr7\Stream;
-use Profesia\ServiceLayer\Exception\ServiceLayerException;
+use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
-use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 
 final class ResponseBodyTrimmingDecorator implements GatewayLoggerInterface
 {
@@ -43,7 +43,7 @@ final class ResponseBodyTrimmingDecorator implements GatewayLoggerInterface
 
     public function logRequestExceptionPair(
         GatewayRequestInterface $request,
-        ServiceLayerException $exception,
+        Exception $exception,
         DateTimeImmutable $start,
         DateTimeImmutable $stop,
         string $logLevel
