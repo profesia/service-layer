@@ -23,8 +23,8 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
         }
 
         if (array_key_exists(RequestOptions::VERIFY, $config)) {
-            if (is_bool($config[RequestOptions::VERIFY]) === false) {
-                throw new InvalidArgumentException('Verify value should be a valid boolean');
+            if (is_bool($config[RequestOptions::VERIFY]) === false && is_string($config[RequestOptions::VERIFY]) === false) {
+                throw new InvalidArgumentException('Verify value should be a valid boolean or a string path');
             }
         }
 

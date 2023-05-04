@@ -95,11 +95,11 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
     public function testWillDetectInvalidVerify()
     {
         $config = [
-            RequestOptions::VERIFY => 'test',
+            RequestOptions::VERIFY => 1,
         ];
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Verify value should be a valid boolean');
+        $this->expectExceptionMessage('Verify value should be a valid boolean or a string path');
         GuzzleAdapterConfig::createFromArray($config);
     }
 

@@ -35,15 +35,15 @@ case "$1" in
     ;;
   php)
     shift 1
-    ${COMPOSE} exec php bash -c "php $*"
+    ${COMPOSE} exec service_layer bash -c "php $*"
     ;;
   bash)
     shift 1
-    ${COMPOSE} exec php bash -c "$*"
+    ${COMPOSE} exec service_layer bash -c "$*"
     ;;
   container)
   	shift 1
-  	${COMPOSE} exec php "$@"
+  	${COMPOSE} exec service_layer "$@"
   	;;
   *)
     print_help
