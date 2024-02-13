@@ -51,7 +51,8 @@ final class GatewayCachingProxy implements GatewayInterface
         $psrRequest = $gatewayRequest->toPsrRequest();
         $key        = self::getRequestCacheKey($psrRequest);
         if ($this->cache->has($key)) {
-            return unserialize($this->cache->get($key));
+            /** @phpstan-ignore-next-line  */
+            return unserialize((string)$this->cache->get($key));
         }
 
         $response = $this->requestGateway->sendRequest($gatewayRequest, $mapper, $adapterOverrideConfigBuilder);
