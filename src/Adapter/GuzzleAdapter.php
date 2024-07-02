@@ -16,6 +16,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 final class GuzzleAdapter implements AdapterInterface
 {
     private Client $client;
+    /** @var array<mixed>  */
     private array  $config;
 
     public function __construct(

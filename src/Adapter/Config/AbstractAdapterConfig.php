@@ -7,15 +7,19 @@ use InvalidArgumentException;
 
 abstract class AbstractAdapterConfig implements AdapterConfigInterface
 {
+    /** @var array<string, mixed> */
     private array $config;
 
+    /**
+     * @param array<string, mixed> $config
+     */
     final protected function __construct(array $config)
     {
         $this->config = $config;
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
      * @return static
      * @throws InvalidArgumentException
@@ -29,6 +33,9 @@ abstract class AbstractAdapterConfig implements AdapterConfigInterface
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getConfig(): array
     {
         return $this->config;

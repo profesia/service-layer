@@ -7,6 +7,7 @@ namespace Profesia\ServiceLayer\Registry;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AbstractAdapterConfig;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
+use Profesia\ServiceLayer\Registry\Config\RequestConfig;
 use Profesia\ServiceLayer\Registry\Exception\BadConfigException;
 use Profesia\ServiceLayer\Registry\Exception\BadStateException;
 use Profesia\ServiceLayer\Registry\Exception\RequestNotRegisteredException;
@@ -21,39 +22,43 @@ final class GatewayUseCaseRegistry
     /** @var GatewayUseCase[] */
     private array $gatewayUseCases = [];
 
+    /**
+     * @param GatewayInterface $defaultGateway
+     * @param RequestConfig[] $config
+     */
     private function __construct(GatewayInterface $defaultGateway, array $config)
     {
         $this->defaultGateway = $defaultGateway;
         foreach ($config as $requestName => $requestConfig) {
             $this->gatewayUseCases[$requestName] = new GatewayUseCase(
                 $this->defaultGateway,
-                $requestConfig['request'] ?? null,
-                $requestConfig['mapper'] ?? null,
-                $requestConfig['configOverride'] ?? null
+                $requestConfig->getRequest(),
+                $requestConfig->getMapper(),
+                $requestConfig->getConfigOverride()
             );
 
-            if (array_key_exists('gatewayOverride', $requestConfig)) {
+            if ($requestConfig->hasOverriddenGateway()) {
                 $this->gatewayUseCases[$requestName]->throughGatewayOverride(
-                    $requestConfig['gatewayOverride']
+                    $requestConfig->getGatewayOverride()
                 );
             }
 
-            if (array_key_exists('adapterOverride', $requestConfig)) {
+            if ($requestConfig->hasOverriddenAdapter()) {
                 $this->gatewayUseCases[$requestName]->viaAdapter(
-                    $requestConfig['adapterOverride']
+                    $requestConfig->getAdapterOverride()
                 );
             }
 
-            if (array_key_exists('loggerOverride', $requestConfig)) {
+            if ($requestConfig->hasOverriddenLogger()) {
                 $this->gatewayUseCases[$requestName]->useLogger(
-                    $requestConfig['loggerOverride']
+                    $requestConfig->getLoggerOverride()
                 );
             }
         }
     }
 
     /**
-     * @param array $config
+     * @param mixed[] $config
      *
      * @return static
      * @throws BadConfigException
@@ -64,6 +69,7 @@ final class GatewayUseCaseRegistry
             throw new BadConfigException('Required key: [defaultGateway] is not set in config');
         }
 
+        /** @var GatewayInterface $defaultGateway */
         $defaultGateway = $config['defaultGateway'];
         if (array_key_exists('requests', $config) === false) {
             throw new BadConfigException('Required key: [requests] is not set in config');
@@ -75,7 +81,7 @@ final class GatewayUseCaseRegistry
 
         $groupConfig = [];
         foreach ($config['requests'] as $requestName => $requestConfig) {
-            /** @var GatewayRequestInterface $request */
+            /** @var GatewayRequestInterface|null $request */
             $request = $requestConfig['request'] ?? null;
 
             /** @var AbstractAdapterConfig|null $configOverride */
@@ -93,14 +99,16 @@ final class GatewayUseCaseRegistry
             /** @var ResponseDomainMapperInterface|null $mapper */
             $mapper = $requestConfig['mapper'] ?? null;
 
-            $groupConfig[$requestName] = [
-                'request'         => $request,
-                'configOverride'  => $configOverride,
-                'mapper'          => $mapper,
-                'adapterOverride' => $adapterOverride,
-                'loggerOverride'  => $loggerOverride,
-                'gatewayOverride' => $gatewayOverride,
-            ];
+            $requestConfig = new RequestConfig(
+                $request,
+                $configOverride,
+                $adapterOverride,
+                $loggerOverride,
+                $gatewayOverride,
+                $mapper
+            );
+
+            $groupConfig[$requestName] = $requestConfig;
         }
 
         return new self(

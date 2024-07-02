@@ -15,10 +15,12 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
     public static function createFromArray(array $config): GuzzleAdapterConfig
     {
         if (array_key_exists(RequestOptions::TIMEOUT, $config)) {
+            /** @phpstan-ignore-next-line  */
             $config[RequestOptions::TIMEOUT] = (Timeout::createFromFloat($config[RequestOptions::TIMEOUT]))->toFloat();
         }
 
         if (array_key_exists(RequestOptions::CONNECT_TIMEOUT, $config)) {
+            /** @phpstan-ignore-next-line  */
             $config[RequestOptions::CONNECT_TIMEOUT] = (Timeout::createFromFloat($config[RequestOptions::CONNECT_TIMEOUT]))->toFloat();
         }
 
