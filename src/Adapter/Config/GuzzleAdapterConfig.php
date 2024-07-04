@@ -16,14 +16,14 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
     {
         $returnConfig = $config;
         if (array_key_exists(AdapterConfigInterface::TIMEOUT, $config)) {
-            /** @phpstan-ignore-next-line  */
             unset($returnConfig[AdapterConfigInterface::TIMEOUT]);
+            /** @phpstan-ignore-next-line  */
             $returnConfig[RequestOptions::TIMEOUT] = (Timeout::createFromFloat($config[AdapterConfigInterface::TIMEOUT]))->toFloat();
         }
 
         if (array_key_exists(AdapterConfigInterface::CONNECT_TIMEOUT, $config)) {
-            /** @phpstan-ignore-next-line  */
             unset($returnConfig[AdapterConfigInterface::CONNECT_TIMEOUT]);
+            /** @phpstan-ignore-next-line  */
             $returnConfig[RequestOptions::CONNECT_TIMEOUT] = (Timeout::createFromFloat($config[AdapterConfigInterface::CONNECT_TIMEOUT]))->toFloat();
         }
 
