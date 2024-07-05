@@ -10,6 +10,7 @@ interface AdapterConfigInterface
     public const VERIFY          = 'verify';
     public const ALLOW_REDIRECTS = 'allow_redirects';
     public const AUTH            = 'auth';
+    public const HEADERS         = 'headers';
 
     /**
      * @return array<string, mixed>

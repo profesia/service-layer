@@ -64,6 +64,14 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
             }
         }
 
+        if (array_key_exists(AdapterConfigInterface::HEADERS, $config)) {
+            if (is_array($config[AdapterConfigInterface::HEADERS]) === false) {
+                throw new InvalidArgumentException('Headers value should be a valid array');
+            }
+
+            $returnConfig[RequestOptions::HEADERS] = $config[AdapterConfigInterface::HEADERS];
+        }
+
         return new self(
             $returnConfig
         );
