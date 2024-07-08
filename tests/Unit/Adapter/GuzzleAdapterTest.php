@@ -415,4 +415,96 @@ class GuzzleAdapterTest extends MockeryTestCase
             $overrideConfig
         );
     }
+
+    public function testCanMergeHeaders(): void
+    {
+        $requestHeaders = [
+            'X-header-1' => '1',
+            'X-header-2' => '2',
+            'X-header-3' => '3',
+        ];
+
+        /** @var RequestInterface|MockInterface $psrRequest */
+        $psrRequest = Mockery::mock(RequestInterface::class);
+        $psrRequest
+            ->shouldReceive('getHeaders')
+            ->once()
+            ->andReturn(
+                $requestHeaders
+            );
+
+        /** @var GatewayRequestInterface|MockInterface $gatewayRequest */
+        $gatewayRequest = Mockery::mock(GatewayRequestInterface::class);
+        $gatewayRequest
+            ->shouldReceive('toPsrRequest')
+            ->once()
+            ->andReturn(
+                $psrRequest
+            );
+
+        $rawConfig = [
+            RequestOptions::HEADERS => [
+                'X-header-2'        => 'config-header-2',
+                'X-header-4'        => 'config-header-4',
+            ],
+        ];
+
+        /** @var ResponseInterface|MockInterface $psrResponse */
+        $psrResponse = Mockery::mock(ResponseInterface::class);
+        $psrResponse
+            ->shouldReceive('getStatusCode')
+            ->once()
+            ->andReturn(200);
+
+        $stream = Stream::create('Response body');
+        $stream->seek(0);
+        $psrResponse
+            ->shouldReceive('getBody')
+            ->once()
+            ->andReturn($stream);
+        $psrResponse
+            ->shouldReceive('getHeaders')
+            ->once()
+            ->andReturn(
+                []
+            );
+
+        $finalConfig = array_merge(
+            $rawConfig,
+            [
+                RequestOptions::HEADERS => array_merge(
+                    $rawConfig[RequestOptions::HEADERS] ?? [],
+                    $requestHeaders,
+                )
+            ]
+        );
+        /** @var Client|MockInterface $client */
+        $client = Mockery::mock(Client::class);
+        $client
+            ->shouldReceive('send')
+            ->once()
+            ->withArgs(
+                [
+                    $psrRequest,
+                    $finalConfig
+                ]
+            )
+            ->andReturn(
+                $psrResponse
+            );
+
+        $adapter = new GuzzleAdapter(
+            $client,
+            GuzzleAdapterConfig::createDefault()
+        );
+
+        $overrideConfig = GuzzleAdapterConfig::createFromArray(
+            $rawConfig
+        );
+
+        $adapter->send(
+            $gatewayRequest,
+            $overrideConfig
+        );
+    }
 }

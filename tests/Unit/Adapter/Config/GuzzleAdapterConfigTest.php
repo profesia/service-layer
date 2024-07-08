@@ -116,7 +116,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         $this->assertEquals($configToCompare, $builder->getConfig());
     }
 
-    public function testWillDetectInvalidTimeout()
+    public function testCanDetectInvalidTimeout()
     {
         $config = [
             AdapterConfigInterface::TIMEOUT => -1.0,
@@ -127,7 +127,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidConnectionTimeout()
+    public function testCanDetectInvalidConnectionTimeout()
     {
         $config = [
             AdapterConfigInterface::CONNECT_TIMEOUT => -10.5,
@@ -138,7 +138,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidVerify()
+    public function testCanDetectInvalidVerify()
     {
         $config = [
             AdapterConfigInterface::VERIFY => 1,
@@ -149,7 +149,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidAllowRedirects()
+    public function testCanDetectInvalidAllowRedirects()
     {
         $config = [
             AdapterConfigInterface::ALLOW_REDIRECTS => 10,
@@ -160,7 +160,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectIncompleteAuthConfig()
+    public function testCanDetectIncompleteAuthConfig()
     {
         $config = [
             AdapterConfigInterface::AUTH => [
@@ -173,7 +173,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectBlankPassword()
+    public function testCanDetectBlankPassword()
     {
         $config = [
             AdapterConfigInterface::AUTH => [
@@ -187,7 +187,7 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectBlankLogin()
+    public function testCanDetectBlankLogin()
     {
         $config = [
             AdapterConfigInterface::AUTH => [
@@ -198,6 +198,17 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Login could not be a blank string');
+        GuzzleAdapterConfig::createFromArray($config);
+    }
+
+    public function testCanDetectInvalidHeaders(): void
+    {
+        $config = [
+            AdapterConfigInterface::HEADERS => 'test'
+        ];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Headers value should be a valid array');
         GuzzleAdapterConfig::createFromArray($config);
     }
 }
