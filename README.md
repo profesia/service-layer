@@ -12,13 +12,13 @@ Install the latest version by running the command
 composer require profesia/service-layer
 ```
 ## Requirements
-- PHP 7.4+
+- PHP 8.0+
 
 ## Documentation
 The documentation for the bundle can be found at https://profesia.github.io/service-layer
 
 ## Author
-Matej Bádal - matej.badal@profesia.sk
+Matej Bádal - matej.badal@almacareer.com
 
 Alma Career Slovakia s r.o.
 ## License
