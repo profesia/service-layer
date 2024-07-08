@@ -1,79 +1,125 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Profesia\ServiceLayer\Test\Unit\Adapter\Config;
 
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 
 class GuzzleAdapterConfigTest extends MockeryTestCase
 {
-    public function testCanTransformToConfig()
+    public function provideDataForTransformation(): array
     {
-        $config = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-        ];
-
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
-
-        $config  = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-            RequestOptions::VERIFY          => false,
-        ];
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
-
-        $config  = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-            RequestOptions::VERIFY          => false,
-            RequestOptions::CONNECT_TIMEOUT => 5.7,
-        ];
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
-
-        $config  = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-            RequestOptions::VERIFY          => false,
-            RequestOptions::TIMEOUT         => 0.0,
-            RequestOptions::CONNECT_TIMEOUT => 5.7,
-        ];
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
-
-        $config  = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-            RequestOptions::VERIFY          => false,
-            RequestOptions::TIMEOUT         => 0.0,
-            RequestOptions::CONNECT_TIMEOUT => 5.7,
-            RequestOptions::AUTH            => [
-                'test',
-                'secret',
+        return [
+            '1 config'                => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true
+                ]
             ],
-        ];
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
-
-        $config  = [
-            RequestOptions::ALLOW_REDIRECTS => true,
-            RequestOptions::VERIFY          => false,
-            RequestOptions::TIMEOUT         => 0.0,
-            RequestOptions::CONNECT_TIMEOUT => 5.7,
-            RequestOptions::AUTH            => [
-                'test',
-                'secret',
-                'third'
+            '2 configs'               => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                    AdapterConfigInterface::VERIFY          => false,
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true,
+                    RequestOptions::VERIFY          => false,
+                ]
             ],
+            '3 configs'               => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                    AdapterConfigInterface::VERIFY          => false,
+                    AdapterConfigInterface::CONNECT_TIMEOUT => 5.7,
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true,
+                    RequestOptions::VERIFY          => false,
+                    RequestOptions::CONNECT_TIMEOUT => 5.7,
+                ]
+            ],
+            '4 configs'               => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                    AdapterConfigInterface::VERIFY          => false,
+                    AdapterConfigInterface::CONNECT_TIMEOUT => 5.7,
+                    AdapterConfigInterface::TIMEOUT         => 0.0,
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true,
+                    RequestOptions::VERIFY          => false,
+                    RequestOptions::TIMEOUT         => 0.0,
+                    RequestOptions::CONNECT_TIMEOUT => 5.7,
+                ]
+            ],
+            '5 configs'               => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                    AdapterConfigInterface::VERIFY          => false,
+                    AdapterConfigInterface::CONNECT_TIMEOUT => 5.7,
+                    AdapterConfigInterface::TIMEOUT         => 0.0,
+                    AdapterConfigInterface::AUTH            => [
+                        'test',
+                        'secret',
+                    ],
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true,
+                    RequestOptions::VERIFY          => false,
+                    RequestOptions::TIMEOUT         => 0.0,
+                    RequestOptions::CONNECT_TIMEOUT => 5.7,
+                    RequestOptions::AUTH            => [
+                        'test',
+                        'secret',
+                    ],
+                ]
+            ],
+            '5 configs extended auth' => [
+                [
+                    AdapterConfigInterface::ALLOW_REDIRECTS => true,
+                    AdapterConfigInterface::VERIFY          => false,
+                    AdapterConfigInterface::CONNECT_TIMEOUT => 5.7,
+                    AdapterConfigInterface::TIMEOUT         => 0.0,
+                    AdapterConfigInterface::AUTH            => [
+                        'test',
+                        'secret',
+                        'third'
+                    ],
+                ],
+                [
+                    RequestOptions::ALLOW_REDIRECTS => true,
+                    RequestOptions::VERIFY          => false,
+                    RequestOptions::TIMEOUT         => 0.0,
+                    RequestOptions::CONNECT_TIMEOUT => 5.7,
+                    RequestOptions::AUTH            => [
+                        'test',
+                        'secret',
+                        'third'
+                    ],
+                ]
+            ]
         ];
-        $builder = GuzzleAdapterConfig::createFromArray($config);
-        $this->assertEquals($config, $builder->getConfig());
     }
 
-    public function testWillDetectInvalidTimeout()
+    /**
+     * @dataProvider provideDataForTransformation
+     */
+    public function testCanTransformToConfig(array $inputConfig, array $configToCompare)
+    {
+        $builder = GuzzleAdapterConfig::createFromArray($inputConfig);
+        $this->assertEquals($configToCompare, $builder->getConfig());
+    }
+
+    public function testCanDetectInvalidTimeout()
     {
         $config = [
-            RequestOptions::TIMEOUT => -1.0,
+            AdapterConfigInterface::TIMEOUT => -1.0,
         ];
 
         $this->expectException(InvalidArgumentException::class);
@@ -81,10 +127,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidConnectionTimeout()
+    public function testCanDetectInvalidConnectionTimeout()
     {
         $config = [
-            RequestOptions::CONNECT_TIMEOUT => -10.5,
+            AdapterConfigInterface::CONNECT_TIMEOUT => -10.5,
         ];
 
         $this->expectException(InvalidArgumentException::class);
@@ -92,10 +138,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidVerify()
+    public function testCanDetectInvalidVerify()
     {
         $config = [
-            RequestOptions::VERIFY => 1,
+            AdapterConfigInterface::VERIFY => 1,
         ];
 
         $this->expectException(InvalidArgumentException::class);
@@ -103,10 +149,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectInvalidAllowRedirects()
+    public function testCanDetectInvalidAllowRedirects()
     {
         $config = [
-            RequestOptions::ALLOW_REDIRECTS => 10,
+            AdapterConfigInterface::ALLOW_REDIRECTS => 10,
         ];
 
         $this->expectException(InvalidArgumentException::class);
@@ -114,10 +160,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectIncompleteAuthConfig()
+    public function testCanDetectIncompleteAuthConfig()
     {
         $config = [
-            RequestOptions::AUTH => [
+            AdapterConfigInterface::AUTH => [
                 'test',
             ],
         ];
@@ -127,10 +173,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectBlankPassword()
+    public function testCanDetectBlankPassword()
     {
         $config = [
-            RequestOptions::AUTH => [
+            AdapterConfigInterface::AUTH => [
                 'login',
                 '',
             ],
@@ -141,10 +187,10 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
         GuzzleAdapterConfig::createFromArray($config);
     }
 
-    public function testWillDetectBlankLogin()
+    public function testCanDetectBlankLogin()
     {
         $config = [
-            RequestOptions::AUTH => [
+            AdapterConfigInterface::AUTH => [
                 '',
                 'password',
             ],
@@ -152,6 +198,17 @@ class GuzzleAdapterConfigTest extends MockeryTestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Login could not be a blank string');
+        GuzzleAdapterConfig::createFromArray($config);
+    }
+
+    public function testCanDetectInvalidHeaders(): void
+    {
+        $config = [
+            AdapterConfigInterface::HEADERS => 'test'
+        ];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Headers value should be a valid array');
         GuzzleAdapterConfig::createFromArray($config);
     }
 }
