@@ -66,7 +66,7 @@ final class GatewayCachingProxy implements GatewayInterface
     private static function getRequestCacheKey(RequestInterface $request): string
     {
         $key = "{$request->getUri()}-{$request->getMethod()}-";
-        $key .= Utils::jsonEncode($request->getBody());
+        $key .= Utils::jsonEncode((string)$request->getBody());
 
         return md5($key);
     }
