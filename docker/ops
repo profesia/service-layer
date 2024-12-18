@@ -24,7 +24,7 @@ if [[ -f ./.env ]]; then
   set +a
 fi
 
-COMPOSE="docker-compose"
+COMPOSE="docker compose"
 
 case "$1" in
   up)
