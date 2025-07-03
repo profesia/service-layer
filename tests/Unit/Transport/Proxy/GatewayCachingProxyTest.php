@@ -13,12 +13,14 @@ use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Proxy\Config\CacheConfigInterface;
 use Profesia\ServiceLayer\Transport\Proxy\GatewayCachingProxy;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestInterface;
 use Psr\SimpleCache\CacheInterface;
+use GuzzleHttp\Utils;
 
 class GatewayCachingProxyTest extends MockeryTestCase
 {
@@ -184,12 +186,12 @@ class GatewayCachingProxyTest extends MockeryTestCase
             ],
         ];
 
-        $jsonBody = \GuzzleHttp\json_encode($requestBody);
+        $jsonBody = Utils::jsonEncode($requestBody);
         $stream   = Stream::create($jsonBody);
         $cacheKey = "{$requestUri}-{$httpMethod}-";
 
         //@todo Double encoding due to bug/hasty solution in GatewayCachingProxy::getRequestCacheKey
-        $cacheKey .= \GuzzleHttp\json_encode($jsonBody);
+        $cacheKey .= Utils::jsonEncode($jsonBody);
         $cacheKey = md5($cacheKey);
 
         /** @var ResponseDomainMapperInterface|MockInterface $mapper */
@@ -249,12 +251,118 @@ class GatewayCachingProxyTest extends MockeryTestCase
                 [
                     $cacheKey,
                     Mockery::any(),
+                    null,
                 ]
             );
 
         $proxy = new GatewayCachingProxy(
             $cache,
             $gateway
+        );
+
+        $actualResponse = $proxy->sendRequest($gatewayRequest, $mapper);
+        $this->assertEquals($mappedResponse, $actualResponse->getResponseBody());
+    }
+
+    /**
+     * @group request-gateway
+     */
+    public function testWillSetReturnedResultToCacheWithConfig()
+    {
+        $requestUri  = new Uri('https://test.sk');
+        $httpMethod  = HttpMethod::createPost();
+        $requestBody = [
+            'a' => 1,
+            'b' => 2,
+        ];
+
+        $mappedResponse = [
+            'response' => [
+                'test' => 1,
+            ],
+        ];
+
+        $jsonBody = Utils::jsonEncode($requestBody);
+        $stream   = Stream::create($jsonBody);
+        $cacheKey = "{$requestUri}-{$httpMethod}-";
+
+        //@todo Double encoding due to bug/hasty solution in GatewayCachingProxy::getRequestCacheKey
+        $cacheKey .= Utils::jsonEncode($jsonBody);
+        $cacheKey = md5($cacheKey);
+
+        /** @var ResponseDomainMapperInterface|MockInterface $mapper */
+        $mapper = Mockery::mock(ResponseDomainMapperInterface::class);
+
+        /** @var RequestInterface|MockInterface $request */
+        $request = Mockery::mock(RequestInterface::class);
+
+        /** @var GatewayRequestInterface|MockInterface $gatewayRequest */
+        $gatewayRequest = Mockery::mock(GatewayRequestInterface::class);
+        $gatewayRequest
+            ->shouldReceive('toPsrRequest')
+            ->times(1)
+            ->andReturn($request);
+
+        $domainResponse = new ArrayDomainResponse(
+            $mappedResponse
+        );
+
+        /** @var GatewayInterface|MockInterface $gateway */
+        $gateway = Mockery::mock(GatewayInterface::class);
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->times(1)
+            ->withArgs(
+                [
+                    $gatewayRequest,
+                    $mapper,
+                    Mockery::any()
+                ]
+            )
+            ->andReturn($domainResponse);
+
+        $ttl = null;
+
+        /** @var CacheInterface|MockInterface $cache */
+        $cache = Mockery::mock(CacheInterface::class);
+        $cache
+            ->shouldReceive('has')
+            ->times(1)
+            ->withArgs([$cacheKey])
+            ->andReturn(false);
+        $cache
+            ->shouldReceive('set')
+            ->times(1)
+            ->withArgs(
+                [
+                    $cacheKey,
+                    Mockery::any(),
+                    $ttl,
+                ]
+            );
+
+        /** @var CacheConfigInterface|MockInterface $cacheConfig */
+        $cacheConfig = Mockery::mock(CacheConfigInterface::class);
+        $cacheConfig
+            ->shouldReceive('getCacheKeyForRequest')
+            ->once()
+            ->withArgs([$request])
+            ->andReturn($cacheKey);
+        $cacheConfig
+            ->shouldReceive('shouldBeResponseForRequestBeCached')
+            ->once()
+            ->withArgs([$request, $domainResponse])
+            ->andReturn(true);
+        $cacheConfig
+            ->shouldReceive('getTtlForRequest')
+            ->once()
+            ->withArgs([$request])
+            ->andReturn($ttl);
+
+        $proxy = new GatewayCachingProxy(
+            $cache,
+            $gateway,
+            $cacheConfig
         );
 
         $actualResponse = $proxy->sendRequest($gatewayRequest, $mapper);

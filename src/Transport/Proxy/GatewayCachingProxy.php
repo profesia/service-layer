@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace Profesia\ServiceLayer\Transport\Proxy;
 
-use GuzzleHttp\Utils;
 use Profesia\ServiceLayer\Adapter\AdapterInterface;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
-use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
-use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
+use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
-use Psr\Http\Message\RequestInterface;
+use Profesia\ServiceLayer\Transport\Logging\GatewayLoggerInterface;
+use Profesia\ServiceLayer\Transport\Proxy\Config\CacheConfigInterface;
+use Profesia\ServiceLayer\Transport\Proxy\Config\DefaultCacheConfig;
 use Psr\SimpleCache\CacheInterface;
 
 final class GatewayCachingProxy implements GatewayInterface
 {
-    private CacheInterface $cache;
-    private GatewayInterface $requestGateway;
+    private CacheInterface       $cache;
+    private GatewayInterface     $requestGateway;
+    private CacheConfigInterface $cacheConfig;
 
-    public function __construct(CacheInterface $cache, GatewayInterface $requestGateway)
+    public function __construct(CacheInterface $cache, GatewayInterface $requestGateway, ?CacheConfigInterface $cacheConfig = null)
     {
         $this->cache          = $cache;
         $this->requestGateway = $requestGateway;
+        $this->cacheConfig    = $cacheConfig ?: new DefaultCacheConfig();
     }
 
     public function viaAdapter(AdapterInterface $adapter): GatewayInterface
@@ -47,27 +49,24 @@ final class GatewayCachingProxy implements GatewayInterface
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
         ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
-    ): DomainResponseInterface {
+    ): DomainResponseInterface
+    {
         $psrRequest = $gatewayRequest->toPsrRequest();
-        $key        = self::getRequestCacheKey($psrRequest);
+        $key        = $this->cacheConfig->getCacheKeyForRequest($psrRequest);
         if ($this->cache->has($key)) {
-            /** @phpstan-ignore-next-line  */
+            /** @phpstan-ignore-next-line */
             return unserialize((string)$this->cache->get($key));
         }
 
         $response = $this->requestGateway->sendRequest($gatewayRequest, $mapper, $adapterOverrideConfigBuilder);
-        if ($response->isSuccessful()) {
-            $this->cache->set($key, serialize($response));
+        if ($this->cacheConfig->shouldBeResponseForRequestBeCached($psrRequest, $response) === true) {
+            $this->cache->set(
+                $key,
+                serialize($response),
+                $this->cacheConfig->getTtlForRequest($psrRequest)
+            );
         }
 
         return $response;
-    }
-
-    private static function getRequestCacheKey(RequestInterface $request): string
-    {
-        $key = "{$request->getUri()}-{$request->getMethod()}-";
-        $key .= Utils::jsonEncode((string)$request->getBody());
-
-        return md5($key);
     }
 }
