@@ -129,11 +129,8 @@ $request = new GetUserRequest(123);
 $response = $gateway->sendRequest($request);
 
 if ($response->isSuccessful()) {
-    $body = $response->getBody();
+    $body = $response->getResponseBody();
     // Process the response body
-} else {
-    $statusCode = $response->getStatusCode();
-    // Handle the error
 }
 ```
 
