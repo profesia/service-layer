@@ -10,6 +10,10 @@ use Profesia\ServiceLayer\ValueObject\Login;
 use Profesia\ServiceLayer\ValueObject\Password;
 use Profesia\ServiceLayer\ValueObject\Timeout;
 
+/**
+ * @deprecated Use AdapterConfig with GuzzleConfigTransformer instead.
+ *             This class is kept for backward compatibility.
+ */
 final class GuzzleAdapterConfig extends AbstractAdapterConfig
 {
     public static function createFromArray(array $config): GuzzleAdapterConfig

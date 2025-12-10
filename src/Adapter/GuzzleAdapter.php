@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
+use Profesia\ServiceLayer\Adapter\Config\GuzzleConfigTransformer;
 use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
@@ -24,7 +25,8 @@ final class GuzzleAdapter implements AdapterInterface
         AdapterConfigInterface $configBuilder
     ) {
         $this->client = $client;
-        $this->config = $configBuilder->getConfig();
+        // Transform platform-independent config to Guzzle-specific config
+        $this->config = GuzzleConfigTransformer::transform($configBuilder);
     }
 
     /**
@@ -36,9 +38,10 @@ final class GuzzleAdapter implements AdapterInterface
             $psrRequest  = $request->toPsrRequest();
             $finalConfig = $this->config;
             if ($configOverrideBuilder !== null) {
+                // Transform override config and merge with base config
                 $finalConfig = array_merge(
                     $finalConfig,
-                    $configOverrideBuilder->getConfig()
+                    GuzzleConfigTransformer::transform($configOverrideBuilder)
                 );
             }
 

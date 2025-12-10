@@ -6,8 +6,8 @@ namespace Profesia\ServiceLayer\Transport;
 
 use GuzzleHttp\Client;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
-use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
 use Profesia\ServiceLayer\Request\SimpleRequest;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
@@ -35,7 +35,7 @@ final class SimpleFacade
             $client = new Client();
             $adapter = new GuzzleAdapter(
                 $client,
-                GuzzleAdapterConfig::createDefault()
+                AdapterConfig::createDefault()
             );
             $gatewayLogger = new CommunicationLogger($logger ?? new NullLogger());
             $gateway = new Gateway($adapter, $gatewayLogger);
@@ -70,7 +70,7 @@ final class SimpleFacade
 
         $adapterConfig = null;
         if ($clientOptions !== null) {
-            $adapterConfig = GuzzleAdapterConfig::createFromArray($clientOptions);
+            $adapterConfig = AdapterConfig::createFromArray($clientOptions);
         }
 
         return $this->gateway->sendRequest($request, null, $adapterConfig);
