@@ -40,4 +40,14 @@ abstract class AbstractAdapterConfig implements AdapterConfigInterface
     {
         return $this->config;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function merge(AdapterConfigInterface $config): self
+    {
+        // Shallow merge - override values, not deep merge
+        $mergedConfig = array_merge($this->config, $config->getConfig());
+        return new static($mergedConfig);
+    }
 }

@@ -26,45 +26,70 @@ final class GuzzleConfigTransformer
         $sourceConfig = $config->getConfig();
         $guzzleConfig = [];
 
-        // Transform timeout
+        // Transform timeout (from Timeout value object)
         if (array_key_exists(AdapterConfigInterface::TIMEOUT, $sourceConfig)) {
-            $guzzleConfig[RequestOptions::TIMEOUT] = Timeout::createFromFloat(
-                (float)$sourceConfig[AdapterConfigInterface::TIMEOUT]
-            )->toFloat();
+            $timeout = $sourceConfig[AdapterConfigInterface::TIMEOUT];
+            if ($timeout instanceof Timeout) {
+                $guzzleConfig[RequestOptions::TIMEOUT] = $timeout->toFloat();
+            } else {
+                // Fallback for backward compatibility
+                $guzzleConfig[RequestOptions::TIMEOUT] = Timeout::createFromFloat((float)$timeout)->toFloat();
+            }
         }
 
-        // Transform connect_timeout
+        // Transform connect_timeout (from Timeout value object)
         if (array_key_exists(AdapterConfigInterface::CONNECT_TIMEOUT, $sourceConfig)) {
-            $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = Timeout::createFromFloat(
-                (float)$sourceConfig[AdapterConfigInterface::CONNECT_TIMEOUT]
-            )->toFloat();
+            $connectTimeout = $sourceConfig[AdapterConfigInterface::CONNECT_TIMEOUT];
+            if ($connectTimeout instanceof Timeout) {
+                $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout->toFloat();
+            } else {
+                // Fallback for backward compatibility
+                $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = Timeout::createFromFloat((float)$connectTimeout)->toFloat();
+            }
         }
 
-        // Transform verify
+        // Transform verify (already primitive type)
         if (array_key_exists(AdapterConfigInterface::VERIFY, $sourceConfig)) {
             $guzzleConfig[RequestOptions::VERIFY] = $sourceConfig[AdapterConfigInterface::VERIFY];
         }
 
-        // Transform allow_redirects
+        // Transform allow_redirects (already primitive type)
         if (array_key_exists(AdapterConfigInterface::ALLOW_REDIRECTS, $sourceConfig)) {
             $guzzleConfig[RequestOptions::ALLOW_REDIRECTS] = $sourceConfig[AdapterConfigInterface::ALLOW_REDIRECTS];
         }
 
-        // Transform auth
+        // Transform auth (from Login/Password value objects)
         if (array_key_exists(AdapterConfigInterface::AUTH, $sourceConfig)) {
             $originalAuthConfig = $sourceConfig[AdapterConfigInterface::AUTH];
             if (is_array($originalAuthConfig) && count($originalAuthConfig) >= 2) {
                 $authConfig = [];
-                $authConfig[] = Login::createFromString($originalAuthConfig[0])->toString();
-                $authConfig[] = Password::createFromString($originalAuthConfig[1])->toString();
-                if (count($originalAuthConfig) === 3) {
+                
+                // Handle Login value object
+                if ($originalAuthConfig[0] instanceof Login) {
+                    $authConfig[] = $originalAuthConfig[0]->toString();
+                } else {
+                    // Fallback for backward compatibility
+                    $authConfig[] = Login::createFromString($originalAuthConfig[0])->toString();
+                }
+                
+                // Handle Password value object
+                if ($originalAuthConfig[1] instanceof Password) {
+                    $authConfig[] = $originalAuthConfig[1]->toString();
+                } else {
+                    // Fallback for backward compatibility
+                    $authConfig[] = Password::createFromString($originalAuthConfig[1])->toString();
+                }
+                
+                // Optional third parameter (e.g., 'digest')
+                if (count($originalAuthConfig) >= 3) {
                     $authConfig[] = $originalAuthConfig[2];
                 }
+                
                 $guzzleConfig[RequestOptions::AUTH] = $authConfig;
             }
         }
 
-        // Transform headers
+        // Transform headers (already array)
         if (array_key_exists(AdapterConfigInterface::HEADERS, $sourceConfig)) {
             $guzzleConfig[RequestOptions::HEADERS] = $sourceConfig[AdapterConfigInterface::HEADERS];
         }

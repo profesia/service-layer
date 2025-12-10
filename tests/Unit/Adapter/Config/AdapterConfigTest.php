@@ -8,6 +8,9 @@ use InvalidArgumentException;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
+use Profesia\ServiceLayer\ValueObject\Login;
+use Profesia\ServiceLayer\ValueObject\Password;
+use Profesia\ServiceLayer\ValueObject\Timeout;
 
 class AdapterConfigTest extends MockeryTestCase
 {
@@ -29,7 +32,14 @@ class AdapterConfigTest extends MockeryTestCase
         $config = AdapterConfig::createFromArray($configArray);
         
         $this->assertInstanceOf(AdapterConfig::class, $config);
-        $this->assertEquals($configArray, $config->getConfig());
+        $resultConfig = $config->getConfig();
+        
+        // Verify timeout is stored as Timeout value object
+        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::TIMEOUT]);
+        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        
+        // Verify is stored as-is
+        $this->assertFalse($resultConfig[AdapterConfigInterface::VERIFY]);
     }
 
     public function testValidatesTimeoutValue(): void
@@ -114,7 +124,66 @@ class AdapterConfigTest extends MockeryTestCase
         ];
         
         $config = AdapterConfig::createFromArray($configArray);
+        $resultConfig = $config->getConfig();
         
-        $this->assertEquals($configArray, $config->getConfig());
+        // Verify value objects
+        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::TIMEOUT]);
+        $this->assertEquals(15.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        
+        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]);
+        $this->assertEquals(5.0, $resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]->toFloat());
+        
+        $this->assertTrue($resultConfig[AdapterConfigInterface::VERIFY]);
+        $this->assertFalse($resultConfig[AdapterConfigInterface::ALLOW_REDIRECTS]);
+        
+        $this->assertInstanceOf(Login::class, $resultConfig[AdapterConfigInterface::AUTH][0]);
+        $this->assertInstanceOf(Password::class, $resultConfig[AdapterConfigInterface::AUTH][1]);
+        $this->assertEquals('username', $resultConfig[AdapterConfigInterface::AUTH][0]->toString());
+        $this->assertEquals('password', $resultConfig[AdapterConfigInterface::AUTH][1]->toString());
+        $this->assertEquals('digest', $resultConfig[AdapterConfigInterface::AUTH][2]);
+        
+        $this->assertEquals(['X-Custom' => 'value'], $resultConfig[AdapterConfigInterface::HEADERS]);
+    }
+
+    public function testCanMergeConfigs(): void
+    {
+        $config1 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::TIMEOUT => 10.0,
+            AdapterConfigInterface::VERIFY => false,
+        ]);
+        
+        $config2 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::TIMEOUT => 20.0,
+            AdapterConfigInterface::HEADERS => ['X-Custom' => 'value'],
+        ]);
+        
+        $merged = $config1->merge($config2);
+        $resultConfig = $merged->getConfig();
+        
+        // Timeout should be overridden
+        $this->assertEquals(20.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        
+        // Verify should remain from config1
+        $this->assertFalse($resultConfig[AdapterConfigInterface::VERIFY]);
+        
+        // Headers should be from config2
+        $this->assertEquals(['X-Custom' => 'value'], $resultConfig[AdapterConfigInterface::HEADERS]);
+    }
+
+    public function testMergeDoesNotMutateOriginal(): void
+    {
+        $config1 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::TIMEOUT => 10.0,
+        ]);
+        
+        $config2 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::TIMEOUT => 20.0,
+        ]);
+        
+        $merged = $config1->merge($config2);
+        
+        // Original should not be mutated
+        $this->assertEquals(10.0, $config1->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
+        $this->assertEquals(20.0, $merged->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
     }
 }
