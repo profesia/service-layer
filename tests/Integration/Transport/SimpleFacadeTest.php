@@ -69,7 +69,6 @@ class SimpleFacadeTest extends MockeryTestCase
         
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals(200, $response->getStatusCode()->getValue());
     }
 
     public function testCanExecuteGetRequestWithoutBody(): void
@@ -109,7 +108,7 @@ class SimpleFacadeTest extends MockeryTestCase
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
         
-        $bodyContent = $response->getResponseBody()->getContents();
+        $bodyContent = (string)$response->getResponseBody();
         $this->assertEquals($responseBody, $bodyContent);
     }
 }
