@@ -40,7 +40,7 @@ class SimpleFacadeTest extends MockeryTestCase
                     return false;
                 }
                 
-                if ($psrRequest->getBody()->getContents() !== 'test body') {
+                if ((string)$psrRequest->getBody() !== 'test body') {
                     return false;
                 }
                 

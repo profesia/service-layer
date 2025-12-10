@@ -14,6 +14,7 @@ use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -22,13 +23,17 @@ final class SimpleFacade
 {
     private GatewayInterface $gateway;
     private RequestFactoryInterface $requestFactory;
+    private UriFactoryInterface $uriFactory;
 
     public function __construct(
         ?GatewayInterface $gateway = null,
         ?RequestFactoryInterface $requestFactory = null,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
+        ?UriFactoryInterface $uriFactory = null
     ) {
-        $this->requestFactory = $requestFactory ?? new Psr17Factory();
+        $psr17Factory = new Psr17Factory();
+        $this->requestFactory = $requestFactory ?? $psr17Factory;
+        $this->uriFactory = $uriFactory ?? $psr17Factory;
         
         if ($gateway === null) {
             $client = new Client();
@@ -61,7 +66,7 @@ final class SimpleFacade
         $httpMethod = HttpMethod::createFromString(strtoupper($method));
         
         if (is_string($uri)) {
-            $uri = (new Psr17Factory())->createUri($uri);
+            $uri = $this->uriFactory->createUri($uri);
         }
         
         $request = new class(

@@ -40,7 +40,7 @@ class SimpleFacadeTest extends MockeryTestCase
                     return false;
                 }
                 
-                if ($request->getBody()->getContents() !== '{"test": "data"}') {
+                if ((string)$request->getBody() !== '{"test": "data"}') {
                     return false;
                 }
                 
