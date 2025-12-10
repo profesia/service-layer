@@ -6,15 +6,15 @@ namespace Profesia\ServiceLayer\Transport;
 
 use GuzzleHttp\Client;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Adapter\Config\GuzzleAdapterConfig;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
-use Profesia\ServiceLayer\Request\AbstractGatewayRequest;
+use Profesia\ServiceLayer\Request\SimpleRequest;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -23,17 +23,13 @@ final class SimpleFacade
 {
     private GatewayInterface $gateway;
     private RequestFactoryInterface $requestFactory;
-    private UriFactoryInterface $uriFactory;
 
     public function __construct(
         ?GatewayInterface $gateway = null,
         ?RequestFactoryInterface $requestFactory = null,
-        ?LoggerInterface $logger = null,
-        ?UriFactoryInterface $uriFactory = null
+        ?LoggerInterface $logger = null
     ) {
-        $psr17Factory = new Psr17Factory();
-        $this->requestFactory = $requestFactory ?? $psr17Factory;
-        $this->uriFactory = $uriFactory ?? $psr17Factory;
+        $this->requestFactory = $requestFactory ?? new Psr17Factory();
         
         if ($gateway === null) {
             $client = new Client();
@@ -51,67 +47,32 @@ final class SimpleFacade
     /**
      * Execute a simple API request
      *
-     * @param UriInterface|string $uri
-     * @param string              $method
+     * @param UriInterface         $uri
+     * @param HttpMethod           $method
      * @param StreamInterface|null $body
+     * @param array<string, mixed>|null $clientOptions
      *
      * @return DomainResponseInterface
      * @throws \Exception
      */
     public function executeRequest(
-        UriInterface|string $uri,
-        string $method,
-        ?StreamInterface $body = null
+        UriInterface $uri,
+        HttpMethod $method,
+        ?StreamInterface $body = null,
+        ?array $clientOptions = null
     ): DomainResponseInterface {
-        $httpMethod = HttpMethod::createFromString(strtoupper($method));
-        
-        if (is_string($uri)) {
-            $uri = $this->uriFactory->createUri($uri);
-        }
-        
-        $request = new class(
-            $httpMethod,
+        $request = new SimpleRequest(
+            $method,
             $uri,
             $body,
             $this->requestFactory
-        ) extends AbstractGatewayRequest {
-            private HttpMethod $method;
-            private UriInterface $uri;
-            private ?StreamInterface $body;
+        );
 
-            public function __construct(
-                HttpMethod $method,
-                UriInterface $uri,
-                ?StreamInterface $body,
-                RequestFactoryInterface $requestFactory
-            ) {
-                $this->method = $method;
-                $this->uri = $uri;
-                $this->body = $body;
-                parent::__construct($requestFactory);
-            }
+        $adapterConfig = null;
+        if ($clientOptions !== null) {
+            $adapterConfig = GuzzleAdapterConfig::createFromArray($clientOptions);
+        }
 
-            protected function getMethod(): HttpMethod
-            {
-                return $this->method;
-            }
-
-            protected function getUri(): UriInterface
-            {
-                return $this->uri;
-            }
-
-            protected function getHeaders(): array
-            {
-                return [];
-            }
-
-            protected function getBody(): ?StreamInterface
-            {
-                return $this->body;
-            }
-        };
-
-        return $this->gateway->sendRequest($request);
+        return $this->gateway->sendRequest($request, null, $adapterConfig);
     }
 }

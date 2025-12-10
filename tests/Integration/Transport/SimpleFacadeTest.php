@@ -11,8 +11,10 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Nyholm\Psr7\Stream;
+use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Response\Domain\SimpleResponse;
 use Profesia\ServiceLayer\Transport\SimpleFacade;
+use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Psr\Http\Message\RequestInterface;
 
 class SimpleFacadeTest extends MockeryTestCase
@@ -64,8 +66,9 @@ class SimpleFacadeTest extends MockeryTestCase
         
         $facade = new SimpleFacade($gateway, new Psr17Factory(), $logger);
         
+        $uri = new Uri('https://api.example.com/endpoint');
         $body = Stream::create('{"test": "data"}');
-        $response = $facade->executeRequest('https://api.example.com/endpoint', 'POST', $body);
+        $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
         
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
@@ -103,7 +106,8 @@ class SimpleFacadeTest extends MockeryTestCase
         
         $facade = new SimpleFacade($gateway);
         
-        $response = $facade->executeRequest('https://api.example.com/data', 'GET');
+        $uri = new Uri('https://api.example.com/data');
+        $response = $facade->executeRequest($uri, HttpMethod::createGet());
         
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());

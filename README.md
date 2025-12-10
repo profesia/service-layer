@@ -20,21 +20,29 @@ For quick prototyping and testing of API endpoints, you can use the `SimpleFacad
 
 ```php
 use Profesia\ServiceLayer\Transport\SimpleFacade;
+use Profesia\ServiceLayer\ValueObject\HttpMethod;
 use Nyholm\Psr7\Stream;
+use Nyholm\Psr7\Uri;
 
 // Create a facade instance
 $facade = new SimpleFacade();
 
 // Make a simple GET request
-$response = $facade->executeRequest('https://api.example.com/users', 'GET');
+$uri = new Uri('https://api.example.com/users');
+$response = $facade->executeRequest($uri, HttpMethod::createGet());
 
 // Make a POST request with a body
+$uri = new Uri('https://api.example.com/users');
 $body = Stream::create(json_encode(['name' => 'John Doe']));
-$response = $facade->executeRequest('https://api.example.com/users', 'POST', $body);
+$response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
+
+// Make a request with custom client options (timeout, SSL verification, etc.)
+$clientOptions = ['timeout' => 10.0, 'verify' => false];
+$response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
 
 // Check the response
 if ($response->isSuccessful()) {
-    echo $response->getResponseBody()->getContents();
+    echo $response->getResponseBody();
 }
 ```
 

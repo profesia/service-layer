@@ -9,7 +9,9 @@ declare(strict_types=1);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Nyholm\Psr7\Stream;
+use Nyholm\Psr7\Uri;
 use Profesia\ServiceLayer\Transport\SimpleFacade;
+use Profesia\ServiceLayer\ValueObject\HttpMethod;
 
 // Create a simple facade instance with default settings
 $facade = new SimpleFacade();
@@ -17,13 +19,11 @@ $facade = new SimpleFacade();
 // Example 1: Simple GET request
 echo "Example 1: GET request\n";
 try {
-    $response = $facade->executeRequest(
-        'https://api.example.com/users',
-        'GET'
-    );
+    $uri = new Uri('https://api.example.com/users');
+    $response = $facade->executeRequest($uri, HttpMethod::createGet());
     
-    echo "Status: " . $response->getStatusCode()->getValue() . "\n";
-    echo "Body: " . $response->getResponseBody()->getContents() . "\n";
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
+    echo "Body: " . $response->getResponseBody() . "\n";
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "\n";
 }
@@ -33,15 +33,11 @@ echo "\n";
 // Example 2: POST request with JSON body
 echo "Example 2: POST request with body\n";
 try {
+    $uri = new Uri('https://api.example.com/users');
     $body = Stream::create(json_encode(['name' => 'John Doe', 'email' => 'john@example.com']));
     
-    $response = $facade->executeRequest(
-        'https://api.example.com/users',
-        'POST',
-        $body
-    );
+    $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
     
-    echo "Status: " . $response->getStatusCode()->getValue() . "\n";
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "\n";
@@ -52,15 +48,12 @@ echo "\n";
 // Example 3: PUT request
 echo "Example 3: PUT request\n";
 try {
+    $uri = new Uri('https://api.example.com/users/123');
     $body = Stream::create(json_encode(['status' => 'active']));
     
-    $response = $facade->executeRequest(
-        'https://api.example.com/users/123',
-        'put',  // Method names are case-insensitive
-        $body
-    );
+    $response = $facade->executeRequest($uri, HttpMethod::createPut(), $body);
     
-    echo "Status: " . $response->getStatusCode()->getValue() . "\n";
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "\n";
 }
@@ -70,12 +63,30 @@ echo "\n";
 // Example 4: DELETE request
 echo "Example 4: DELETE request\n";
 try {
-    $response = $facade->executeRequest(
-        'https://api.example.com/users/123',
-        'DELETE'
-    );
+    $uri = new Uri('https://api.example.com/users/123');
+    $response = $facade->executeRequest($uri, HttpMethod::createDelete());
     
-    echo "Status: " . $response->getStatusCode()->getValue() . "\n";
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "\n";
 }
+
+echo "\n";
+
+// Example 5: Request with client options (timeout, verify SSL, etc.)
+echo "Example 5: Request with custom client options\n";
+try {
+    $uri = new Uri('https://api.example.com/users');
+    $clientOptions = [
+        'timeout' => 10.0,
+        'connect_timeout' => 5.0,
+        'verify' => false,
+    ];
+    
+    $response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+    
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+

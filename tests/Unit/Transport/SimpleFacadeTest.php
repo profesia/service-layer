@@ -50,8 +50,9 @@ class SimpleFacadeTest extends MockeryTestCase
 
         $facade = new SimpleFacade($gateway, new Psr17Factory());
         
+        $uri = new Uri('https://example.com/api/test');
         $body = Stream::create('test body');
-        $response = $facade->executeRequest('https://example.com/api/test', 'POST', $body);
+        $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -86,7 +87,7 @@ class SimpleFacadeTest extends MockeryTestCase
 
         $facade = new SimpleFacade($gateway, new Psr17Factory());
         
-        $response = $facade->executeRequest($uri, 'GET', null);
+        $response = $facade->executeRequest($uri, HttpMethod::createGet(), null);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -119,7 +120,8 @@ class SimpleFacadeTest extends MockeryTestCase
 
         $facade = new SimpleFacade($gateway, new Psr17Factory());
         
-        $response = $facade->executeRequest('https://example.com/api/resource/123', 'DELETE');
+        $uri = new Uri('https://example.com/api/resource/123');
+        $response = $facade->executeRequest($uri, HttpMethod::createDelete());
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -143,8 +145,9 @@ class SimpleFacadeTest extends MockeryTestCase
 
         $facade = new SimpleFacade($gateway, new Psr17Factory());
         
+        $uri = new Uri('https://example.com/api/update');
         $body = Stream::create('{"key": "value"}');
-        $response = $facade->executeRequest('https://example.com/api/update', 'put', $body);
+        $response = $facade->executeRequest($uri, HttpMethod::createPut(), $body);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -154,5 +157,48 @@ class SimpleFacadeTest extends MockeryTestCase
         $facade = new SimpleFacade();
         
         $this->assertInstanceOf(SimpleFacade::class, $facade);
+    }
+
+    public function testCanExecuteRequestWithClientOptions(): void
+    {
+        /** @var MockInterface|GatewayInterface $gateway */
+        $gateway = Mockery::mock(GatewayInterface::class);
+        
+        /** @var MockInterface|DomainResponseInterface $expectedResponse */
+        $expectedResponse = Mockery::mock(DomainResponseInterface::class);
+        
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->once()
+            ->withArgs(function (
+                GatewayRequestInterface $request,
+                $mapper,
+                $adapterConfig
+            ) {
+                $psrRequest = $request->toPsrRequest();
+                
+                if ($psrRequest->getMethod() !== 'GET') {
+                    return false;
+                }
+                
+                // Verify adapter config is passed
+                if ($adapterConfig === null) {
+                    return false;
+                }
+                
+                return true;
+            })
+            ->andReturn($expectedResponse);
+
+        $facade = new SimpleFacade($gateway, new Psr17Factory());
+        
+        $uri = new Uri('https://example.com/api/test');
+        $clientOptions = [
+            'timeout' => 10.0,
+            'verify' => false
+        ];
+        $response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+        
+        $this->assertSame($expectedResponse, $response);
     }
 }
