@@ -47,3 +47,4 @@ final class SimpleRequest extends AbstractGatewayRequest
         return $this->body;
     }
 }
+

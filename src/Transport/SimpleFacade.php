@@ -76,3 +76,4 @@ final class SimpleFacade
         return $this->gateway->sendRequest($request, null, $adapterConfig);
     }
 }
+
