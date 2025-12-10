@@ -90,4 +90,40 @@ try {
     echo "Error: " . $e->getMessage() . "\n";
 }
 
+echo "\n";
+
+// Example 6: Using builder pattern with custom mapper
+echo "Example 6: Builder pattern with custom response mapper\n";
+try {
+    $uri = new Uri('https://api.example.com/users');
+    
+    $response = $facade
+        ->withMapper(function ($endpointResponse) {
+            // Custom transformation logic
+            echo "Custom mapper called\n";
+            return \Profesia\ServiceLayer\Response\Domain\SimpleResponse::createFromEndpointResponse($endpointResponse);
+        })
+        ->executeRequest($uri, HttpMethod::createGet());
+    
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
+echo "\n";
+
+// Example 7: Using builder pattern with client options
+echo "Example 7: Builder pattern with client options\n";
+try {
+    $uri = new Uri('https://api.example.com/users');
+    
+    $response = $facade
+        ->withClientOptions(['timeout' => 15.0, 'verify' => false])
+        ->executeRequest($uri, HttpMethod::createGet());
+    
+    echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
 

@@ -201,4 +201,109 @@ class SimpleFacadeTest extends MockeryTestCase
         
         $this->assertSame($expectedResponse, $response);
     }
+
+    public function testCanUseBuilderPatternWithMapper(): void
+    {
+        /** @var MockInterface|GatewayInterface $gateway */
+        $gateway = Mockery::mock(GatewayInterface::class);
+        
+        /** @var MockInterface|DomainResponseInterface $expectedResponse */
+        $expectedResponse = Mockery::mock(DomainResponseInterface::class);
+        
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->once()
+            ->withArgs(function (
+                GatewayRequestInterface $request,
+                $mapper,
+                $adapterConfig
+            ) {
+                // Verify mapper is passed
+                if ($mapper === null) {
+                    return false;
+                }
+                
+                return true;
+            })
+            ->andReturn($expectedResponse);
+
+        $facade = new SimpleFacade($gateway, new Psr17Factory());
+        
+        $uri = new Uri('https://example.com/api/test');
+        $response = $facade
+            ->withMapper(function ($endpointResponse) use ($expectedResponse) {
+                return $expectedResponse;
+            })
+            ->executeRequest($uri, HttpMethod::createGet());
+        
+        $this->assertSame($expectedResponse, $response);
+    }
+
+    public function testCanUseBuilderPatternWithClientOptions(): void
+    {
+        /** @var MockInterface|GatewayInterface $gateway */
+        $gateway = Mockery::mock(GatewayInterface::class);
+        
+        /** @var MockInterface|DomainResponseInterface $expectedResponse */
+        $expectedResponse = Mockery::mock(DomainResponseInterface::class);
+        
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->once()
+            ->withArgs(function (
+                GatewayRequestInterface $request,
+                $mapper,
+                $adapterConfig
+            ) {
+                // Verify adapter config is passed
+                if ($adapterConfig === null) {
+                    return false;
+                }
+                
+                return true;
+            })
+            ->andReturn($expectedResponse);
+
+        $facade = new SimpleFacade($gateway, new Psr17Factory());
+        
+        $uri = new Uri('https://example.com/api/test');
+        $response = $facade
+            ->withClientOptions(['timeout' => 10.0])
+            ->executeRequest($uri, HttpMethod::createGet());
+        
+        $this->assertSame($expectedResponse, $response);
+    }
+
+    public function testBuilderPatternDoesNotMutateOriginalInstance(): void
+    {
+        /** @var MockInterface|GatewayInterface $gateway */
+        $gateway = Mockery::mock(GatewayInterface::class);
+        
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->twice()
+            ->withArgs(function (
+                GatewayRequestInterface $request,
+                $mapper,
+                $adapterConfig
+            ) {
+                return true;
+            })
+            ->andReturn(Mockery::mock(DomainResponseInterface::class));
+
+        $originalFacade = new SimpleFacade($gateway, new Psr17Factory());
+        
+        // Create a new instance with mapper
+        $facadeWithMapper = $originalFacade->withMapper(function ($response) {
+            return Mockery::mock(DomainResponseInterface::class);
+        });
+        
+        // Verify they are different instances
+        $this->assertNotSame($originalFacade, $facadeWithMapper);
+        
+        // Both should work independently
+        $uri = new Uri('https://example.com/api/test');
+        $originalFacade->executeRequest($uri, HttpMethod::createGet());
+        $facadeWithMapper->executeRequest($uri, HttpMethod::createGet());
+    }
 }

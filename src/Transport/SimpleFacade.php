@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Profesia\ServiceLayer\Transport;
 
+use Closure;
 use GuzzleHttp\Client;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Adapter\GuzzleAdapter;
+use Profesia\ServiceLayer\Mapper\ClosureMapper;
+use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Request\SimpleRequest;
+use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\Logging\CommunicationLogger;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
@@ -23,6 +27,8 @@ final class SimpleFacade
 {
     private GatewayInterface $gateway;
     private RequestFactoryInterface $requestFactory;
+    private ?ResponseDomainMapperInterface $mapper = null;
+    private ?array $clientOptions = null;
 
     public function __construct(
         ?GatewayInterface $gateway = null,
@@ -42,6 +48,45 @@ final class SimpleFacade
         }
         
         $this->gateway = $gateway;
+    }
+
+    /**
+     * Set a response mapper using a closure (builder pattern)
+     *
+     * @param Closure(EndpointResponseInterface): DomainResponseInterface $mapper
+     * @return self
+     */
+    public function withMapper(Closure $mapper): self
+    {
+        $clone = clone $this;
+        $clone->mapper = new ClosureMapper($mapper);
+        return $clone;
+    }
+
+    /**
+     * Set a response mapper using a ResponseDomainMapperInterface implementation (builder pattern)
+     *
+     * @param ResponseDomainMapperInterface $mapper
+     * @return self
+     */
+    public function withResponseMapper(ResponseDomainMapperInterface $mapper): self
+    {
+        $clone = clone $this;
+        $clone->mapper = $mapper;
+        return $clone;
+    }
+
+    /**
+     * Set client options (builder pattern)
+     *
+     * @param array<string, mixed> $clientOptions
+     * @return self
+     */
+    public function withClientOptions(array $clientOptions): self
+    {
+        $clone = clone $this;
+        $clone->clientOptions = $clientOptions;
+        return $clone;
     }
 
     /**
@@ -68,12 +113,14 @@ final class SimpleFacade
             $this->requestFactory
         );
 
+        // Use provided clientOptions or fall back to builder pattern options
+        $options = $clientOptions ?? $this->clientOptions;
         $adapterConfig = null;
-        if ($clientOptions !== null) {
-            $adapterConfig = AdapterConfig::createFromArray($clientOptions);
+        if ($options !== null) {
+            $adapterConfig = AdapterConfig::createFromArray($options);
         }
 
-        return $this->gateway->sendRequest($request, null, $adapterConfig);
+        return $this->gateway->sendRequest($request, $this->mapper, $adapterConfig);
     }
 }
 

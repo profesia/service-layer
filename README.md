@@ -40,6 +40,19 @@ $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
 $clientOptions = ['timeout' => 10.0, 'verify' => false];
 $response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
 
+// Use builder pattern with custom response mapper
+$response = $facade
+    ->withMapper(function ($endpointResponse) {
+        // Custom response transformation logic
+        return MyCustomResponse::fromEndpoint($endpointResponse);
+    })
+    ->executeRequest($uri, HttpMethod::createGet());
+
+// Use builder pattern with client options
+$response = $facade
+    ->withClientOptions(['timeout' => 10.0, 'verify' => false])
+    ->executeRequest($uri, HttpMethod::createGet());
+
 // Check the response
 if ($response->isSuccessful()) {
     echo $response->getResponseBody();
