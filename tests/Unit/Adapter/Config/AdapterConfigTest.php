@@ -186,4 +186,36 @@ class AdapterConfigTest extends MockeryTestCase
         $this->assertEquals(10.0, $config1->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
         $this->assertEquals(20.0, $merged->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
     }
+
+    public function testMergePerformsDeepCopyForHeaders(): void
+    {
+        $config1 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::TIMEOUT => 10.0,
+            AdapterConfigInterface::HEADERS => [
+                'X-Custom-Header' => 'value1',
+                'X-Auth' => 'token1',
+            ],
+        ]);
+        
+        $config2 = AdapterConfig::createFromArray([
+            AdapterConfigInterface::HEADERS => [
+                'X-Auth' => 'token2',
+                'X-New-Header' => 'value2',
+            ],
+        ]);
+        
+        $merged = $config1->merge($config2);
+        $resultConfig = $merged->getConfig();
+        
+        // Headers should be deep merged
+        $this->assertArrayHasKey(AdapterConfigInterface::HEADERS, $resultConfig);
+        $this->assertEquals([
+            'X-Custom-Header' => 'value1',  // From config1
+            'X-Auth' => 'token2',            // Overridden by config2
+            'X-New-Header' => 'value2',      // From config2
+        ], $resultConfig[AdapterConfigInterface::HEADERS]);
+        
+        // Timeout should remain from config1
+        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+    }
 }
