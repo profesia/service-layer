@@ -246,15 +246,31 @@ class ServiceLayerTest extends MockeryTestCase
         /** @var MockInterface|GatewayInterface $gateway */
         $gateway = Mockery::mock(GatewayInterface::class);
         
+        // First request with mapper - mapper should be present
         $gateway
             ->shouldReceive('sendRequest')
-            ->twice()
+            ->once()
             ->withArgs(function (
                 GatewayRequestInterface $request,
                 $mapper,
                 $adapterConfig
             ) {
-                return true;
+                // First call should have mapper
+                return $mapper !== null;
+            })
+            ->andReturn(Mockery::mock(DomainResponseInterface::class));
+        
+        // Second request should not have mapper (state reset) - mapper should be null
+        $gateway
+            ->shouldReceive('sendRequest')
+            ->once()
+            ->withArgs(function (
+                GatewayRequestInterface $request,
+                $mapper,
+                $adapterConfig
+            ) {
+                // Mapper should be null after reset
+                return $mapper === null && $adapterConfig === null;
             })
             ->andReturn(Mockery::mock(DomainResponseInterface::class));
 
@@ -269,19 +285,6 @@ class ServiceLayerTest extends MockeryTestCase
             ->executeRequest($uri, HttpMethod::createGet());
         
         // Second request should not have mapper (state reset)
-        $gateway
-            ->shouldReceive('sendRequest')
-            ->once()
-            ->withArgs(function (
-                GatewayRequestInterface $request,
-                $mapper,
-                $adapterConfig
-            ) {
-                // Mapper should be null after reset
-                return $mapper === null && $adapterConfig === null;
-            })
-            ->andReturn(Mockery::mock(DomainResponseInterface::class));
-        
         $facade->executeRequest($uri, HttpMethod::createGet());
     }
 }
