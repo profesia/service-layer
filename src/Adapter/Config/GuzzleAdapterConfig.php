@@ -10,6 +10,9 @@ use Profesia\ServiceLayer\ValueObject\Login;
 use Profesia\ServiceLayer\ValueObject\Password;
 use Profesia\ServiceLayer\ValueObject\Timeout;
 
+/**
+ * @deprecated Use AdapterConfig with GuzzleConfigTransformer instead.
+ */
 final class GuzzleAdapterConfig extends AbstractAdapterConfig
 {
     public static function createFromArray(array $config): GuzzleAdapterConfig
@@ -63,5 +66,24 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
         return new self(
             $config
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function merge(AdapterConfigInterface $config): self
+    {
+        $baseConfig = $this->getConfig();
+        $newConfig = $config->getConfig();
+
+        // Shallow merge - override values, not deep merge
+        $mergedConfig = array_merge($baseConfig, $newConfig);
+
+        // Deep merge for HEADERS key specifically
+        if (array_key_exists(self::HEADERS, $baseConfig) && array_key_exists(self::HEADERS, $newConfig)) {
+            $mergedConfig[self::HEADERS] = array_merge($baseConfig[self::HEADERS], $newConfig[self::HEADERS]);
+        }
+
+        return new self($mergedConfig);
     }
 }

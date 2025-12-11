@@ -14,7 +14,7 @@ use Profesia\ServiceLayer\ValueObject\StatusCode;
 
 class TestingAdapter implements AdapterInterface
 {
-    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverrideBuilder = null): EndpointResponseInterface
+    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverride = null): EndpointResponseInterface
     {
         $psrRequest = $request->toPsrRequest();
         return EndpointResponse::createFromComponents(

@@ -40,25 +40,4 @@ abstract class AbstractAdapterConfig implements AdapterConfigInterface
     {
         return $this->config;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function merge(AdapterConfigInterface $config): self
-    {
-        $baseConfig = $this->config;
-        $newConfig = $config->getConfig();
-        
-        // Shallow merge - override values, not deep merge
-        $mergedConfig = array_merge($baseConfig, $newConfig);
-        
-        // Deep merge for HEADERS key specifically
-        if (array_key_exists(self::HEADERS, $baseConfig) && array_key_exists(self::HEADERS, $newConfig)) {
-            if (is_array($baseConfig[self::HEADERS]) && is_array($newConfig[self::HEADERS])) {
-                $mergedConfig[self::HEADERS] = array_merge($baseConfig[self::HEADERS], $newConfig[self::HEADERS]);
-            }
-        }
-        
-        return new static($mergedConfig);
-    }
 }

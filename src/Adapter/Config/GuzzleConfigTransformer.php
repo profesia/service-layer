@@ -28,24 +28,12 @@ final class GuzzleConfigTransformer
 
         // Transform timeout (from Timeout value object)
         if (array_key_exists(AdapterConfigInterface::TIMEOUT, $sourceConfig)) {
-            $timeout = $sourceConfig[AdapterConfigInterface::TIMEOUT];
-            if ($timeout instanceof Timeout) {
-                $guzzleConfig[RequestOptions::TIMEOUT] = $timeout->toFloat();
-            } else {
-                // Fallback for backward compatibility
-                $guzzleConfig[RequestOptions::TIMEOUT] = Timeout::createFromFloat((float)$timeout)->toFloat();
-            }
+            $guzzleConfig[RequestOptions::TIMEOUT] = $sourceConfig[AdapterConfigInterface::TIMEOUT];
         }
 
         // Transform connect_timeout (from Timeout value object)
         if (array_key_exists(AdapterConfigInterface::CONNECT_TIMEOUT, $sourceConfig)) {
-            $connectTimeout = $sourceConfig[AdapterConfigInterface::CONNECT_TIMEOUT];
-            if ($connectTimeout instanceof Timeout) {
-                $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = $connectTimeout->toFloat();
-            } else {
-                // Fallback for backward compatibility
-                $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = Timeout::createFromFloat((float)$connectTimeout)->toFloat();
-            }
+            $guzzleConfig[RequestOptions::CONNECT_TIMEOUT] = $sourceConfig[AdapterConfigInterface::CONNECT_TIMEOUT];
         }
 
         // Transform verify (already primitive type)
