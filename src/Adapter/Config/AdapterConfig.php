@@ -12,7 +12,7 @@ use Profesia\ServiceLayer\ValueObject\Timeout;
 /**
  * Platform-independent adapter configuration.
  * Holds configuration using standard keys defined in AdapterConfigInterface.
- * Stores values as value objects for type safety.
+ * Values are validated through value objects but stored as primitive types.
  */
 final class AdapterConfig implements AdapterConfigInterface
 {
