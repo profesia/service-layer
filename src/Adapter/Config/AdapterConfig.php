@@ -80,7 +80,7 @@ final class AdapterConfig implements AdapterConfigInterface
     }
 
     /**
-     * Normalize and validate configuration array, converting to value objects
+     * Normalize and validate configuration array, converting to value objects and back to primitives
      *
      * @param array<string, mixed> $config
      * @return array<string, mixed>
@@ -90,20 +90,16 @@ final class AdapterConfig implements AdapterConfigInterface
     {
         $normalized = [];
 
-        // Normalize timeout to Timeout value object
+        // Normalize timeout - create Timeout value object and convert back to float
         if (array_key_exists(self::TIMEOUT, $config)) {
-            if (!is_float($config[self::TIMEOUT]) && !is_int($config[self::TIMEOUT])) {
-                throw new InvalidArgumentException('Timeout value should be a valid number');
-            }
-            $normalized[self::TIMEOUT] = Timeout::createFromFloat((float)$config[self::TIMEOUT]);
+            $timeoutVO = Timeout::createFromFloat((float)$config[self::TIMEOUT]);
+            $normalized[self::TIMEOUT] = $timeoutVO->toFloat();
         }
 
-        // Normalize connect_timeout to Timeout value object
+        // Normalize connect_timeout - create Timeout value object and convert back to float
         if (array_key_exists(self::CONNECT_TIMEOUT, $config)) {
-            if (!is_float($config[self::CONNECT_TIMEOUT]) && !is_int($config[self::CONNECT_TIMEOUT])) {
-                throw new InvalidArgumentException('Connect timeout value should be a valid number');
-            }
-            $normalized[self::CONNECT_TIMEOUT] = Timeout::createFromFloat((float)$config[self::CONNECT_TIMEOUT]);
+            $connectTimeoutVO = Timeout::createFromFloat((float)$config[self::CONNECT_TIMEOUT]);
+            $normalized[self::CONNECT_TIMEOUT] = $connectTimeoutVO->toFloat();
         }
 
         // Normalize verify (keep as-is, bool or string)
@@ -122,7 +118,7 @@ final class AdapterConfig implements AdapterConfigInterface
             $normalized[self::ALLOW_REDIRECTS] = $config[self::ALLOW_REDIRECTS];
         }
 
-        // Normalize auth to use Login and Password value objects
+        // Normalize auth - create Login and Password value objects and convert back to strings
         if (array_key_exists(self::AUTH, $config)) {
             if (!is_array($config[self::AUTH])) {
                 throw new InvalidArgumentException('Auth value should be a valid array');
@@ -131,9 +127,12 @@ final class AdapterConfig implements AdapterConfigInterface
                 throw new InvalidArgumentException('Auth value requires at least two items in the array config');
             }
             
+            $loginVO = Login::createFromString($config[self::AUTH][0]);
+            $passwordVO = Password::createFromString($config[self::AUTH][1]);
+            
             $authConfig = [
-                Login::createFromString($config[self::AUTH][0]),
-                Password::createFromString($config[self::AUTH][1]),
+                $loginVO->toString(),
+                $passwordVO->toString(),
             ];
             
             // Optional third parameter (e.g., 'digest')

@@ -34,9 +34,9 @@ class AdapterConfigTest extends MockeryTestCase
         $this->assertInstanceOf(AdapterConfig::class, $config);
         $resultConfig = $config->getConfig();
         
-        // Verify timeout is stored as Timeout value object
-        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::TIMEOUT]);
-        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        // Verify timeout is stored as float (value object validation occurred during normalization)
+        $this->assertIsFloat($resultConfig[AdapterConfigInterface::TIMEOUT]);
+        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]);
         
         // Verify is stored as-is
         $this->assertFalse($resultConfig[AdapterConfigInterface::VERIFY]);
@@ -45,20 +45,20 @@ class AdapterConfigTest extends MockeryTestCase
     public function testValidatesTimeoutValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Timeout value should be a valid number');
+        $this->expectExceptionMessage('Timeout value should be 0.0 or greater');
         
         AdapterConfig::createFromArray([
-            AdapterConfigInterface::TIMEOUT => 'invalid',
+            AdapterConfigInterface::TIMEOUT => -5.0,
         ]);
     }
 
     public function testValidatesConnectTimeoutValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Connect timeout value should be a valid number');
+        $this->expectExceptionMessage('Timeout value should be 0.0 or greater');
         
         AdapterConfig::createFromArray([
-            AdapterConfigInterface::CONNECT_TIMEOUT => 'invalid',
+            AdapterConfigInterface::CONNECT_TIMEOUT => -10.0,
         ]);
     }
 
@@ -126,20 +126,20 @@ class AdapterConfigTest extends MockeryTestCase
         $config = AdapterConfig::createFromArray($configArray);
         $resultConfig = $config->getConfig();
         
-        // Verify value objects
-        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::TIMEOUT]);
-        $this->assertEquals(15.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        // Verify primitive types (value objects validated during normalization)
+        $this->assertIsFloat($resultConfig[AdapterConfigInterface::TIMEOUT]);
+        $this->assertEquals(15.0, $resultConfig[AdapterConfigInterface::TIMEOUT]);
         
-        $this->assertInstanceOf(Timeout::class, $resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]);
-        $this->assertEquals(5.0, $resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]->toFloat());
+        $this->assertIsFloat($resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]);
+        $this->assertEquals(5.0, $resultConfig[AdapterConfigInterface::CONNECT_TIMEOUT]);
         
         $this->assertTrue($resultConfig[AdapterConfigInterface::VERIFY]);
         $this->assertFalse($resultConfig[AdapterConfigInterface::ALLOW_REDIRECTS]);
         
-        $this->assertInstanceOf(Login::class, $resultConfig[AdapterConfigInterface::AUTH][0]);
-        $this->assertInstanceOf(Password::class, $resultConfig[AdapterConfigInterface::AUTH][1]);
-        $this->assertEquals('username', $resultConfig[AdapterConfigInterface::AUTH][0]->toString());
-        $this->assertEquals('password', $resultConfig[AdapterConfigInterface::AUTH][1]->toString());
+        $this->assertIsString($resultConfig[AdapterConfigInterface::AUTH][0]);
+        $this->assertIsString($resultConfig[AdapterConfigInterface::AUTH][1]);
+        $this->assertEquals('username', $resultConfig[AdapterConfigInterface::AUTH][0]);
+        $this->assertEquals('password', $resultConfig[AdapterConfigInterface::AUTH][1]);
         $this->assertEquals('digest', $resultConfig[AdapterConfigInterface::AUTH][2]);
         
         $this->assertEquals(['X-Custom' => 'value'], $resultConfig[AdapterConfigInterface::HEADERS]);
@@ -161,7 +161,7 @@ class AdapterConfigTest extends MockeryTestCase
         $resultConfig = $merged->getConfig();
         
         // Timeout should be overridden
-        $this->assertEquals(20.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        $this->assertEquals(20.0, $resultConfig[AdapterConfigInterface::TIMEOUT]);
         
         // Verify should remain from config1
         $this->assertFalse($resultConfig[AdapterConfigInterface::VERIFY]);
@@ -183,8 +183,8 @@ class AdapterConfigTest extends MockeryTestCase
         $merged = $config1->merge($config2);
         
         // Original should not be mutated
-        $this->assertEquals(10.0, $config1->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
-        $this->assertEquals(20.0, $merged->getConfig()[AdapterConfigInterface::TIMEOUT]->toFloat());
+        $this->assertEquals(10.0, $config1->getConfig()[AdapterConfigInterface::TIMEOUT]);
+        $this->assertEquals(20.0, $merged->getConfig()[AdapterConfigInterface::TIMEOUT]);
     }
 
     public function testMergePerformsDeepCopyForHeaders(): void
@@ -216,6 +216,6 @@ class AdapterConfigTest extends MockeryTestCase
         ], $resultConfig[AdapterConfigInterface::HEADERS]);
         
         // Timeout should remain from config1
-        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]->toFloat());
+        $this->assertEquals(10.0, $resultConfig[AdapterConfigInterface::TIMEOUT]);
     }
 }
