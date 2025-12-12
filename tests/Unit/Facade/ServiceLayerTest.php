@@ -10,6 +10,8 @@ use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Stream;
 use Nyholm\Psr7\Uri;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Facade\ServiceLayer;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
@@ -52,7 +54,7 @@ class ServiceLayerTest extends MockeryTestCase
         
         $uri = new Uri('https://example.com/api/test');
         $body = Stream::create('test body');
-        $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
+        $response = $facade->sendRequest($uri, HttpMethod::createPost(), $body);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -87,7 +89,7 @@ class ServiceLayerTest extends MockeryTestCase
 
         $facade = new ServiceLayer($gateway, new Psr17Factory());
         
-        $response = $facade->executeRequest($uri, HttpMethod::createGet(), null);
+        $response = $facade->sendRequest($uri, HttpMethod::createGet(), null);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -121,7 +123,7 @@ class ServiceLayerTest extends MockeryTestCase
         $facade = new ServiceLayer($gateway, new Psr17Factory());
         
         $uri = new Uri('https://example.com/api/resource/123');
-        $response = $facade->executeRequest($uri, HttpMethod::createDelete());
+        $response = $facade->sendRequest($uri, HttpMethod::createDelete());
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -164,7 +166,7 @@ class ServiceLayerTest extends MockeryTestCase
             'timeout' => 10.0,
             'verify' => false
         ];
-        $response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+        $response = $facade->sendRequest($uri, HttpMethod::createGet(), null, $clientOptions);
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -198,45 +200,10 @@ class ServiceLayerTest extends MockeryTestCase
         
         $uri = new Uri('https://example.com/api/test');
         $response = $facade
-            ->withMapper(function ($endpointResponse) use ($expectedResponse) {
+            ->withMapperClosure(function ($endpointResponse) use ($expectedResponse) {
                 return $expectedResponse;
             })
-            ->executeRequest($uri, HttpMethod::createGet());
-        
-        $this->assertSame($expectedResponse, $response);
-    }
-
-    public function testCanUseBuilderPatternWithClientOptions(): void
-    {
-        /** @var MockInterface|GatewayInterface $gateway */
-        $gateway = Mockery::mock(GatewayInterface::class);
-        
-        /** @var MockInterface|DomainResponseInterface $expectedResponse */
-        $expectedResponse = Mockery::mock(DomainResponseInterface::class);
-        
-        $gateway
-            ->shouldReceive('sendRequest')
-            ->once()
-            ->withArgs(function (
-                GatewayRequestInterface $request,
-                $mapper,
-                $adapterConfig
-            ) {
-                // Verify adapter config is passed
-                if ($adapterConfig === null) {
-                    return false;
-                }
-                
-                return true;
-            })
-            ->andReturn($expectedResponse);
-
-        $facade = new ServiceLayer($gateway, new Psr17Factory());
-        
-        $uri = new Uri('https://example.com/api/test');
-        $response = $facade
-            ->withClientOptions(['timeout' => 10.0])
-            ->executeRequest($uri, HttpMethod::createGet());
+            ->sendRequest($uri, HttpMethod::createGet());
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -267,10 +234,10 @@ class ServiceLayerTest extends MockeryTestCase
             ->withArgs(function (
                 GatewayRequestInterface $request,
                 $mapper,
-                $adapterConfig
+                AdapterConfigInterface $adapterConfig
             ) {
                 // Mapper should be null after reset
-                return $mapper === null && $adapterConfig === null;
+                return $mapper === null && $adapterConfig->getConfig() === [];
             })
             ->andReturn(Mockery::mock(DomainResponseInterface::class));
 
@@ -279,12 +246,12 @@ class ServiceLayerTest extends MockeryTestCase
         // First request with mapper
         $uri = new Uri('https://example.com/api/test');
         $facade
-            ->withMapper(function ($response) {
+            ->withMapperClosure(function ($response) {
                 return Mockery::mock(DomainResponseInterface::class);
             })
-            ->executeRequest($uri, HttpMethod::createGet());
+            ->sendRequest($uri, HttpMethod::createGet());
         
         // Second request should not have mapper (state reset)
-        $facade->executeRequest($uri, HttpMethod::createGet());
+        $facade->sendRequest($uri, HttpMethod::createGet());
     }
 }

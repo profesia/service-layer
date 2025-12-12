@@ -63,7 +63,7 @@ class ServiceLayerTest extends MockeryTestCase
         
         $uri = new Uri('https://api.example.com/endpoint');
         $body = Stream::create('{"test": "data"}');
-        $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
+        $response = $facade->sendRequest($uri, HttpMethod::createPost(), $body);
         
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());
@@ -102,7 +102,7 @@ class ServiceLayerTest extends MockeryTestCase
         $facade = new ServiceLayer($gateway, new Psr17Factory());
         
         $uri = new Uri('https://api.example.com/data');
-        $response = $facade->executeRequest($uri, HttpMethod::createGet());
+        $response = $facade->sendRequest($uri, HttpMethod::createGet());
         
         $this->assertInstanceOf(SimpleResponse::class, $response);
         $this->assertTrue($response->isSuccessful());

@@ -43,24 +43,24 @@ $facade = new ServiceLayer($gateway, $requestFactory);
 
 // Make a simple GET request
 $uri = new Uri('https://api.example.com/users');
-$response = $facade->executeRequest($uri, HttpMethod::createGet());
+$response = $facade->sendRequest($uri, HttpMethod::createGet());
 
 // Make a POST request with a body
 $uri = new Uri('https://api.example.com/users');
 $body = Stream::create(json_encode(['name' => 'John Doe']));
-$response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
+$response = $facade->sendRequest($uri, HttpMethod::createPost(), $body);
 
 // Make a request with custom client options (timeout, SSL verification, etc.)
 $clientOptions = ['timeout' => 10.0, 'verify' => false];
-$response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+$response = $facade->sendRequest($uri, HttpMethod::createGet(), null, $clientOptions);
 
 // Use builder pattern with custom response mapper
 $response = $facade
-    ->withMapper(function ($endpointResponse) {
+    ->withMapperClosure(function ($endpointResponse) {
         // Custom response transformation logic
         return MyCustomResponse::fromEndpoint($endpointResponse);
     })
-    ->executeRequest($uri, HttpMethod::createGet());
+    ->sendRequest($uri, HttpMethod::createGet());
 
 // Use builder pattern with client options (state is reset after each request)
 $response = $facade

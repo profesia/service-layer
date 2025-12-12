@@ -34,7 +34,7 @@ $facade = new ServiceLayer($gateway, $requestFactory);
 echo "Example 1: GET request\n";
 try {
     $uri = new Uri('https://api.example.com/users');
-    $response = $facade->executeRequest($uri, HttpMethod::createGet());
+    $response = $facade->sendRequest($uri, HttpMethod::createGet());
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
     echo "Body: " . $response->getResponseBody() . "\n";
@@ -50,7 +50,7 @@ try {
     $uri = new Uri('https://api.example.com/users');
     $body = Stream::create(json_encode(['name' => 'John Doe', 'email' => 'john@example.com']));
     
-    $response = $facade->executeRequest($uri, HttpMethod::createPost(), $body);
+    $response = $facade->sendRequest($uri, HttpMethod::createPost(), $body);
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
@@ -65,7 +65,7 @@ try {
     $uri = new Uri('https://api.example.com/users/123');
     $body = Stream::create(json_encode(['status' => 'active']));
     
-    $response = $facade->executeRequest($uri, HttpMethod::createPut(), $body);
+    $response = $facade->sendRequest($uri, HttpMethod::createPut(), $body);
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
@@ -78,7 +78,7 @@ echo "\n";
 echo "Example 4: DELETE request\n";
 try {
     $uri = new Uri('https://api.example.com/users/123');
-    $response = $facade->executeRequest($uri, HttpMethod::createDelete());
+    $response = $facade->sendRequest($uri, HttpMethod::createDelete());
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
@@ -97,7 +97,7 @@ try {
         'verify' => false,
     ];
     
-    $response = $facade->executeRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+    $response = $facade->sendRequest($uri, HttpMethod::createGet(), null, $clientOptions);
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
@@ -112,12 +112,12 @@ try {
     $uri = new Uri('https://api.example.com/users');
     
     $response = $facade
-        ->withMapper(function ($endpointResponse) {
+        ->withMapperClosure(function ($endpointResponse) {
             // Custom transformation logic
             echo "Custom mapper called\n";
             return \Profesia\ServiceLayer\Response\Domain\SimpleResponse::createFromEndpointResponse($endpointResponse);
         })
-        ->executeRequest($uri, HttpMethod::createGet());
+        ->sendRequest($uri, HttpMethod::createGet());
     
     echo "Successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {
@@ -139,7 +139,7 @@ try {
     echo "First request successful: " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
     
     // Second request - state is automatically reset, so default options apply
-    $response = $facade->executeRequest($uri, HttpMethod::createGet());
+    $response = $facade->sendRequest($uri, HttpMethod::createGet());
     
     echo "Second request successful (default options): " . ($response->isSuccessful() ? 'Yes' : 'No') . "\n";
 } catch (Exception $e) {

@@ -26,7 +26,6 @@ final class ServiceLayer
     private GatewayInterface $gateway;
     private RequestFactoryInterface $requestFactory;
     private ?ResponseDomainMapperInterface $mapper = null;
-    private ?array $clientOptions = null;
 
     public function __construct(
         GatewayInterface $gateway,
@@ -42,9 +41,10 @@ final class ServiceLayer
      * @param Closure(EndpointResponseInterface): DomainResponseInterface $mapper
      * @return self
      */
-    public function withMapper(Closure $mapper): self
+    public function withMapperClosure(Closure $mapper): self
     {
         $this->mapper = new ClosureMapper($mapper);
+
         return $this;
     }
 
@@ -57,18 +57,7 @@ final class ServiceLayer
     public function withResponseMapper(ResponseDomainMapperInterface $mapper): self
     {
         $this->mapper = $mapper;
-        return $this;
-    }
 
-    /**
-     * Set client options (builder pattern)
-     *
-     * @param array<string, mixed> $clientOptions
-     * @return self
-     */
-    public function withClientOptions(array $clientOptions): self
-    {
-        $this->clientOptions = $clientOptions;
         return $this;
     }
 
@@ -78,16 +67,16 @@ final class ServiceLayer
      * @param UriInterface         $uri
      * @param HttpMethod           $method
      * @param StreamInterface|null $body
-     * @param array<string, mixed>|null $clientOptions
+     * @param array<string, mixed> $clientOptions
      *
      * @return DomainResponseInterface
      * @throws \Exception
      */
-    public function executeRequest(
+    public function sendRequest(
         UriInterface $uri,
         HttpMethod $method,
         ?StreamInterface $body = null,
-        ?array $clientOptions = null
+        array $clientOptions = []
     ): DomainResponseInterface {
         $request = new SimpleRequest(
             $method,
@@ -96,14 +85,11 @@ final class ServiceLayer
             $this->requestFactory
         );
 
-        // Use provided clientOptions or fall back to builder pattern options
-        $options = $clientOptions ?? $this->clientOptions;
-        $adapterConfig = null;
-        if ($options !== null) {
-            $adapterConfig = AdapterConfig::createFromArray($options);
-        }
-
-        $response = $this->gateway->sendRequest($request, $this->mapper, $adapterConfig);
+        $response = $this->gateway->sendRequest(
+            $request,
+            $this->mapper,
+            AdapterConfig::createFromArray($clientOptions)
+        );
         
         // Reset state after request
         $this->resetState();
@@ -119,6 +105,5 @@ final class ServiceLayer
     private function resetState(): void
     {
         $this->mapper = null;
-        $this->clientOptions = null;
     }
 }
