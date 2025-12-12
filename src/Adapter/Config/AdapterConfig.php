@@ -90,11 +90,6 @@ final class AdapterConfig implements AdapterConfigInterface
         return new self($config);
     }
 
-    /**
-     * Create default empty configuration
-     *
-     * @return self
-     */
     public static function createDefault(): self
     {
         return new self([]);
@@ -122,7 +117,7 @@ final class AdapterConfig implements AdapterConfigInterface
         // Deep merge for HEADERS key specifically
         if (array_key_exists(self::HEADERS, $baseConfig) && array_key_exists(self::HEADERS, $newConfig)) {
             /** @phpstan-ignore-next-line  */
-            $mergedConfig[self::HEADERS] = array_merge($baseConfig[self::HEADERS], $newConfig[self::HEADERS]);
+            $mergedConfig[self::HEADERS] = array_merge_recursive($baseConfig[self::HEADERS], $newConfig[self::HEADERS]);
         }
         
         return new self($mergedConfig);

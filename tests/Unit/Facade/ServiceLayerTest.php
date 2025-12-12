@@ -142,7 +142,7 @@ class ServiceLayerTest extends MockeryTestCase
             ->withArgs(function (
                 GatewayRequestInterface $request,
                 $mapper,
-                $adapterConfig
+                ?AdapterConfigInterface $adapterConfig
             ) {
                 $psrRequest = $request->toPsrRequest();
                 
@@ -163,10 +163,10 @@ class ServiceLayerTest extends MockeryTestCase
         
         $uri = new Uri('https://example.com/api/test');
         $clientOptions = [
-            'timeout' => 10.0,
-            'verify' => false
+            AdapterConfigInterface::TIMEOUT => 10.0,
+            AdapterConfigInterface::VERIFY => false
         ];
-        $response = $facade->sendRequest($uri, HttpMethod::createGet(), null, $clientOptions);
+        $response = $facade->sendRequest($uri, HttpMethod::createGet(), null, AdapterConfig::createFromArray($clientOptions));
         
         $this->assertSame($expectedResponse, $response);
     }
@@ -220,7 +220,7 @@ class ServiceLayerTest extends MockeryTestCase
             ->withArgs(function (
                 GatewayRequestInterface $request,
                 $mapper,
-                $adapterConfig
+                ?AdapterConfigInterface $adapterConfig
             ) {
                 // First call should have mapper
                 return $mapper !== null;
@@ -234,10 +234,10 @@ class ServiceLayerTest extends MockeryTestCase
             ->withArgs(function (
                 GatewayRequestInterface $request,
                 $mapper,
-                AdapterConfigInterface $adapterConfig
+                ?AdapterConfigInterface $adapterConfig
             ) {
                 // Mapper should be null after reset
-                return $mapper === null && $adapterConfig->getConfig() === [];
+                return $mapper === null;
             })
             ->andReturn(Mockery::mock(DomainResponseInterface::class));
 

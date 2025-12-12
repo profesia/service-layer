@@ -48,7 +48,7 @@ final class GatewayCachingProxy implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterConfigOverride = null
     ): DomainResponseInterface
     {
         $psrRequest = $gatewayRequest->toPsrRequest();
@@ -58,7 +58,7 @@ final class GatewayCachingProxy implements GatewayInterface
             return unserialize((string)$this->cache->get($key));
         }
 
-        $response = $this->requestGateway->sendRequest($gatewayRequest, $mapper, $adapterOverrideConfigBuilder);
+        $response = $this->requestGateway->sendRequest($gatewayRequest, $mapper, $adapterConfigOverride);
         if ($this->cacheConfig->shouldBeResponseForRequestBeCached($psrRequest, $response) === true) {
             $this->cache->set(
                 $key,

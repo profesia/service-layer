@@ -211,7 +211,10 @@ class AdapterConfigTest extends MockeryTestCase
         $this->assertArrayHasKey(AdapterConfigInterface::HEADERS, $resultConfig);
         $this->assertEquals([
             'X-Custom-Header' => 'value1',  // From config1
-            'X-Auth' => 'token2',            // Overridden by config2
+            'X-Auth' => [
+                'token1',
+                'token2',
+            ],            // Deep merged with config2
             'X-New-Header' => 'value2',      // From config2
         ], $resultConfig[AdapterConfigInterface::HEADERS]);
         

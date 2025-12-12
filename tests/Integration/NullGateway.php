@@ -30,7 +30,7 @@ final class NullGateway implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterConfigOverride = null
     ): DomainResponseInterface {
         $psrRequest = $gatewayRequest->toPsrRequest();
         return SimpleResponse::createFromStatusCodeAndStream(

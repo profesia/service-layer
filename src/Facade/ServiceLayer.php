@@ -6,6 +6,7 @@ namespace Profesia\ServiceLayer\Facade;
 
 use Closure;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
 use Profesia\ServiceLayer\Mapper\ClosureMapper;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Request\SimpleRequest;
@@ -23,9 +24,10 @@ final class ServiceLayer
     private ?ResponseDomainMapperInterface $mapper = null;
 
     public function __construct(
-        GatewayInterface $gateway,
+        GatewayInterface        $gateway,
         RequestFactoryInterface $requestFactory
-    ) {
+    )
+    {
         $this->gateway = $gateway;
         $this->requestFactory = $requestFactory;
     }
@@ -45,22 +47,21 @@ final class ServiceLayer
     }
 
     /**
-     * Execute a simple API request
-     *
-     * @param UriInterface         $uri
-     * @param HttpMethod           $method
+     * @param UriInterface $uri
+     * @param HttpMethod $method
      * @param StreamInterface|null $body
-     * @param array<string, mixed> $clientOptions
+     * @param AdapterConfigInterface|null $adapterConfig
      *
      * @return DomainResponseInterface
      * @throws \Exception
      */
     public function sendRequest(
-        UriInterface $uri,
-        HttpMethod $method,
-        ?StreamInterface $body = null,
-        array $clientOptions = []
-    ): DomainResponseInterface {
+        UriInterface            $uri,
+        HttpMethod              $method,
+        ?StreamInterface        $body = null,
+        ?AdapterConfigInterface $adapterConfig = null
+    ): DomainResponseInterface
+    {
         $request = new SimpleRequest(
             $method,
             $uri,
@@ -71,11 +72,11 @@ final class ServiceLayer
         $response = $this->gateway->sendRequest(
             $request,
             $this->mapper,
-            AdapterConfig::createFromArray($clientOptions)
+            $adapterConfig
         );
 
         $this->resetState();
-        
+
         return $response;
     }
 
