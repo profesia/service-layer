@@ -9,7 +9,6 @@ use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
 use Profesia\ServiceLayer\Mapper\ClosureMapper;
 use Profesia\ServiceLayer\Mapper\ResponseDomainMapperInterface;
 use Profesia\ServiceLayer\Request\SimpleRequest;
-use Profesia\ServiceLayer\Response\Connection\EndpointResponseInterface;
 use Profesia\ServiceLayer\Response\Domain\DomainResponseInterface;
 use Profesia\ServiceLayer\Transport\GatewayInterface;
 use Profesia\ServiceLayer\ValueObject\HttpMethod;
@@ -17,10 +16,6 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-/**
- * Simplified facade for streamlined API prototyping and testing.
- * Provides a clean interface for making HTTP requests with optional response mapping.
- */
 final class ServiceLayer
 {
     private GatewayInterface $gateway;
@@ -35,12 +30,6 @@ final class ServiceLayer
         $this->requestFactory = $requestFactory;
     }
 
-    /**
-     * Set a response mapper using a closure (builder pattern)
-     *
-     * @param Closure(EndpointResponseInterface): DomainResponseInterface $mapper
-     * @return self
-     */
     public function withMapperClosure(Closure $mapper): self
     {
         $this->mapper = new ClosureMapper($mapper);
@@ -48,12 +37,6 @@ final class ServiceLayer
         return $this;
     }
 
-    /**
-     * Set a response mapper using a ResponseDomainMapperInterface implementation (builder pattern)
-     *
-     * @param ResponseDomainMapperInterface $mapper
-     * @return self
-     */
     public function withResponseMapper(ResponseDomainMapperInterface $mapper): self
     {
         $this->mapper = $mapper;
@@ -90,18 +73,12 @@ final class ServiceLayer
             $this->mapper,
             AdapterConfig::createFromArray($clientOptions)
         );
-        
-        // Reset state after request
+
         $this->resetState();
         
         return $response;
     }
 
-    /**
-     * Reset the mapper and client options state
-     *
-     * @return void
-     */
     private function resetState(): void
     {
         $this->mapper = null;

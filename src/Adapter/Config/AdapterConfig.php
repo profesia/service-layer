@@ -121,6 +121,7 @@ final class AdapterConfig implements AdapterConfigInterface
         
         // Deep merge for HEADERS key specifically
         if (array_key_exists(self::HEADERS, $baseConfig) && array_key_exists(self::HEADERS, $newConfig)) {
+            /** @phpstan-ignore-next-line  */
             $mergedConfig[self::HEADERS] = array_merge($baseConfig[self::HEADERS], $newConfig[self::HEADERS]);
         }
         
