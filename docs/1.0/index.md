@@ -15,3 +15,4 @@ Library designed for SOA communication via REST with external services
 - [Logger](08-logger.html)
 - [Gateway](09-gateway.html)
 - [Gateway Registry](10-gateway-registry.html)
+- [Facade](11-facade.html)
