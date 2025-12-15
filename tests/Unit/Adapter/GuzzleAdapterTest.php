@@ -472,7 +472,7 @@ class GuzzleAdapterTest extends MockeryTestCase
         $finalConfig = array_merge(
             $rawConfig,
             [
-                RequestOptions::HEADERS => array_merge(
+                RequestOptions::HEADERS => array_merge_recursive(
                     $rawConfig[RequestOptions::HEADERS] ?? [],
                     $requestHeaders,
                 )

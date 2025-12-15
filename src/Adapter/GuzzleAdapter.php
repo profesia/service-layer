@@ -45,7 +45,7 @@ final class GuzzleAdapter implements AdapterInterface
             $finalConfig = array_merge(
                 $finalConfig,
                 [
-                    RequestOptions::HEADERS => array_merge(
+                    RequestOptions::HEADERS => array_merge_recursive(
                         array_key_exists(RequestOptions::HEADERS, $finalConfig) ? (array)$finalConfig[RequestOptions::HEADERS] : [],
                         $psrRequest->getHeaders(),
                     )
