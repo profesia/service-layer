@@ -11,7 +11,7 @@ composer require profesia/service-layer
 ```
 
 ## Requirements
-- PHP 7.4+
+- PHP 8.0+
 
 ## Documentation
 * [Actual documentation](docs/1.0/index.html)
