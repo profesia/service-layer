@@ -82,7 +82,7 @@ final class GuzzleAdapterConfig extends AbstractAdapterConfig
         // Deep merge for HEADERS key specifically
         if (array_key_exists(RequestOptions::HEADERS, $baseConfig) && array_key_exists(RequestOptions::HEADERS, $newConfig)) {
             /** @phpstan-ignore-next-line  */
-            $mergedConfig[RequestOptions::HEADERS] = array_merge($baseConfig[RequestOptions::HEADERS], $newConfig[RequestOptions::HEADERS]);
+            $mergedConfig[RequestOptions::HEADERS] = array_merge_recursive($baseConfig[RequestOptions::HEADERS], $newConfig[RequestOptions::HEADERS]);
         }
 
         return new self($mergedConfig);
