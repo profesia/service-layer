@@ -247,7 +247,7 @@ $baseConfig = AdapterConfig::createFromArray([
 $overrides = AdapterConfig::createFromArray([
     'timeout' => 20.0, // Overrides timeout
     'headers' => [
-        'X-Auth' => 'token2', // Overrides auth token
+        'X-Auth' => 'token2', // Merges with auth token
         'X-New-Header' => 'value2', // Adds new header
     ],
 ]);
@@ -259,7 +259,7 @@ $merged = $baseConfig->merge($overrides);
 // - timeout: 20.0 (overridden)
 // - headers: {
 //     'X-Custom-Header': 'value1',  // Preserved from base
-//     'X-Auth': 'token2',            // Overridden
+//     'X-Auth': ['token1', 'token2'],            // Merged
 //     'X-New-Header': 'value2'       // Added
 //   }
 ```
