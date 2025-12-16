@@ -16,4 +16,13 @@ interface AdapterConfigInterface
      * @return array<string, mixed>
      */
     public function getConfig(): array;
+
+    /**
+     * Merge configurations. The provided config overrides existing values.
+     * Performs shallow merge, not deep merge.
+     *
+     * @param AdapterConfigInterface $config Configuration to merge
+     * @return self New instance with merged configuration
+     */
+    public function merge(AdapterConfigInterface $config): self;
 }

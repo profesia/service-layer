@@ -7,7 +7,9 @@ namespace Profesia\ServiceLayer\Adapter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
+use Profesia\ServiceLayer\Adapter\Config\AdapterConfig;
 use Profesia\ServiceLayer\Adapter\Config\AdapterConfigInterface;
+use Profesia\ServiceLayer\Adapter\Config\GuzzleConfigTransformer;
 use Profesia\ServiceLayer\Adapter\Exception\AdapterException;
 use Profesia\ServiceLayer\Response\Connection\EndpointResponse;
 use Profesia\ServiceLayer\Request\GatewayRequestInterface;
@@ -16,46 +18,39 @@ use Psr\Http\Client\ClientExceptionInterface;
 final class GuzzleAdapter implements AdapterInterface
 {
     private Client $client;
-    /** @var array<mixed>  */
-    private array  $config;
+    private AdapterConfigInterface $config;
 
     public function __construct(
-        Client $client,
-        AdapterConfigInterface $configBuilder
-    ) {
+        Client                 $client,
+        AdapterConfigInterface $config
+    )
+    {
         $this->client = $client;
-        $this->config = $configBuilder->getConfig();
+        $this->config = $config;
     }
 
     /**
      * @inheritdoc
      */
-    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverrideBuilder = null): EndpointResponse
+    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverride = null): EndpointResponse
     {
         try {
-            $psrRequest  = $request->toPsrRequest();
+            $psrRequest = $request->toPsrRequest();
             $finalConfig = $this->config;
-            if ($configOverrideBuilder !== null) {
-                $finalConfig = array_merge(
-                    $finalConfig,
-                    $configOverrideBuilder->getConfig()
-                );
+            if ($configOverride !== null) {
+                $finalConfig = $finalConfig->merge($configOverride);
             }
-
-            $finalConfig = array_merge(
-                $finalConfig,
-                [
-                    RequestOptions::HEADERS => array_merge_recursive(
-                        array_key_exists(RequestOptions::HEADERS, $finalConfig) ? (array)$finalConfig[RequestOptions::HEADERS] : [],
-                        $psrRequest->getHeaders(),
-                    )
-                ]
-            );
 
             return EndpointResponse::createFromPsrResponse(
                 $this->client->send(
                     $psrRequest,
-                    $finalConfig
+                    GuzzleConfigTransformer::transform($finalConfig->merge(
+                        AdapterConfig::createFromArray(
+                            [
+                                AdapterConfigInterface::HEADERS => $psrRequest->getHeaders(),
+                            ]
+                        )
+                    ))
                 )
             );
         } catch (RequestException $e) {

@@ -18,7 +18,7 @@ interface GatewayInterface
     /**
      * @param GatewayRequestInterface            $gatewayRequest
      * @param ResponseDomainMapperInterface|null $mapper
-     * @param AdapterConfigInterface|null        $adapterOverrideConfigBuilder
+     * @param AdapterConfigInterface|null        $adapterConfigOverride
      *
      * @return DomainResponseInterface
      * @throws Exception
@@ -26,6 +26,6 @@ interface GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterConfigOverride = null
     ): DomainResponseInterface;
 }

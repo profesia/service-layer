@@ -12,10 +12,10 @@ interface AdapterInterface
 {
     /**
      * @param GatewayRequestInterface     $request
-     * @param AdapterConfigInterface|null $configOverrideBuilder
+     * @param AdapterConfigInterface|null $configOverride
      *
      * @return EndpointResponseInterface
      * @throws AdapterException
      */
-    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverrideBuilder = null): EndpointResponseInterface;
+    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverride = null): EndpointResponseInterface;
 }

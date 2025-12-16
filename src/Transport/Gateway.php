@@ -52,7 +52,7 @@ final class Gateway implements GatewayInterface
     public function sendRequest(
         GatewayRequestInterface $gatewayRequest,
         ?ResponseDomainMapperInterface $mapper = null,
-        ?AdapterConfigInterface $adapterOverrideConfigBuilder = null
+        ?AdapterConfigInterface $adapterConfigOverride = null
     ): DomainResponseInterface {
         $startTime = new DateTimeImmutable();
         $logger    = $this->getLogger();
@@ -60,7 +60,7 @@ final class Gateway implements GatewayInterface
         $this->resetOneTimeConfig();
 
         try {
-            $endpointResponse = $adapter->send($gatewayRequest, $adapterOverrideConfigBuilder);
+            $endpointResponse = $adapter->send($gatewayRequest, $adapterConfigOverride);
 
             $logger->logRequestResponsePair(
                 $gatewayRequest,
