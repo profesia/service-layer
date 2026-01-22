@@ -22,23 +22,23 @@ final class GuzzleAdapter implements AdapterInterface
 
     public function __construct(
         Client                 $client,
-        AdapterConfigInterface $config
+        AdapterConfigInterface $configBuilder
     )
     {
         $this->client = $client;
-        $this->config = $config;
+        $this->config = $configBuilder;
     }
 
     /**
      * @inheritdoc
      */
-    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configOverride = null): EndpointResponse
+    public function send(GatewayRequestInterface $request, ?AdapterConfigInterface $configBuilderOverride = null): EndpointResponse
     {
         try {
             $psrRequest = $request->toPsrRequest();
             $finalConfig = $this->config;
-            if ($configOverride !== null) {
-                $finalConfig = $finalConfig->merge($configOverride);
+            if ($configBuilderOverride !== null) {
+                $finalConfig = $finalConfig->merge($configBuilderOverride);
             }
 
             return EndpointResponse::createFromPsrResponse(
